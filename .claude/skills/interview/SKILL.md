@@ -1,8 +1,8 @@
 ---
 name: interview
-description: Pulls one recorded interview from the Wispr Flow connector with the candidate in chat, saves its transcript and writes a review of how they answered. The review quotes their answers and proposes better ones from their own facts, and the Interviews tab shows it. Use when the candidate says they want to pull, review or go over an interview.
+description: Pulls one recorded interview with the candidate in chat, from a meeting-notes connector, a pasted transcript or a file, saves its transcript and writes a review of how they answered. The review quotes their answers and proposes better ones from their own facts, and the Interviews tab shows it. Use when the candidate says they want to pull, review or go over an interview.
 argument-hint: "[which interview, in the candidate's words]"
-allowed-tools: Read, Write, Edit, Grep, Glob, Bash(node process/engine.ts profile), Bash(grep:*), Bash(sed -n:*), Bash(mkdir:*), Bash(npm run typecheck), Agent, mcp__395111e9-c942-4cf6-b3eb-5561968ca8e1__search_meetings, mcp__395111e9-c942-4cf6-b3eb-5561968ca8e1__get_meeting
+allowed-tools: Read, Write, Edit, Grep, Glob, Bash(node process/engine.ts profile), Bash(grep:*), Bash(sed -n:*), Bash(mkdir:*), Bash(npm run typecheck), Agent
 ---
 
 # /interview
@@ -17,11 +17,17 @@ Every Agent call names its model, the cheapest that does the job well. `stated` 
 
 1. Resolve the profile with `node process/engine.ts profile`. If it exits 2, stop and tell the
    candidate why.
-2. List recent meetings through the Wispr Flow connector, with their dates and titles. If the
-   connector needs a sign-in, tell the candidate to run `/mcp` in an interactive `claude` terminal, and
-   stop.
-3. The candidate names the meeting. Pull that one only, and never pull every meeting.
-4. If the transcript isn't ready, say so, write nothing and stop.
+2. Read `[interview] source` from `inputs.toml` with grep. If it is absent, ask the candidate which of
+   `connector`, `paste` or `file` they use, and say `/setup` records it.
+3. Get the transcript by that source. All three then follow the same saved transcript and review flow.
+   - `connector`: use whatever meeting-notes connector tools the session has, named by `connector` in
+     `inputs.toml`. List recent meetings with their dates and titles, and let the candidate name one.
+     Pull that one only, and never pull every meeting. Claude Code asks the candidate to approve the
+     connector's tools the first time. If the connector needs a sign-in, tell the candidate to run `/mcp`
+     in an interactive `claude` terminal, and stop.
+   - `paste`: ask the candidate to paste the transcript into chat.
+   - `file`: ask for the path and read it.
+4. If the transcript isn't ready or is empty, say so, write nothing and stop.
 
 ## What to ask
 
@@ -30,7 +36,7 @@ Ask in plain numbered questions, and only for what the meeting doesn't show.
 1. Which company and round was this?
 2. Which speaker is the candidate? Ask this when the labels don't make it plain.
 
-Wispr's labels can slip on a single recording, and it misspells names. Keep its labels as they came in
+Speaker labels can slip on a single recording, and transcripts misspell names. Keep its labels as they came in
 `transcript.md`, and separate the speakers by what they said. Say in the review that this was needed.
 If the speakers still can't be separated, write `transcript.md`, write no review and say why.
 
@@ -51,14 +57,17 @@ The folder is `my-interviews/YYYY-MM-DD-<company>-<round>`, in lower case with h
   "role": "",
   "round": "",
   "folder": "",
-  "wispr_meeting_id": "",
+  "source": "connector | paste | file",
+  "source_id": null,
   "application_id": null
 }
 ```
 
 Read the file before writing it. If it exists and doesn't parse, stop and tell the candidate, so that
-no earlier row is lost. If `wispr_meeting_id` is already in the index, keep that row and folder, and
-replace the three files.
+no earlier row is lost. `source_id` is the connector's meeting id, the file path for `file`, and null for
+`paste`. Old rows hold `wispr_meeting_id` instead. Read it as a `source_id` and leave it as it is. If the
+`source_id` or `wispr_meeting_id` is already in the index, keep that row and folder, and replace the
+three files. A paste has no id, so match it on date, company and round.
 
 ## The review
 

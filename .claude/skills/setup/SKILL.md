@@ -1,14 +1,15 @@
 ---
 name: setup
-description: Sets up a new candidate with them in chat, one area at a time. /setup copies the example profile, creates the ledger, pins Chrome, connects Gmail, fills inputs.toml key by key, builds the profile and portfolio in conversation, hands the resumes to /profile, fills the FAQ, offers interview preparation, sets the reply rules and ends by running preflight. Use when the candidate is new here, or wants to redo one area.
+description: Sets up a new candidate's machine with them in chat, one area at a time. /setup checks Node, Chrome and the packages, tests that Claude runs from the terminal, copies the example profile, creates the ledger and the run-time folders, pins Chrome, signs in to each job site and checks the session, signs in to Overleaf, connects Gmail, records how interviews come in and ends by running preflight. It builds no profile, because /profile does that next. Use when the candidate is new here, or wants to redo one area.
 argument-hint: "[area to start from, in the candidate's words]"
-allowed-tools: Read, Write, Edit, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(node process/tools/ea-apply.ts:*), Bash(node process/tools/naukri.ts:*), Bash(node process/tools/hirist.ts:*), Bash(npm install:*), Bash(cp:*), Bash(ls:*), Bash(git status:*), mcp__claude-in-chrome__list_connected_browsers, mcp__claude-in-chrome__select_browser
+allowed-tools: Read, Write, Edit, Grep, Glob, Bash(node --version:*), Bash(node process/engine.ts:*), Bash(node process/tools/ea-apply.ts:*), Bash(node process/tools/naukri.ts:*), Bash(node process/tools/hirist.ts:*), Bash(node process/tools/li-msg.ts:*), Bash(node process/tools/li-harvest.ts:*), Bash(claude -p:*), Bash(npm install:*), Bash(cp:*), Bash(mkdir:*), Bash(rm -r my-sessions/setup-check:*), Bash(ls:*), Bash(git status:*), mcp__claude-in-chrome__list_connected_browsers, mcp__claude-in-chrome__select_browser, mcp__claude-in-chrome__tabs_context_mcp, mcp__claude-in-chrome__tabs_create_mcp, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__get_page_text
 ---
 
 # /setup
 
-This skill is human in the loop. The candidate drives it, and nothing ships without them. The usual
-model is Opus 5.5. `stated` 2026-11-02
+This skill is human in the loop. The candidate drives it, and nothing ships without them. It is
+technical only. It builds no profile, and `/profile` does that next. The usual model is Opus 5.5.
+`stated` 2026-11-26
 
 ## Start of a run
 
@@ -16,7 +17,7 @@ model is Opus 5.5. `stated` 2026-11-02
 2. Look at what exists before asking anything. Run `ls my-profile process/local.json` and
    `node process/engine.ts profile`. An area that is already done is skipped unless the candidate asks
    to redo it.
-3. If the opening phrase names an area, start there. If it doesn't, list the ten areas below in one
+3. If the opening phrase names an area, start there. If it doesn't, list the nine areas below in one
    numbered message, mark the finished ones, and begin at the first unfinished one.
 
 ## How the conversation runs
@@ -26,36 +27,71 @@ model is Opus 5.5. `stated` 2026-11-02
 2. The candidate dictates, so read past typos. Expand a terse answer into full wording before it goes
    into a file.
 3. Act on each answer at once. A local edit needs no "approve?" question.
-4. Write every fact the candidate gives into the profile files unasked. Tag it `stated` with the date.
-   Tag an inference `ours` and flag it to them.
-5. Never enter a credential and never sign in. If a site or a connector needs a login, say so and wait.
-6. Make no commit and no send. Run no test, because this repo has none.
+4. Never enter a credential and never sign in. If a site or a connector needs a login, say so and wait.
+   The candidate types every password and approves every sign-in themselves.
+5. Make no commit and no send. Run no test, because this repo has none.
+6. Every check in this skill is read-only. It applies, sends and changes nothing on a site.
 7. Never repeat a figure from `## Private pay` or the `[pay]` table in chat, in a log line or in a
-   summary. Write it where it belongs and move on.
+   summary.
 8. Every subagent runs on Sonnet or Opus with `model` named, never Fable. Tell it the same rule.
 
 ## The areas, in order
 
-### 1. Copy the example and make the ledger
+The areas are: 1 Prerequisites, 2 Claude from the terminal, 3 Folders, 4 Pin Chrome, 5 Site sign-ins,
+6 Overleaf, 7 Gmail, 8 Interview source, 9 Preflight.
+
+### 1. Prerequisites
+
+1. Run `node --version`. It must print v25 or later. If it does not, tell the candidate to install the
+   current Node from nodejs.org, open a new terminal and start `/setup` again.
+2. Run `ls "/Applications/Google Chrome.app"`. If it is missing, tell the candidate to install Google
+   Chrome from google.com/chrome and start this area again.
+3. Run `ls node_modules/playwright-core`. If it is missing, run `npm install`, then check again.
+4. Say that the scripts drive the Chrome that is installed. They use `channel: 'chrome'`, so no
+   `npx playwright install` is needed.
+5. On any failure, give the one exact fix in one plain step, wait, and run the check again.
+
+### 2. Claude from the terminal
+
+Several parts of this repo run `claude -p` themselves: the dashboard's Rerun, Resume and Start now
+buttons, the Prep judge, and the `li-score.ts` script. They need a Claude Code sign-in that works
+outside this chat.
+
+1. Run `claude -p "reply with ok"` with the Bash tool's own timeout of 60000 ms. macOS has no `timeout` command.
+2. If it prints a reply, say so in one line and go on.
+3. If it fails or asks to sign in, hand-hold the candidate. They open their own terminal and run `claude`
+   once. They complete the browser sign-in there. Never type a credential for them.
+4. Run the check again once they say it is done. Repeat until it prints a reply, or until they choose
+   to skip. If they skip, say which buttons and scripts will fail.
+
+### 3. Folders
 
 1. If `my-profile/` exists, do not overwrite it. Ask whether to carry on with the profile that is there.
-2. Otherwise install the engine's packages, copy the example, check that the profile resolves, and
-   create the ledger:
+2. Otherwise copy the example and check that the profile resolves:
 
    ```bash
-   npm install
    cp -R my-profile.example my-profile
    node process/engine.ts profile
+   ```
+
+3. Create the ledger. It never overwrites:
+
+   ```bash
    node process/engine.ts --ledger my-sessions/ledger ledger init
    ```
 
-3. Explain that `ledger init` creates only the ledger and never overwrites. Say that `my-sessions/`
-   and `my-applications/` are created at run time. Each `/hunt`, `/outreach`, `/retro` and `/profile`
-   run opens its own folder in `my-sessions/`. Each application sent gets a folder in
-   `my-applications/`. The dashboard makes `my-notebook/`, and the Learn tab makes `my-learn/` when it
-   first saves a graded answer. All five are gitignored, and the candidate makes none by hand.
+4. Create the empty run-time folders, so the candidate can see where things will go:
 
-### 2. Pin Chrome
+   ```bash
+   mkdir -p my-applications my-sessions my-interviews my-notebook my-learn
+   ```
+
+5. Say what each one holds, in one line each. `my-applications/` gets a folder for each application
+   sent. `my-sessions/` gets a folder for each `/hunt`, `/outreach`, `/retro` and `/profile` run, and the
+   ledger. `my-interviews/` gets each reviewed interview. `my-notebook/` holds the dashboard's bookmarks and
+   progress. `my-learn/` holds graded Learn answers. All five are gitignored.
+
+### 4. Pin Chrome
 
 1. Run `cp process/local.example.json process/local.json`. The file holds `chrome_device_id`, which
    is blank, and `chrome_profile_account`.
@@ -70,31 +106,65 @@ model is Opus 5.5. `stated` 2026-11-02
 6. Call `select_browser` once with that id, to prove the pin. R6 in `process/instructions.md` has the
    browser rules every later run follows.
 
-### 2b. Sign in to LinkedIn for the Easy Apply script
+### 5. Site sign-ins
+
+Take one site at a time. Ask first whether the candidate uses the site. If they say skip, leave that lane
+out of `search.live_sources` in `inputs.toml` and go to the next site. Each sign-in is followed by a
+read-only check, reported in one plain line.
+
+#### 5a. LinkedIn
 
 1. Run `node process/tools/ea-apply.ts login`. A Chrome window opens on LinkedIn's sign-in page.
 2. Ask the candidate to sign in by hand in that window. Never type a credential. The command waits up
    to five minutes and prints `Signed in. The session is saved.`
 3. If it prints `Timed out.`, run it again. The candidate repeats this step when a hunt reports that
    the script's profile is signed out.
+4. Check the session. Run `mkdir -p my-sessions/setup-check` and then
+   `node process/tools/li-msg.ts inbox --run my-sessions/setup-check`. It only reads the inbox into files.
+   Exit 5 means signed out, so go back to step 1. A `LM-INBOX fallback` line is not a session failure. Report
+   the reason it names. Say `LinkedIn: session works` or `LinkedIn: signed out`.
 
-### 2c. Sign in to Naukri for the Naukri script
+#### 5b. Naukri
 
 1. Run `node process/tools/naukri.ts login`. A Chrome window opens on Naukri's sign-in page.
 2. Ask the candidate to sign in by hand in that window and then close it. Never type a credential. The command waits up
    to ten minutes and prints `Window closed. Run sweep to check the session.`
 3. If it prints `Timed out.`, run it again. The candidate repeats this step when a hunt reports that
    the Naukri script is signed out.
+4. Check the session with `node process/tools/naukri.ts sweep --out my-sessions/setup-check/naukri`. The sweep
+   only reads the invite inbox. Report its status line in one plain line, such as `Naukri: session works`.
 
-### 2d. Sign in to Hirist for the Hirist script
+#### 5c. Hirist
 
 1. Run `node process/tools/hirist.ts login`. A Chrome window opens on Hirist's sign-in page.
 2. Ask the candidate to sign in by hand in that window and then close it. Never type a credential. The command waits up
    to ten minutes and prints `Window closed. Run apply without --press to check the session.`
 3. If it prints `Timed out.`, run it again. The candidate repeats this step when a hunt reports that
    the Hirist script is signed out. Search works signed out, so only Apply needs this session.
+4. Hirist's own session check is `apply <row-id> --out <dir>` without `--press`, and it needs a role row that
+   does not exist yet. So run `node process/tools/hirist.ts sweep --out my-sessions/setup-check/hirist`, which
+   proves the script and Chrome work, and say plainly that the Apply session is proved on the first
+   `/hunt --dry-run`.
 
-### 3. Gmail and Wispr Flow
+#### 5d. LinkedIn job harvest and remote boards
+
+1. These two need no sign-in. LinkedIn's job search runs on public pages, and the remote boards read public feeds.
+2. Run `node process/tools/li-harvest.ts sweep --lane linkedin-ea --out my-sessions/setup-check/harvest`. It is
+   read-only. Exit 4 means LinkedIn put up a wall. Report it and carry on. 0 cards is expected here, because
+   `/profile` fills the search terms later.
+3. Run `node process/engine.ts boards sweep --dry-run`. It prints the rows and writes nothing. It prints "boards.terms is empty" before `/profile` fills the terms, and that is expected.
+4. Report each in one plain line.
+
+### 6. Overleaf
+
+1. The candidate opens the pinned Chrome and signs in to Overleaf themselves. Never type the password.
+   Overleaf's sign-in may use Google or an email link, and either is theirs to do.
+2. When they say they are in, open `https://www.overleaf.com/project` in the pinned Chrome with `navigate`
+   and read the page with `get_page_text`. A project list means the session works. A sign-in page means it
+   does not, so ask them to finish and look again.
+3. Report it in one plain line. Record nothing else here. The project id is `/profile`'s job.
+
+### 7. Gmail
 
 `/retro` reads Gmail through the engine's `mail` command, which calls Google's Gmail API with a
 sign-in the candidate gives once. It sends a plain reply the same way, and a reply with a resume
@@ -107,120 +177,43 @@ through the pinned Chrome. `process/runners/gmail.md` has the send mechanics. `s
    project for it. In that project they turn on the Gmail API, because `mail login` ends in a 403
    without it. Then they create an OAuth client of type Desktop app and download its file.
    `artefact` 2026-11-22 If they decline, say
-   that Phase 2 of `/retro` cannot read mail without it, note it, and go on to area 4.
+   that Phase 2 of `/retro` cannot read mail without it, note it, and go on to area 8.
 3. Have them set `mailbox` in `process/local.json` to their Gmail address and run
    `node process/engine.ts mail login <client.json>` in a terminal themselves. Never run it for them
    and never open the client file. Run `mail status` again to confirm.
-4. Record the Gmail address under `## Accounts` in `profile.md`. Ask them to confirm the pinned Chrome
-   is signed in to the same account, because a reply with a resume is sent through it.
-5. Ask whether the candidate records interviews in Wispr Flow. If so, have them connect it as a connector
-   in Claude's connector settings, and wait. Find the tool names with a ToolSearch for
-   `search_meetings get_meeting`. Confirm with the candidate that the account is theirs. Edit the
-   `allowed-tools` line of `.claude/skills/interview/SKILL.md` so both entries use the new prefix. If the
-   edit is denied, quote the denial text and give the candidate the two exact entries to paste
-   themselves. If they decline, say that `/interview` cannot pull a recording without it.
+4. Ask them to confirm the pinned Chrome is signed in to the same account, because a reply with a
+   resume is sent through it. `/profile` records the address under `## Accounts` in `profile.md`.
 
-### 4. inputs.toml, key by key
+### 8. Interview source
 
-`my-profile/inputs.toml` holds every number, and markdown names the key and never the value. Each
-key has a comment above it. Go table by table and find them with `grep -n '^\[' my-profile/inputs.toml`.
+`/interview` needs a recorded interview. Ask how those will come in. There are three answers.
 
-1. For each key, read its comment aloud in plain words, show the current value, and ask for the
-   candidate's value. Keys the example already fills with a default can be accepted in one batch per
-   table, after you read the batch out.
-2. Replace `# set me` with nothing once a key is set. Leave an `[outreach]` quote key commented out
-   until the candidate gives a figure they are happy to tell a recruiter. An absent quote becomes an
-   open question in a draft, never a number.
-3. `search.live_sources` is the list of lanes the hunt works. Read the live lanes from R9 in
-   `process/instructions.md` and let the candidate choose. `engine.ts preflight` prints the result on
-   its `Lanes:` line.
-4. Keep the pay figures private. `engine.ts config` never prints the `[pay]` values, and the runners compare a band through `engine.ts pay below`, which prints only `below` or `not below`.
+1. A connector. Wispr Flow or another meeting-notes tool, added in Claude's connector settings. The
+   candidate adds it and signs in themselves. Ask its name.
+2. Paste. The candidate pastes a transcript into chat each time.
+3. A file. The candidate gives the path of a transcript file each time.
 
-Three assumptions sit in the engine. Name each to the candidate and do not generalise any of them.
+Record the answer in `my-profile/inputs.toml` under an `[interview]` table. Add the table if it is
+missing. `stated` 2026-11-26
 
-1. Rupees. `[pay]` keeps `pay.current_inr_lakh` and `pay.expected_india_inr_lakh` in lakh rupees a
-   year, and the runners compare an INR band with them. The abroad floor and the founder ask are in US
-   dollars a year. A candidate who is not paid in rupees should hear that plainly, and choose how to
-   fill those two keys. Do not rename a key or convert a figure.
-2. IST. Every timestamp the engine writes, the Easy Apply window and the hour in a `firing` use a
-   fixed UTC+05:30 (`constants.TZ`). Say so, and leave the constant alone.
-3. PAN. No run ever enters a government tax or identity number, such as India's PAN, or a full street
-   address that is not in the FAQ. Area 7 records the candidate's own list.
+```toml
+[interview]
+source = "connector"   # "connector", "paste" or "file"
+connector = "<its name>"   # only for a connector
+```
 
-### 5. The profile and the portfolio
+Never edit the interview skill's `allowed-tools`. If the candidate declines every answer, set `source = "paste"`
+and say that `/interview` then takes a pasted transcript.
 
-1. List the sections of `my-profile/profile.md` with `grep -n '^## '`. Work down them in order.
-   Each has a guidance line and an example. Ask for the content, write it in the candidate's words,
-   and delete the guidance line once the section is filled.
-2. `## Identity` comes first, because `engine.ts validate` reads the name, handle and emails from it to
-   keep them out of the engine. Do `## Private pay` last, and write only what the candidate says.
-3. `## Accounts` lists one line for each source. It holds no credential and no password.
-4. Then `my-profile/work-portfolio.md`. Take the projects one at a time under `## Evidence`. Ask for
-   the caveats under `## Caveats` outright, meaning any work that was a team's or someone else's,
-   because standing rule 2 depends on them. Fill `## Numbers that may be quoted` last, with only the
-   figures the candidate confirms.
-5. Tag each line with its authority and the date, as `CLAUDE.md` says under Authority tags.
-
-### 6. Overleaf and the resumes
-
-This area sets the ground. `/profile` writes the variants, and R11 in `process/instructions.md` has
-the Overleaf mechanics.
-
-1. The candidate creates the Overleaf project and sends its id. Write it under `## Resume` in
-   `profile.md`. Never sign in to Overleaf for them.
-2. Ask how many fixed variants they want, what each targets, and which one is the default. Fill the
-   `## Resume variants` table. Exactly one row says `yes` under Default, or `engine.ts validate` fails.
-3. Create `resume/<variant>/` for each row and set it to `planned`. `resume/README.md` explains the
-   folder, and the `.md` of a variant is its source of truth.
-4. Tell the candidate to run `/profile` next to write each variant, compile it on Overleaf at two
-   pages and put the PDF in place. A row turns `live` only after that.
-
-### 7. The FAQ and how answers are written
-
-1. Open `my-profile/faq.md`. Take the starter rows one at a time. Ask, write the answer in full
-   sentences and tag it `stated` with the date. A row that needs a number names the `inputs.toml` key
-   and never writes the value.
-2. Read out the years rule and the gap rules. An unknown question holds the row, the applier files an
-   `answer_gap` with the question verbatim, and `/retro` asks the candidate and writes the answer. The
-   bank grows from there, so nothing needs to be complete today.
-3. Ask for the answers that are never entered whatever the form says. Record the candidate's own list.
-   It starts with a government tax or identity number and a full street address.
-4. Ask how they want self-identification questions handled, such as gender, race, disability and
-   veteran status. Each item is its own question, and "decline to self-identify" is a valid answer.
-5. Anything an outside reader sees follows R5 in `process/instructions.md`.
-
-### 8. Interview preparation
-
-1. Ask whether the candidate wants it now. It is optional, and the dashboard's Prep tab reads it.
-2. If yes, follow R13. It needs `profile.md`, `work-portfolio.md`, `faq.md` and at least one variant
-   `.md`. One Opus agent plans, then Sonnet writers write. End with `npm run typecheck` and ask the
-   candidate to open the Prep tab once.
-3. If no, say that R11 runs R13 later, when the story or a resume changes and the folder exists.
-
-### 9. Reply rules and how replies are made
-
-1. Explain the flow in four lines. `/retro` reads the Gmail and LinkedIn inboxes. The `inbox-reader`
-   agent writes one draft for each job thread, following `my-profile/reply-rules.md`. The candidate
-   sees the final text and says send. Claude then sends it, by the engine's `mail send` for a plain email
-   and the messenger for the rest. `/outreach` never touches the inbox, and its first messages follow
-   the rules not marked `inbox only` plus R14.
-2. Open `my-profile/reply-rules.md`. Go through the starter rules one at a time. For each, ask whether
-   to keep it, change it or drop it, and write the result in the candidate's words.
-3. Ask what the candidate wants on four points: how to answer a pay question, how to treat a
-   recruiter who has the facts wrong, how to decline a role, and when to attach a resume.
-4. Add new rules at the end. Never renumber. Replace the text of a dropped rule with `retired`. `ours`
-   2026-11-02
-5. Tag each rule `stated` when the candidate said it and `artefact` when it was read from a message
-   they wrote. Ask whether they have a few replies of their own to read.
-
-### 10. Preflight
+### 9. Preflight
 
 1. Run `node process/engine.ts --ledger my-sessions/ledger preflight 2>&1`.
 2. Report its output as it printed, line by line. A `STOP:` line means a run cannot start. Name the
    area that fixes it and offer to redo that area. A `STOP-APPLY:` line means the hunt can sweep but not
-   submit.
-3. Say what is left: the first variant through `/profile`, any area the candidate skipped, and the
-   first `/hunt`. Start none of them.
+   submit. A `STOP:` line about the empty profile is expected, because `/profile` fills it next.
+3. Remove `my-sessions/setup-check/`, which only held the check output.
+4. Tell the candidate in one short message that setup is done and the next step is `/profile`. Say that
+   nothing else is started.
 
 ## Close
 

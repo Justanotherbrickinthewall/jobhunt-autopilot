@@ -105,15 +105,11 @@ Each phone build publishes the laptop's reading and prep progress from `my-noteb
 Each skill has its detail in one place. This section says what each one is for, in the order a new
 candidate meets them.
 
-`/setup` sets up a new candidate in chat, once, one area at a time. It copies `my-profile.example/` to
-`my-profile/`, creates the ledger, pins Chrome, signs the candidate in to LinkedIn once in the Easy Apply script's own Chrome profile, connects Gmail, fills `inputs.toml`, builds the profile
-and the portfolio, hands the resumes to `/profile`, fills the FAQ, offers interview preparation, sets
-the reply rules and ends with `engine.ts preflight`. A new candidate starts with no profile, no
+`/setup` sets up a new candidate in chat, once, and does only the technical work. It checks Node 25, Google Chrome and the packages. It checks that `claude -p` works from the terminal, and walks the candidate through signing in to Claude if it does not. It creates the `my-*` folders and the ledger, and pins Chrome. It walks the candidate through signing in to LinkedIn, Naukri, Hirist and Overleaf, with a read-only live check after each, and connects Gmail. It asks how interviews will come in, a connector such as Wispr Flow, a pasted transcript or a file, and records `[interview] source` and `connector` in `inputs.toml`. It ends with `engine.ts preflight` and says to run `/profile` next. A new candidate starts with no profile, no
 applications, no sessions, no notebook and no interview prep, and none of those is ever handed over.
-Its rules are in `.claude/skills/setup/SKILL.md`. `stated` 2026-11-02
+Its rules are in `.claude/skills/setup/SKILL.md`. `stated` 2026-11-26
 
-`/profile` works on the profile with the candidate in chat. It starts with Overleaf, the prebuilt
-resumes, the projects and the FAQ, and later narrows and updates the resume variants. Each locked
+`/profile` works on the profile with the candidate in chat. On an empty profile it runs in build mode. It asks first for a resume source, which is a LinkedIn link, an Overleaf project or a resume file. It extracts the facts and interviews the candidate only for the gaps. It writes `profile.md`, `work-portfolio.md`, `faq.md`, `inputs.toml` and `reply-rules.md`. It then builds interview prep with answers, links it to the Learn courses and says to run `/hunt --dry-run`. `stated` 2026-11-26 On a built profile it narrows and updates the resume variants. Each locked
 change flows to the `.tex`, a two-page Overleaf PDF and, for the default, the LinkedIn and Naukri
 profiles. Each run also offers a small Naukri refresh, because a small change bumps the profile for
 recent activity and that brings recruiter calls. The candidate runs it every three or four days. Its
@@ -121,15 +117,15 @@ rules are in `.claude/skills/profile/SKILL.md`. `stated` 2026-11-02
 
 `/hunt` runs the whole hunt with no one present and never stops to ask. It submits every clean form and
 holds the rest for `/retro`. For a `linkedin-ea` row it runs the Easy Apply script first, and it dispatches the applier agent only when the script hands the row back, or when Top choice is allowed for the row. `stated` 2026-11-25 `/hunt --linkedin-ea`, `/hunt --linkedin-ex`, `/hunt --naukri`, `/hunt --hirist` and `/hunt --remote-boards` run one
-lane only, and `/hunt status` prints a read-only report. A recruiter's invite on Naukri gets an answer
+lane only, and `/hunt status` prints a read-only report. `/hunt --dry-run` runs the whole flow on a throwaway copy of the ledger and never submits, as the dry run section of `process/instructions.md` says. `stated` 2026-11-26 A recruiter's invite on Naukri gets an answer
 whatever its score: Apply, or Not interested when the role is plainly wrong. The `naukri` lane runs
 first. `stated` 2026-11-02 Speed is the reason for the Easy Apply window: the
 sooner an application lands, the higher it sits in the employer's pile. The hunt starts when the
-candidate starts it. It is not scheduled. It follows `process/instructions.md`. While the LinkedIn
+candidate starts it, in chat or from a scheduled task they set up in the Claude app. `stated` 2026-11-26 It follows `process/instructions.md`. While the LinkedIn
 security cooldown runs, a hunt works neither LinkedIn lane, and `naukri`, `hirist`, `remote_boards` and `career_page` carry on, as R9 says.
 A security check that a hunt meets starts that cooldown, whichever command hits it. `stated` 2026-11-02
 
-`/outreach` runs with no one present and asks nothing. It works in lanes, and `prospect.live_lanes` in `inputs.toml` is the switch. The `roles` lane finds one person at each applied or held role whose match is at or above `prospect.roles_match_min`. It tries the hiring manager, then the job's poster, then a recruiter. The `posts` lane searches LinkedIn posts for open roles and judges each one. Each lane drafts first contacts. The run sends them within the `[prospect]` caps and withdraws stale connection requests, all in one run folder. A bare `/outreach` runs every live lane, `roles` first. `/outreach --roles` and `/outreach --posts` run one lane. It never reads the Gmail or LinkedIn inbox and sends no reply. Anything it cannot finish is held for `/retro`. `/outreach status` prints a read-only report that includes the budget. It follows R14 of `process/instructions.md`. `stated` 2026-11-10
+`/outreach` runs with no one present and asks nothing. It works in lanes, and `prospect.live_lanes` in `inputs.toml` is the switch. The `roles` lane finds one person at each applied or held role whose match is at or above `prospect.roles_match_min`. It tries the hiring manager, then the job's poster, then a recruiter. The `posts` lane searches LinkedIn posts for open roles and judges each one. Each lane drafts first contacts. The run sends them within the `[prospect]` caps and withdraws stale connection requests, all in one run folder. A bare `/outreach` runs every live lane, `roles` first. `/outreach --roles` and `/outreach --posts` run one lane. It never reads the Gmail or LinkedIn inbox and sends no reply. Anything it cannot finish is held for `/retro`. `/outreach status` prints a read-only report that includes the budget. It follows R14 of `process/instructions.md`. `stated` 2026-11-10 `/outreach --dry-run` runs the same way on a throwaway ledger and sends nothing. `stated` 2026-11-26
 
 `/retro` is the only skill that works with the candidate present, and the candidate runs it when they
 choose. Its order is fixed. Phase 1 folds the findings of past hunts and asks about the held items,
@@ -138,8 +134,7 @@ that is concrete about the profile and the hunting strategy. Each reply is draft
 candidate approves it or asks for changes, and it is sent. A resume is attached wherever the site
 allows it. It follows R10 of `process/instructions.md`. `stated` 2026-11-02
 
-`/interview` works with the candidate in chat, when they ask. It pulls one recorded interview from the
-Wispr Flow connector, saves the transcript and writes a review that quotes their answers and proposes
+`/interview` works with the candidate in chat, when they ask. It reads `[interview] source` from `inputs.toml` and takes one recorded interview from a meeting-notes connector, a pasted transcript or a file. `stated` 2026-11-26 It saves the transcript and writes a review that quotes their answers and proposes
 better ones from their own facts. It then folds those lessons into `my-profile/interview-prep/`, so the
 Prep tab holds the corrected answers. It takes no lock, so it can run during a live hunt.
 Its rules are in `.claude/skills/interview/SKILL.md`. `stated` 2026-11-05
@@ -160,7 +155,9 @@ These override convenience, and every agent follows them.
 5. A form is submitted only in a run the candidate started, and only when it is clean as
    instructions.md defines it. The candidate starts a run in chat, or with a Rerun, Resume or Start now
    click on the dashboard. That click is the go-ahead for its one row, and the run logs it verbatim with
-   the time. Everything else is held for /retro or the dashboard. `stated` 2026-10-24
+   the time. Everything else is held for /retro or the dashboard. `stated` 2026-10-24 A scheduled task the
+   candidate set up in the Claude app also starts a run, and its prompt is the go-ahead, logged verbatim
+   with the time. `stated` 2026-11-26
 6. Anything an outside reader sees follows the professional register in instructions.md R5.
 7. Use only the pinned Chrome from `process/local.json`. Never use the built-in browser. There are three
    exceptions. `process/tools/ea-apply.ts` drives its own Chrome profile at `.playwright/linkedin` for the

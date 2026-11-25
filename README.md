@@ -14,6 +14,12 @@ You bring your own facts. The repository holds the engine and an empty example p
 
 ## You start in three steps
 
+Claude Code is Anthropic's coding assistant that runs in your terminal. Install it from https://docs.claude.com/en/docs/claude-code, then run `claude` once in Terminal and sign in. A skill is one of the slash commands below, such as `/setup`. You type it into Claude Code.
+
+Node runs the engine. Install it from https://nodejs.org, then check that `node --version` prints v25 or later.
+
+Claude in Chrome is Anthropic's browser extension. Install it from the Chrome Web Store and sign in. `/setup` then pins the one Chrome it may use, so the engine never drives another browser.
+
 You need Node 25 or later, Claude Code, and Google Chrome in `/Applications` with the Claude in Chrome extension signed in to the accounts your search uses. Reading Gmail needs your own Google Cloud project and OAuth client, and `/setup` walks you through making one. Claude Code asks you to trust the project's hooks on first open. `/setup` also asks you to sign in to LinkedIn and Naukri once in the scripts' own browser.
 
 ```bash
@@ -26,22 +32,40 @@ cd jobhunt-autopilot && claude
 
 Then type `/setup` in Claude Code.
 
-`/setup` installs the packages and walks you through everything in chat, one area at a time. It copies `my-profile.example/` to `my-profile/`, creates the ledger, pins your Chrome, connects Gmail, fills `inputs.toml`, builds your profile and work portfolio from conversation, takes your resumes, fills your screening answers and sets your reply rules. It ends by running a preflight check that says which sources are live.
+`/setup` does the technical work in chat, one area at a time. It checks Node, Chrome and the packages, and makes sure `claude -p` works from your terminal. It creates your folders and the ledger, and pins your Chrome. It asks you to sign in to LinkedIn, Naukri, Hirist and Overleaf, and checks each one works. It connects Gmail and asks how your interview recordings will come in. It ends with a preflight check that says which sources are live.
 
 Claude never enters a password. Where a login is needed it stops and asks you to sign in.
+
+## After setup, four steps take you live
+
+1. `/profile` builds your profile. It asks for a resume source first: a LinkedIn link, an Overleaf project or a resume file. It asks you only about the gaps, then builds your interview preparation.
+2. `/hunt --dry-run` runs the whole hunt on a throwaway copy of the ledger. It submits and sends nothing, and shows you what it would have done. The LinkedIn, Naukri and Hirist scripts cannot submit in a dry run. On other employer sites an agent fills the form and is told to stop before the final click, so watch the first dry run.
+3. `/hunt` runs the real hunt. It submits every clean form and holds the rest, and asks you nothing while it runs.
+4. `/retro` settles the held roles and answers your inboxes. You approve each reply.
+
+## When something goes wrong
+
+| Problem | Fix |
+|---|---|
+| `claude -p` says you are not signed in | Run `claude` in a terminal, sign in, then run `/setup` again. |
+| Chrome is not in `/Applications` | Install Google Chrome there, then re-run the Chrome step of `/setup`. |
+| A site sign-in has expired | Re-run that site's step of `/setup`. |
+| Gmail is not connected | Re-run the Gmail step of `/setup`, which runs `node process/engine.ts mail login`. |
+| The LinkedIn security cooldown is running | Wait for it to end. The hunt skips both LinkedIn lanes and works the others. |
+| `node process/engine.ts profile` exits 2 | Run `/setup` if `my-profile/` is missing, or `/profile` if it is incomplete. The message names the gap. |
 
 ## Six skills run the search
 
 | Skill | You are present | What it does |
 |---|---|---|
-| `/setup` | Yes | Sets up a new candidate, once. |
-| `/profile` | Yes | Works on your resume variants and screening answers, and keeps your LinkedIn and Naukri profiles in line with the default resume. |
+| `/setup` | Yes | Does the technical setup, once: tools, sign-ins, folders, Gmail and the interview source. |
+| `/profile` | Yes | Builds your profile from a resume source, then your interview preparation. Later it works on your resume variants and keeps LinkedIn and Naukri in line with the default resume. |
 | `/hunt` | No | Harvests roles, scores them, picks the resume, fills the forms and submits the clean ones. Everything else is held. |
 | `/outreach` | No | Finds one person at each role worth a message, and the authors of hiring posts, and sends a first contact within your caps. |
 | `/retro` | Yes | Settles the held roles with you, then answers your Gmail and LinkedIn inboxes one reply at a time. |
-| `/interview` | Yes | Pulls one recorded interview, reviews how you answered and folds the lessons into your preparation. |
+| `/interview` | Yes | Takes one interview transcript from a connector such as Wispr Flow, a paste or a file. It reviews how you answered and folds the lessons into your preparation. |
 
-`/hunt` works six sources: LinkedIn Easy Apply, LinkedIn roles with an external link, Naukri recruiter invites, Hirist, four remote job boards and company career pages. `/hunt --naukri`, `/hunt --hirist` and the other flags run one source. `/hunt status` and `/outreach status` only report.
+`/hunt` works six sources: LinkedIn Easy Apply, LinkedIn roles with an external link, Naukri recruiter invites, Hirist, four remote job boards and company career pages. `/hunt --naukri`, `/hunt --hirist` and the other flags run one source. `/hunt status` and `/outreach status` only report. `/hunt --dry-run` and `/outreach --dry-run` rehearse a run and never submit or send.
 
 ## The dashboard shows the whole search
 
@@ -121,7 +145,7 @@ That repository is public. The build drops every preparation item that mentions 
 
 ## Where to look next
 
-1. `CLAUDE.md` holds the standing rules and a map of the repository.
+1. `CLAUDE.md` holds the standing rules and a map of the repository. `AGENTS.md` gives the same orientation to Codex and other agents.
 2. `process/instructions.md` is the hunt as numbered steps.
 3. `process/contracts.md` holds the file formats.
 4. `process/runners/` holds one file for each job site.

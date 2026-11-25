@@ -18,6 +18,8 @@ No LinkedIn connector exists, because LinkedIn's API forbids third-party job sea
 
 ## Harvest
 
+The sweep of a live `/hunt` is run by `process/tools/li-harvest.ts hunt-sweep` once for both lanes, with plain web requests to the guest endpoints and no browser. A 429, a 999 or a sign-in page prints `fallback throttle` or `fallback authwall`, and the other lane then falls back without a request. Only a security checkpoint prints `security`, runs `outreach stop` and ends both lanes. A throttle or sign-in page during the JD reads keeps the rows and the lane stays `ok`. A checkpoint during the JD reads keeps the rows too, but it runs `outreach stop` and the other lane prints `security`. Some JD files may be missing, and the matcher fetches those itself. `--lane` is only for a single-lane run. The script exits 0 on a wall, so the parent reads its lines. The title regex takes the words inside the keyword's quotes and the words outside them, and `ai` counts as a specific word only as a whole word. The sweep-source agent harvests by the steps below only when the script prints `fallback`, and its JD files are `my-sessions/ledger/roles/linkedin-<id>.jd.md`. The script's judgement calls, such as the title regex, the adjacent titles and the rotation keywords, are fixed rules marked `shortcut:` in its code. `ours` 2026-11-26
+
 ### The guest search endpoint
 
 ```
@@ -114,6 +116,8 @@ t.replace(/[^\x20-\x7E\n]/g,'')
 ```
 
 ## JD reading
+
+For a live `/hunt`, `process/tools/li-score.ts hunt` scores each LinkedIn row from the staged `linkedin-<id>.jd.md` file in one text call, and the matcher agent below reads a JD only for a row the script hands back. `ours` 2026-11-26
 
 Try the routes in this order. Concurrent readers above `concurrency.linkedin_readers` draw throttling, and spacing calls 12 to 25 seconds apart clears it.
 

@@ -1,9 +1,9 @@
 ---
 name: hunt
-description: Runs one job hunt from sweep to submit without stopping. /hunt go (or a bare /hunt) follows process/instructions.md steps 0 to 4 on every live lane, submits every clean form and holds the rest for /retro. /hunt --linkedin-ea, /hunt --linkedin-ex, /hunt --naukri, /hunt --hirist or /hunt --remote-boards runs one lane only. /hunt status prints a read-only report.
-argument-hint: "[go | --linkedin-ea | --linkedin-ex | --naukri | --hirist | --remote-boards | status]"
+description: Runs one job hunt from sweep to submit without stopping. /hunt go (or a bare /hunt) follows process/instructions.md steps 0 to 4 on every live lane, submits every clean form and holds the rest for /retro. /hunt --linkedin-ea, /hunt --linkedin-ex, /hunt --naukri, /hunt --hirist or /hunt --remote-boards runs one lane only. /hunt status prints a read-only report. /hunt --dry-run runs the whole flow, with or without a lane flag, and submits nothing.
+argument-hint: "[go | --dry-run | --linkedin-ea | --linkedin-ex | --naukri | --hirist | --remote-boards | status]"
 disable-model-invocation: true
-allowed-tools: Read, Write, Edit, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(node process/tools/ea-apply.ts:*), Bash(node process/tools/naukri.ts:*), Bash(node process/tools/hirist.ts:*), Bash(git status:*), Bash(git log:*), Bash(git add:*), Bash(git commit:*)
+allowed-tools: Read, Write, Edit, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(cp -R my-sessions/ledger:*), Bash(node process/tools/ea-apply.ts:*), Bash(node process/tools/naukri.ts:*), Bash(node process/tools/hirist.ts:*), Bash(node process/tools/li-harvest.ts:*), Bash(node process/tools/li-score.ts:*), Bash(git status:*), Bash(git log:*), Bash(git add:*), Bash(git commit:*)
 ---
 
 # /hunt
@@ -18,7 +18,7 @@ The procedure is in `process/instructions.md`. This file only says where to star
 ## /hunt go, or a bare /hunt
 
 Open `process/instructions.md` and follow steps 0 to 4 in order. Each step names who does the work,
-which model it runs on and the exact commands. The reference sections R0 to R14 hold the rules the
+which model it runs on and the exact commands. The reference sections R0 to R15 hold the rules the
 steps point to.
 
 Invoking `/hunt` is the candidate's go-ahead to submit every clean form in this run, including the
@@ -47,11 +47,19 @@ open no browser page, because each browser agent pins Chrome itself. The things 
 candidate anything. A row that needs them is held, and `/retro` takes it up when they choose. Name
 the model on every Agent call, as each step says.
 
+## /hunt --dry-run
+
+`--dry-run` runs steps 0 to 4 on a copy of the ledger and never submits, presses or sends. It combines
+with any lane flag, such as `/hunt --dry-run --naukri`. It still takes the session lock and respects
+the LinkedIn cooldown. Follow R15 of `process/instructions.md`. The run ends by saying that nothing was
+submitted, listing what would have gone out and telling the candidate that `/hunt` without the flag runs
+it live. `stated` 2026-11-26
+
 ## /hunt status
 
 Run `node process/engine.ts status`, show its output and stop. It changes nothing.
 
 ## Arguments
 
-The arguments are `go`, `status`, `--linkedin-ea`, `--linkedin-ex`, `--naukri`, `--hirist` and `--remote-boards`. Any other argument
-gets a one-line reply naming the seven that exist.
+The arguments are `go`, `status`, `--dry-run`, `--linkedin-ea`, `--linkedin-ex`, `--naukri`, `--hirist` and `--remote-boards`. Any other argument
+gets a one-line reply naming the eight that exist.

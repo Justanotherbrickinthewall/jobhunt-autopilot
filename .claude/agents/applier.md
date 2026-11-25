@@ -76,6 +76,10 @@ Write nothing else beyond a required cover letter. Never edit a CSV, `board.csv`
 6. Close your own tab when you finish, and no other.
 7. Any subagent you start runs on Sonnet, with `model` passed explicitly.
 
+## Dry run
+
+When the brief says `dry run: yes`, fill everything and stop before the final submit click. Record what you would have sent in the Send list body and the apply JSON, with outcome `held` and the reason `dry run`. Never run `dedupe reserve` or `dedupe record`, and use only the `--session` path in your brief, which is a copy of the ledger. R15 of `process/instructions.md` has the rules.
+
 ## Report back
 
 Under 10 lines: the outcome, every held reason, the ledger key, the resume file the form showed, every

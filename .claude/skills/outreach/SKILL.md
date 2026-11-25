@@ -1,9 +1,9 @@
 ---
 name: outreach
-description: Writes first contacts on LinkedIn, in lanes. The roles lane finds one person at each applied or held role above the bar. The posts lane searches LinkedIn posts for open roles and judges each one. /outreach runs every live lane, roles first. /outreach --roles or /outreach --posts runs one. It drafts, sends within the prospect caps and withdraws stale connection requests, in one run. It is AFK, asks nothing and never sends email. It does not touch the inbox, because /retro reads, drafts and sends every reply. /outreach status prints a read-only report.
-argument-hint: "[--roles | --posts | status]"
+description: Writes first contacts on LinkedIn, in lanes. The roles lane finds one person at each applied or held role above the bar. The posts lane searches LinkedIn posts for open roles and judges each one. /outreach runs every live lane, roles first. /outreach --roles or /outreach --posts runs one. It drafts, sends within the prospect caps and withdraws stale connection requests, in one run. It is AFK, asks nothing and never sends email. It does not touch the inbox, because /retro reads, drafts and sends every reply. /outreach status prints a read-only report. /outreach --dry-run runs the whole flow, with or without a lane flag, and sends nothing.
+argument-hint: "[--dry-run | --roles | --posts | status]"
 disable-model-invocation: true
-allowed-tools: Read, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(node process/tools/li-msg.ts:*), Bash(git status:*)
+allowed-tools: Read, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(cp -R my-sessions/ledger:*), Bash(node process/tools/li-msg.ts:*), Bash(git status:*)
 ---
 
 # /outreach
@@ -37,6 +37,14 @@ If `outreach lanes` exits 2, or the flag's lane is not live, the skill reports i
 message or an invitation yourself. Name the model on every Agent call, as each step says. File every
 stop as `### When a step stops` in R14 says.
 
+## /outreach --dry-run
+
+`--dry-run` runs O0 to O3 on a copy of the ledger and never sends a message, an InMail or a connection
+request. It combines with `--roles` and `--posts`. It still takes the run folder and respects the
+security cooldown. Follow R15 of `process/instructions.md`. The run ends by saying that nothing was sent,
+listing what would have gone out and telling the candidate that `/outreach` without the flag runs it
+live. `stated` 2026-11-26
+
 ## /outreach status
 
 Read-only. Change nothing and dispatch no agent. Print prospect counts, the budget and the cooldown,
@@ -57,4 +65,4 @@ and nothing about the inbox.
 
 ## Arguments
 
-`status`, `--roles` and `--posts` are the arguments. A bare `/outreach` runs every live lane, `roles` first. Any other argument gets a one-line reply naming the three, and the run does not start. `stated` 2026-11-10
+`status`, `--dry-run`, `--roles` and `--posts` are the arguments. A bare `/outreach` runs every live lane, `roles` first. Any other argument gets a one-line reply naming the four, and the run does not start. `stated` 2026-11-10

@@ -47,7 +47,7 @@ function check(): void {
   }
   const absent = PROFILE_FILES.filter((f) => !isFile(join(PROFILE_DIR, f)))
   if (absent.length > 0) {
-    throw new ProfileError(`my-profile/ is missing ${absent.join(', ')}. Copy ${absent.length === 1 ? 'it' : 'them'} from my-profile.example/ and run /setup.`)
+    throw new ProfileError(`my-profile/ is missing ${absent.join(', ')}. Copy ${absent.length === 1 ? 'it' : 'them'} from my-profile.example/ and run /profile.`)
   }
 }
 

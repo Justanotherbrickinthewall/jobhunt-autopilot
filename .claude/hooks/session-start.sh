@@ -6,7 +6,9 @@ if ! node process/engine.ts profile 2>&1; then
   echo "WARNING: profile did not resolve. Stop and report."
 fi
 
-if [ -z "$(git status --porcelain 2>/dev/null)" ]; then
+if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
+  :  # no upstream: nothing to pull
+elif [ -z "$(git status --porcelain 2>/dev/null)" ]; then
   PULL="$(git pull --rebase --autostash 2>&1)" || echo "WARNING: pull failed."
   echo "$PULL" | tail -2
 else

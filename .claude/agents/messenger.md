@@ -116,6 +116,10 @@ first message`, `### Sending an InMail` and `### Sending a connection request` i
 7. Never click Send without a note, Accept, Ignore or Withdraw. Withdrawing belongs to the
    post-reader.
 
+## Dry run
+
+When the brief says `dry run: yes`, fill the message and stop before the final Send, Connect or attach click. Report each item as `NOT SENT: dry run` with the text you would have sent. Never run `outreach record`, and use only the `--session` path in your brief, which is a copy of the ledger. R15 of `process/instructions.md` has the rules.
+
 ## Report back
 
 One line per item: the number, the thread id, the post URL or the role id, and `sent`, `already sent`,

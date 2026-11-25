@@ -315,7 +315,7 @@ export function Profile({ target }: { target: Target | null }) {
   if (files.every((f) => f.source === null)) {
     return (
       <div className="scroll">
-        <div className="empty small"><p>Your profile hasn't been set up yet. Run <code>/setup</code> in chat to begin.</p></div>
+        <div className="empty small"><p>Your profile hasn't been set up yet. Run <code>/profile</code> in chat to begin.</p></div>
       </div>
     )
   }
@@ -354,7 +354,7 @@ export function Profile({ target }: { target: Target | null }) {
               const doc = docs.get(f.key)
               return (
                 <div key={f.key} className="pf-panel" data-active={f.key === tab ? '' : undefined}>
-                  {doc ? <DocView doc={doc} file={f.key} ctx={ctxFor(f)} /> : <p className="pf-empty">Nothing here yet. Run <code>/setup</code> in chat to fill it in.</p>}
+                  {doc ? <DocView doc={doc} file={f.key} ctx={ctxFor(f)} /> : <p className="pf-empty">Nothing here yet. Run <code>/profile</code> in chat to fill it in.</p>}
                 </div>
               )
             })}

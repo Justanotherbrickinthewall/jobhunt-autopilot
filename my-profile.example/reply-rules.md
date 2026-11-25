@@ -8,7 +8,7 @@ true when a rule is added at the end. Never renumber.
 A rule marked `inbox only` applies to a reply in a thread someone else started. It does not apply to a
 prospect first message. Anything an outside reader sees also follows R5.
 
-Replace every starter rule with the candidate's own once /setup has asked them. The rules below are
+Replace every starter rule with the candidate's own once /profile has asked them. The rules below are
 generic and name nobody. Tag each rule `stated` when the candidate said it, `artefact` when it was read
 from a message they wrote, and `ours` when it is an inference. `ours`
 

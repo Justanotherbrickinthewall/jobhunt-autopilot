@@ -7,7 +7,9 @@ type IndexRow = {
   role: string
   round: string
   folder: string
-  wispr_meeting_id: string
+  wispr_meeting_id?: string
+  source?: 'connector' | 'paste' | 'file'
+  source_id?: string | null
   application_id: string | null
 }
 
