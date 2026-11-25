@@ -23,7 +23,7 @@ Claude in Chrome is Anthropic's browser extension. Install it from the Chrome We
 You need Node 25 or later, Claude Code, and Google Chrome in `/Applications` with the Claude in Chrome extension signed in to the accounts your search uses. Reading Gmail needs your own Google Cloud project and OAuth client, and `/setup` walks you through making one. Claude Code asks you to trust the project's hooks on first open. `/setup` also asks you to sign in to LinkedIn and Naukri once in the scripts' own browser.
 
 ```bash
-git clone https://github.com/Justanotherbrickinthewall/jobhunt-autopilot.git
+git clone <the URL from the green Code button on this repository's GitHub page>
 ```
 
 ```bash
