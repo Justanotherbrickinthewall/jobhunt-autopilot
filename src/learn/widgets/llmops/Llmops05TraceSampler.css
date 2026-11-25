@@ -1,0 +1,27 @@
+.llmops05-trace-sampler { display: grid; gap: 12px; }
+.llmops05-trace-sampler-note { margin: 0; color: var(--muted); font-size: 0.86rem; line-height: 1.45; }
+.llmops05-trace-sampler-strip { width: 100%; height: auto; display: block; }
+.llmops05-trace-sampler-axis { stroke: var(--line); stroke-width: 2; }
+.llmops05-trace-sampler-fill { fill: var(--teal-soft); }
+.llmops05-trace-sampler-dot { fill: var(--surface-2); stroke: var(--muted); stroke-width: 1.5; }
+.llmops05-trace-sampler-dot.in { fill: var(--teal); stroke: var(--teal); }
+.llmops05-trace-sampler-rate { stroke: var(--accent); stroke-width: 2; }
+.llmops05-trace-sampler-tick { font-size: 11px; fill: var(--muted); font-family: var(--font-mono); }
+.llmops05-trace-sampler-scroll { overflow-x: auto; }
+.llmops05-trace-sampler-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.llmops05-trace-sampler-table th { text-align: left; font-size: 0.72rem; font-weight: 600; letter-spacing: 0; color: var(--muted); padding: 4px 6px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.llmops05-trace-sampler-table td { padding: 4px 6px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.llmops05-trace-sampler-table tr.in td { background: var(--teal-soft); }
+.llmops05-trace-sampler-quiz { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; min-width: 0; }
+.llmops05-trace-sampler-quiz legend { padding: 0; margin-bottom: 2px; }
+.llmops05-trace-sampler-q { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+.llmops05-trace-sampler-opts { display: grid; gap: 6px; }
+.llmops05-trace-sampler-opt { all: unset; box-sizing: border-box; padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.92rem; line-height: 1.4; }
+.llmops05-trace-sampler-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.llmops05-trace-sampler-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.llmops05-trace-sampler-opt.right { border-color: var(--teal); background: var(--teal-soft); }
+.llmops05-trace-sampler-quiz:disabled .llmops05-trace-sampler-opt { cursor: default; }
+.llmops05-trace-sampler-why { margin: 0; padding: 6px 8px; font-size: 0.88rem; line-height: 1.45; border-radius: var(--r-sm); border-left: 3px solid var(--line); }
+.llmops05-trace-sampler-why.ok { border-left-color: var(--teal); }
+.llmops05-trace-sampler-why.miss { border-left-color: var(--rose); }
+.llmops05-trace-sampler-slider { display: grid; gap: 6px; }

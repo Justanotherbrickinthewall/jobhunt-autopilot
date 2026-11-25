@@ -1,0 +1,15 @@
+.llmops01-burn-rate { display: grid; gap: 12px; }
+.llmops01-burn-rate-hint { margin: 0; font-size: 0.9rem; line-height: 1.5; }
+.llmops01-burn-rate-cards { display: grid; gap: 8px; }
+.llmops01-burn-rate-card { all: unset; box-sizing: border-box; display: grid; gap: 3px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.9rem; line-height: 1.4; }
+.llmops01-burn-rate-card:hover { border-color: var(--accent); }
+.llmops01-burn-rate-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.llmops01-burn-rate-card.on { border-color: var(--accent); background: var(--accent-soft); }
+.llmops01-burn-rate-card.right { border-color: var(--teal); background: var(--teal-soft); }
+.llmops01-burn-rate-card:disabled { cursor: default; }
+.llmops01-burn-rate-name { font-weight: 600; }
+.llmops01-burn-rate-sum { margin-top: 4px; font-size: 0.85rem; overflow-wrap: anywhere; }
+.llmops01-burn-rate-play { display: grid; gap: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.llmops01-burn-rate-slider { display: grid; gap: 6px; font-size: 0.9rem; }
+.llmops01-burn-rate-out { margin: 0; font-size: 0.9rem; line-height: 1.5; }
+.llmops01-burn-rate .w-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

@@ -1,0 +1,82 @@
+/* List and detail: Retro as an outbox, Outreach as conversations. Row sizes are from design-spec.md part a, items 22 to 24. */
+
+.lr-text { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.lr-top { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.lr-name { overflow: hidden; color: var(--ink); font-size: 13.5px; line-height: 19px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.lr-dot { display: none; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.lr-meta { display: inline-flex; align-items: center; gap: 6px; flex: none; margin-left: auto; color: var(--text-3); font-size: 11.5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lr-line { overflow: hidden; color: var(--body); font-size: 13px; line-height: 18px; text-overflow: ellipsis; white-space: nowrap; }
+.lr-preview { overflow: hidden; color: var(--text-3); font-size: 12.5px; line-height: 17px; text-overflow: ellipsis; white-space: nowrap; }
+.lr-foot { display: flex; align-items: center; gap: 8px; min-width: 0; margin-top: 4px; color: var(--text-3); font-size: 11.5px; white-space: nowrap; }
+/* Outreach rows hold four lines, so each reserves its height */
+.lr-line, .lr-preview { min-height: 1lh; }
+.lr-foot > span:last-child:not(.state) { overflow: hidden; text-overflow: ellipsis; }
+
+
+
+.because { margin-top: 18px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: light-dark(#f7fafb, var(--sub)); }
+.because > .cap { display: flex; align-items: center; gap: 6px; }
+.because ul { display: flex; flex-direction: column; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
+.because li { display: flex; align-items: flex-start; gap: 8px; color: var(--text); font-size: 12.5px; line-height: 18px; overflow-wrap: anywhere; }
+.because li > .lucide { flex: none; margin-top: 2px; color: var(--text-3); }
+.because p { margin: 10px 0 0; color: var(--text-3); font-size: 12px; }
+
+
+
+/* The thread: dated notes as messages. Ours are white on a ring, a draft adds the accent halo, the rest sit on sub. */
+.th-head { display: flex; align-items: flex-start; gap: 12px; padding: 20px 0 14px; border-bottom: 1px solid var(--line); }
+.th-head > div { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.th-head b { overflow: hidden; color: var(--ink); font-size: 13.5px; line-height: 19px; font-weight: 550; text-overflow: ellipsis; white-space: nowrap; }
+.th-head .state { margin-top: 3px; }
+.th-list { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 16px 0 0; list-style: none; }
+.th-list > li { display: flex; align-items: flex-start; gap: 12px; }
+.th-me { display: grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--harbor); color: var(--on-accent); }
+.th-msg { flex: 1; min-width: 0; padding: 12px 14px; border-radius: 9px; background: var(--sub); }
+.th-msg.out { background: var(--bg); box-shadow: 0 0 0 1px var(--line); }
+.th-msg.draft { background: var(--bg); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent), 0 0 0 4px color-mix(in srgb, var(--accent) 6%, transparent); }
+.th-msg-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.th-msg-head b { color: var(--ink); font-size: 13px; line-height: 18px; font-weight: 500; }
+.th-msg-head time { margin-left: auto; color: var(--text-3); font-size: 11.5px; white-space: nowrap; }
+.th-msg p { margin: 4px 0 0; color: var(--body); font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
+.th-msg-foot { display: flex; align-items: center; gap: 6px; margin-top: 10px; color: var(--text-3); font-size: 11.5px; }
+
+/* The About card under the thread: one ringed card, a faint head and three cells on 1px dividers */
+.ctx { margin-top: 16px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.ctx-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 40px; padding: 0 14px; border-bottom: 1px solid var(--line); background: light-dark(#f7fafb, var(--sub)); }
+.ctx-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); }
+.ctx-cell { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 12px 14px 13px; background: var(--bg); }
+.ctx-cell .cap { color: var(--text-3); }
+.ctx-val { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--ink); font-size: 13.5px; line-height: 19px; font-weight: 500; }
+.ctx-val > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ctx-sub { color: var(--text-3); font-size: 12px; line-height: 16px; }
+.ctx-bar { height: 4px; border-radius: 2px; background: var(--sunk); overflow: hidden; }
+.ctx-bar i { display: block; height: 100%; border-radius: 2px; background: var(--accent); }
+.ctx-note { margin: 12px 2px 0; color: var(--text-3); font-size: 12px; line-height: 17px; }
+
+/* The Outbox pane: From, To and channel rows, the saved text as typed, the draft block and its foot */
+.ob-rows { display: grid; gap: 6px; margin: 0; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.ob-rows > div { display: flex; gap: 12px; min-width: 0; font-size: 13px; line-height: 18px; }
+.ob-rows dt { flex: none; width: 76px; color: var(--text-3); }
+.ob-rows dd { min-width: 0; margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+.th-msg p.ob-pre, .ob-pre { white-space: pre-wrap; }
+.th-msg-head .who-sub { flex: 1; min-width: 0; }
+.ob-draft { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; padding: 14px; border-radius: 10px; background: var(--bg); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent), 0 0 0 4px color-mix(in srgb, var(--accent) 6%, transparent); }
+.ob-draft > .ob-pre { margin: 0; color: var(--body); font-size: 13.5px; line-height: 1.55; overflow-wrap: anywhere; }
+.ob-edit { width: 100%; padding: 8px 10px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--bg); color: var(--body); font: inherit; font-size: 13.5px; line-height: 1.55; resize: vertical; }
+.ob-edit:focus-visible { outline: none; border-color: var(--focus); box-shadow: 0 0 0 1px var(--focus); }
+.ob-why { padding: 10px 12px; border-radius: 8px; background: var(--sub); }
+.ob-why .cap { color: var(--text-3); }
+.ob-why p, .ob-why ul { margin: 4px 0 0; padding: 0; color: var(--body); font-size: 12.5px; line-height: 1.5; overflow-wrap: anywhere; }
+.ob-why ul { padding-left: 16px; }
+.ob-foot { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+.ob-reason { margin-right: auto; color: var(--text-3); font-size: 12px; line-height: 17px; }
+.ob-reason.block { margin: 12px 2px 0; }
+
+/* At 900px the panes stack and the window scrolls. */
+@media (max-width: 900px) {
+  .ctx-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Campaign Results: the people a campaign wrote to, one ghost button each */
+.comms { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; margin: 8px 0 0; padding: 0; list-style: none; }
+.comms .btn { gap: 10px; }

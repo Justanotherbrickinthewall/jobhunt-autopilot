@@ -1,0 +1,21 @@
+.design-connector-plan { display: grid; gap: 12px; }
+.design-connector-plan-head { justify-content: space-between; flex-wrap: wrap; gap: 6px 12px; }
+.design-connector-plan-facts { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.45; }
+.design-connector-plan-opts { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 6px; }
+.design-connector-plan-opts legend { padding: 0; margin-bottom: 6px; }
+.design-connector-plan-opt { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; min-height: 44px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); cursor: pointer; font-size: 0.92rem; line-height: 1.35; }
+.design-connector-plan-opt.is-on { border-color: var(--accent); background: var(--accent-soft); }
+.design-connector-plan-opt input { margin-top: 3px; accent-color: var(--accent); flex: none; }
+.design-connector-plan-out { display: grid; gap: 8px; }
+.design-connector-plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 0; }
+.design-connector-plan-grid > div { padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface-2); }
+.design-connector-plan-grid dt { margin: 0 0 2px; }
+.design-connector-plan-grid dd { margin: 0; font-size: 0.9rem; }
+.design-connector-plan-grid dd.is-ok { color: var(--teal); }
+.design-connector-plan-grid dd.is-bad { color: var(--rose); }
+.design-connector-plan-flag { margin: 0; font-size: 0.88rem; color: var(--rose); }
+.design-connector-plan-explain { font-size: 0.9rem; line-height: 1.45; }
+.design-connector-plan-total { display: grid; gap: 6px; }
+.design-connector-plan-plan { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.88rem; }
+.design-connector-plan-plan li { padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface-2); border-left: 2px solid var(--good); }
+.design-connector-plan-foot { margin: 0; font-size: 0.8rem; color: var(--muted); }

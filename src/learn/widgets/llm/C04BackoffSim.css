@@ -1,0 +1,5 @@
+.llm-backoff-sim-controls { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; margin: 10px 0; align-items: end; }
+.llm-backoff-sim-controls label { display: grid; gap: 4px; }
+.llm-backoff-sim-chart { width: 100%; height: auto; margin: 12px 0 4px; }
+.llm-backoff-sim-note { color: var(--muted); font-size: 0.9rem; margin: 0 0 10px; }
+@media (max-width: 480px) { .llm-backoff-sim-controls { grid-template-columns: 1fr; } }

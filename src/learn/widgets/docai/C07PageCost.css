@@ -1,0 +1,7 @@
+.docai-page-cost-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.docai-page-cost-job { font-size: 0.92rem; margin: 0 0 10px; }
+.docai-page-cost-controls { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; font-size: 0.86rem; }
+.docai-page-cost-controls label { display: flex; flex-direction: column; gap: 4px; }
+.docai-page-cost-controls select { min-width: 0; }
+.docai-page-cost-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.docai-page-cost-hint { font-size: 0.84rem; margin: 0 0 10px; color: var(--muted); }

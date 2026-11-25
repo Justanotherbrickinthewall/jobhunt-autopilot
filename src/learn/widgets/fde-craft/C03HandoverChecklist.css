@@ -1,0 +1,13 @@
+.fde-craft-handover-checklist-lede { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.fde-craft-handover-checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.fde-craft-handover-checklist-pkg { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px; background: var(--surface-2); display: grid; gap: 8px; align-content: start; }
+.fde-craft-handover-checklist-pkg h4 { margin: 0; }
+.fde-craft-handover-checklist-pkg ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 0.84rem; }
+.fde-craft-handover-checklist-pkg li span { display: inline-block; min-width: 3.1em; font-weight: 650; }
+.fde-craft-handover-checklist-pkg li.is-has span { color: var(--teal); }
+.fde-craft-handover-checklist-pkg li.is-lacks { color: var(--muted); }
+.fde-craft-handover-checklist-pkg li.is-lacks span { color: var(--rose); }
+.fde-craft-handover-checklist-why { margin: 0; font-size: 0.84rem; padding-left: 8px; border-left: 3px solid var(--line); }
+.fde-craft-handover-checklist-why.is-right { border-left-color: var(--teal); }
+.fde-craft-handover-checklist-why.is-wrong { border-left-color: var(--rose); }
+.fde-craft-handover-checklist-foot { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }

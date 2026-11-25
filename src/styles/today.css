@@ -1,0 +1,32 @@
+/* Today: the stat strip, then one flush table for each thing that waits. Sections part on a 28px gap. */
+.today-page section + section > .filter-row { border-top: 1px solid var(--line); }
+.today-page { padding-bottom: var(--s6); }
+.today-page .fr-right { gap: 12px; }
+.today-page col.c-kind { width: 200px; }
+.today-page col.c-state { width: 190px; }
+.today-page col.c-n { width: 120px; }
+.today-page col.c-next { width: 220px; }
+.today-page col.c-role { width: 300px; }
+.today-page col.c-latest { width: 34%; }
+.today-page .role-cell { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
+.today-page .role-title, .today-page .latest { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; color: var(--text-2); }
+.today-page .latest { display: block; }
+.today-page .role-cell .fit { flex: none; }
+.today-page .go { color: var(--accent); font-weight: 500; }
+@media (max-width: 700px) { .today-page :is(.c-kind, .c-state, .c-role, .c-latest) { display: none; } }
+
+/* Campaigns: the same strip and table. The note and the Results and Settings tabs keep the gutter. */
+.campaigns-page col.c-status { width: 150px; }
+.campaigns-page col.c-last { width: 110px; }
+.campaigns-page col.c-num { width: 84px; }
+.campaigns-page col.c-spark { width: 140px; }
+.campaigns-page td.c-spark .spark { width: 92px; height: 28px; margin-left: auto; }
+.page-note { margin: 0; padding: 14px var(--gutter); color: var(--text-3); font-size: 12px; line-height: 17px; }
+.campaign-tabs { align-items: stretch; }
+.campaign-tabs .tabs button { padding: 0; }
+.campaign-body { padding: 0 var(--gutter) var(--s7); }
+.runs-table col.c-started { width: 140px; }
+.runs-table col.c-lanes { width: 260px; }
+.runs-table col.c-took { width: 120px; }
+.runs-table td.clip { white-space: nowrap; text-overflow: ellipsis; }
+@media (max-width: 900px) { .campaigns-page :is(.c-last, .c-spark) { display: none; } }

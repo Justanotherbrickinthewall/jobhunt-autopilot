@@ -1,0 +1,8 @@
+.evals07-failure-coder-question { margin: 10px 0 8px; font-size: 0.95rem; overflow-wrap: anywhere; }
+.evals07-failure-coder-question em { color: var(--muted); font-size: 0.82rem; }
+.evals07-failure-coder-scores { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 6px; }
+.evals07-failure-coder-scores li { background: var(--surface-2); border-radius: var(--r-sm); padding: 8px 10px; display: grid; gap: 2px; font-size: 0.88rem; overflow-wrap: anywhere; }
+.evals07-failure-coder-name { font-weight: 600; }
+.evals07-failure-coder-pick { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; margin: 10px 0; min-width: 0; }
+.evals07-failure-coder-pick legend { font-weight: 600; font-size: 0.9rem; padding: 0 4px; }
+.evals07-failure-coder .w-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

@@ -1,0 +1,35 @@
+.llmops03-two-traces { display: grid; gap: 12px; }
+.llmops03-two-traces-note { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+.llmops03-two-traces-guess { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; min-width: 0; }
+.llmops03-two-traces-guess legend { padding: 0; margin-bottom: 2px; }
+.llmops03-two-traces-q { margin: 0; font-size: 0.95rem; }
+.llmops03-two-traces-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.llmops03-two-traces-opts .w-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.llmops03-two-traces-opts .w-chip:disabled { cursor: default; }
+.llmops03-two-traces-trace {
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-ctl);
+  background: var(--surface);
+  min-width: 0;
+}
+.llmops03-two-traces-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.llmops03-two-traces-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.llmops03-two-traces-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "name ms" "track track" "note note";
+  align-items: center;
+  gap: 2px 8px;
+}
+.llmops03-two-traces-row.depth1 { padding-left: 14px; }
+.llmops03-two-traces-name { grid-area: name; overflow-wrap: anywhere; }
+.llmops03-two-traces-ms { grid-area: ms; color: var(--muted); white-space: nowrap; }
+.llmops03-two-traces-track { grid-area: track; position: relative; display: block; height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.llmops03-two-traces-bar { position: absolute; top: 0; bottom: 0; border-radius: 4px; background: var(--accent); }
+.llmops03-two-traces-row.depth0 .llmops03-two-traces-bar { background: var(--teal); }
+.llmops03-two-traces-rownote { grid-area: note; color: var(--muted); font-size: 0.82rem; }
+.llmops03-two-traces-judge { display: grid; gap: 8px; }
+.llmops03-two-traces-why { margin: 0; font-size: 0.9rem; line-height: 1.45; }

@@ -1,0 +1,20 @@
+.agents03-state-reducer { display: grid; gap: 0.9rem; }
+.agents03-state-reducer-note { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.agents03-state-reducer-fields { display: grid; gap: 8px; }
+.agents03-state-reducer-field { display: grid; gap: 6px; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); }
+.agents03-state-reducer-head { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.agents03-state-reducer-name { font-weight: 650; color: var(--accent); }
+.agents03-state-reducer-hint { color: var(--muted); font-size: 0.85rem; }
+.agents03-state-reducer-writes { display: grid; gap: 2px; font-size: 0.78rem; overflow-wrap: anywhere; }
+.agents03-state-reducer-pick { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: center; font-size: 0.88rem; }
+.agents03-state-reducer-guess { display: grid; gap: 6px; }
+.agents03-state-reducer-result { display: grid; gap: 10px; }
+.agents03-state-reducer-table { display: grid; gap: 4px; }
+.agents03-state-reducer-tr { display: grid; grid-template-columns: 0.9fr 1.8fr 1.8fr 0.8fr; gap: 4px 8px; padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--r-sm); font-size: 0.78rem; overflow-wrap: anywhere; }
+.agents03-state-reducer-tr.head { border-color: transparent; color: var(--muted); font-weight: 600; letter-spacing: 0; font-size: 0.7rem; }
+.agents03-state-reducer-tr.ok { border-color: var(--teal); background: var(--teal-soft); }
+.agents03-state-reducer-tr.bad { border-color: var(--rose); background: var(--rose-soft); }
+@media (max-width: 480px) {
+  .agents03-state-reducer-tr { grid-template-columns: 1fr 1fr; }
+  .agents03-state-reducer-tr.head { display: none; }
+}

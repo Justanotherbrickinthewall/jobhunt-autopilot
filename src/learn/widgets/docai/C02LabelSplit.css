@@ -1,0 +1,14 @@
+.docai-label-split-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.docai-label-split-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 10px 0; }
+.docai-label-split-doc { border: 2px solid var(--line); border-radius: var(--r-sm); padding: 6px 4px; text-align: center; font-size: 0.8rem; background: var(--surface-2); display: grid; }
+.docai-label-split-doc small { color: var(--muted); font-size: 0.68rem; }
+.docai-label-split-doc.is-test { border-color: var(--rose); border-style: dashed; }
+.docai-label-split-s0 { border-bottom: 4px solid var(--accent); }
+.docai-label-split-s1 { border-bottom: 4px solid var(--teal); }
+.docai-label-split-s2 { border-bottom: 4px solid var(--amber); }
+.docai-label-split-s3 { border-bottom: 4px solid var(--rose); }
+.docai-label-split-score { font-size: 0.9rem; margin: 10px 0 4px; }
+.docai-label-split-hint { font-size: 0.82rem; color: var(--muted); margin: 0 0 8px; }
+.docai-label-split-ask { margin: 12px 0 8px; font-size: 0.92rem; }
+.docai-label-split-ask p { margin: 0 0 6px; }
+.docai-label-split-opts { display: flex; gap: 6px; }

@@ -1,0 +1,27 @@
+.architecture07-wait-budget { display: grid; gap: 12px; }
+.architecture07-wait-budget-note { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.architecture07-wait-budget-count { font-size: 0.8rem; color: var(--muted); }
+.architecture07-wait-budget-setup { margin: 0; font-size: 0.92rem; line-height: 1.5; }
+.architecture07-wait-budget-group { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.architecture07-wait-budget-q { font-size: 0.92rem; line-height: 1.45; font-weight: 600; }
+.architecture07-wait-budget-opts { display: grid; gap: 6px; }
+.architecture07-wait-budget-opt { all: unset; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.9rem; line-height: 1.4; }
+.architecture07-wait-budget-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.architecture07-wait-budget-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.architecture07-wait-budget-opt:disabled { cursor: default; }
+.architecture07-wait-budget-tl { display: grid; gap: 6px; }
+.architecture07-wait-budget-bar { position: relative; display: flex; height: 26px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); overflow: hidden; }
+.architecture07-wait-budget-seg { display: block; height: 100%; border-right: 1px solid var(--surface); }
+.architecture07-wait-budget-seg.work, .architecture07-wait-budget-dot.work { background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.architecture07-wait-budget-seg.guard, .architecture07-wait-budget-dot.guard { background: var(--amber-soft); box-shadow: inset 0 0 0 1px var(--amber); }
+.architecture07-wait-budget-seg.reask, .architecture07-wait-budget-dot.reask { background: var(--rose-soft); box-shadow: inset 0 0 0 1px var(--rose); }
+.architecture07-wait-budget-limit { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px dashed var(--bad); }
+.architecture07-wait-budget-first { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px solid var(--good); }
+.architecture07-wait-budget-ticks { position: relative; height: 1rem; font-size: 0.74rem; color: var(--muted); }
+.architecture07-wait-budget-ticks span { position: absolute; top: 0; transform: translateX(-100%); white-space: nowrap; }
+.architecture07-wait-budget-ticks span:first-child { left: 0; transform: none; }
+.architecture07-wait-budget-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 0.86rem; }
+.architecture07-wait-budget-legend li { display: flex; align-items: center; gap: 8px; }
+.architecture07-wait-budget-dot { flex: none; width: 14px; height: 14px; border-radius: 4px; }
+.architecture07-wait-budget-sum { margin: 0; font-size: 0.9rem; line-height: 1.5; }
+.architecture07-wait-budget code { font-family: var(--font-mono); font-size: 0.86em; }

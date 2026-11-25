@@ -1,0 +1,100 @@
+/* Phone and tablet rules, imported last. Every rule sits inside a media query, so desktop is unchanged.
+   Widget CSS loads later than this file, so the soft defaults use :where() to stay at the widget's own specificity. */
+
+/* Under 900px the app window scrolls and .learn grows with its content, so it must not clip or scroll vertically. */
+@media (max-width: 900px) {
+  .learn {
+    overflow: visible;
+    overflow-x: clip; /* a safety net for horizontal spill; Safari before 16 ignores it and keeps visible */
+    flex: 1 0 auto;
+    min-height: auto;
+    overflow-wrap: break-word;
+    -webkit-text-size-adjust: 100%; /* stops Safari inflating text in landscape */
+    text-size-adjust: 100%;
+  }
+  .lrn-app, .lrn-main, .page-narrow, .chapter-main { min-width: 0; max-width: 100%; }
+  .lrn-body, .chapter-main { padding-left: max(var(--s5), env(safe-area-inset-left)); padding-right: max(var(--s5), env(safe-area-inset-right)); }
+  .lrn-body.flush { padding-left: 0; padding-right: 0; }
+  .chapter-layout { grid-template-columns: minmax(0, 1fr); }
+  .cards { grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr)); }
+  .course-card > *, .step-head > *, .lab-step > * { min-width: 0; }
+  .lab-step { grid-template-columns: 2.2rem minmax(0, 1fr); }
+  .widget-stage :where(div, ul, ol, li, label, section, article, form, fieldset, details, dl, dt, dd, p) { min-width: 0; }
+  .widget-stage svg, .widget-stage img, .widget-stage canvas, .widget-stage video { max-width: 100%; height: auto; }
+  .widget-stage pre { max-width: 100%; overflow-x: auto; }
+  .widget-stage :where(input:not([type="checkbox"], [type="radio"], [type="range"]), textarea, select) { max-width: 100%; }
+  .nar-pill { padding-bottom: calc(7px + env(safe-area-inset-bottom)); padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); }
+}
+
+@media (max-width: 640px) {
+  .lrn-body, .chapter-main { padding: var(--s4) max(var(--s4), env(safe-area-inset-right)) var(--s6) max(var(--s4), env(safe-area-inset-left)); }
+  .lrn-body.flush { padding: 0 0 var(--s6); }
+  .boxes { display: none; }
+  /* Course rows wrap their question and objectives, because an ellipsis hides the part a reader needs. */
+  .chapter-list :is(.lr-name, .lr-line, .lr-preview, .ch-obj > span) { overflow: visible; white-space: normal; text-overflow: clip; }
+  /* A side item's marker wraps, so the whole question shows before it is opened. */
+  .side-head .side-title { overflow: visible; white-space: normal; text-overflow: clip; }
+  .side-text { overflow: visible; white-space: normal; text-overflow: clip; }
+  .chapter-list .lr-name { display: block; flex: 1 1 100%; }
+  /* The meta column sat beside the title and tripled its row height, so it drops below it as one line. */
+  .chapter-list .lr-top { flex-wrap: wrap; }
+  .chapter-list .lr-meta { flex: 1 1 100%; margin-left: 0; }
+  .chapter-list .ch-meta { flex-direction: row; align-items: center; gap: 10px; }
+  .pager { grid-template-columns: minmax(0, 1fr); }
+  .pager a.next { grid-column: 1; }
+  .fold .fold-body { padding-left: 1.1rem; }
+  .callout, .quiz, .reinforce { padding: 1rem; }
+  .lab-head { padding: 1rem; }
+  .lab-body { padding: 1rem; }
+  .practice { padding: var(--s4); }
+  .lrn-tabs { display: flex; width: 100%; }
+  .tab { flex: 1; padding: var(--s1) var(--s2); }
+  .filters .w-row { gap: 0.4rem; }
+  /* Two rows at 360px: the transport buttons and counter, then speed, voice and follow. */
+  .nar-pill .sep { display: none; }
+  .nar-pill .speed { flex: 1 1 150px; }
+  .nar-pill .speed input { flex: 1; width: auto; min-width: 60px; }
+  .nar-pill .err { flex-basis: 100%; max-width: none; text-align: center; }
+}
+
+@media (max-width: 560px) {
+  /* A table that cannot fit scrolls inside its own box. */
+  .widget-stage table { display: block; max-width: 100%; overflow-x: auto; }
+}
+
+@media (max-width: 480px) {
+  .w-panel { padding: 1rem; }
+}
+
+/* Touch screens, including landscape phones: 44px targets and 16px fields so Safari does not zoom on focus. */
+@media (pointer: coarse) {
+  :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"]), textarea, select) { font-size: 16px !important; }
+  :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"]), select) { min-height: 44px; }
+  :is(a, button, summary, label, input, select, textarea) { touch-action: manipulation; }
+  .w-btn, .w-btn.small, .tab, .quiz-opt, .copy-btn, .fold summary, .widget-stage button, button.w-chip, .lab-step label.w-chip { min-height: 44px; }
+  .copy-btn { padding: 0 0.9rem; }
+  .back { display: inline-flex; align-items: center; min-height: 44px; padding-right: var(--s4); }
+  .pager a, .iq-list a, .chapter-row, .course-card { min-height: 44px; }
+  .nar-pill button { min-width: 44px; height: 44px; }
+  .nar-pill button.pill-main { width: 44px; height: 44px; }
+  .step-check { display: inline-flex; padding: 12px; margin: -12px; }
+  .step-check input { width: 1.4rem; height: 1.4rem; }
+  .bm-btn { position: relative; }
+  .bm-btn::after { content: ""; position: absolute; inset: -6px; } /* a 44px hit area around the 32px icon */
+  .bm-pop :is(input, select) { min-height: 44px; }
+  .w-panel input[type="range"], .range { margin: 0.9rem 0; }
+  .w-panel input[type="range"]::-webkit-slider-thumb, .range::-webkit-slider-thumb { width: 28px; height: 28px; }
+}
+
+/* No hover on touch: a tap leaves :hover stuck, so put the hover looks back to the resting ones. */
+@media (hover: none) {
+  .w-btn:hover:not(:disabled) { transform: none; box-shadow: 0 1px 2px rgb(0 0 0 / 0.12); }
+  .w-btn.ghost:hover:not(.is-on, :disabled), .w-btn[data-variant="ghost"]:hover:not(.is-on, :disabled) { background: transparent; color: var(--ink); border-color: var(--line); box-shadow: none; }
+  button.w-chip:hover:not([aria-pressed="true"], .is-on, .good, .bad, .warn) { border-color: var(--line); }
+  a.course-card:hover, .chapter-row:hover, .pager a:hover, .iq-list a:hover, button.q-card:hover, .quiz-opt:hover:not(:disabled), .followup:hover:not(:disabled) { border-color: var(--line); }
+  .narr-block:hover:not(.is-current) { background: transparent; }
+  .copy-btn:hover:not(.done) { color: var(--muted); border-color: var(--line); }
+  .tab:hover:not(.on) { color: var(--muted); }
+  .nar-pill button:hover:not(.is-on, .pill-main) { background: transparent; }
+  .nar-pill button.pill-main:hover { filter: none; }
+}

@@ -1,0 +1,16 @@
+.cloud05-slot-budget { display: grid; gap: 12px; }
+.cloud05-slot-budget-hint { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.cloud05-slot-budget-card { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; background: var(--surface); display: grid; gap: 8px; }
+.cloud05-slot-budget-config { margin: 0; font-size: 0.9rem; overflow-wrap: anywhere; }
+.cloud05-slot-budget-choices { display: flex; flex-wrap: wrap; gap: 6px; }
+.cloud05-slot-budget-choice { cursor: pointer; min-width: 44px; justify-content: center; }
+.cloud05-slot-budget-choice:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cloud05-slot-budget-choice.on { background: var(--accent-soft); border-color: var(--accent); }
+.cloud05-slot-budget-choice.right { border-color: var(--teal); }
+.cloud05-slot-budget-choice:disabled { cursor: default; }
+.cloud05-slot-budget-rates { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.cloud05-slot-budget-rate { font-size: 0.8rem; }
+.cloud05-slot-budget-rate.picked { outline: 2px solid var(--accent); outline-offset: 1px; }
+.cloud05-slot-budget-why { margin: 0; padding: 6px 8px; font-size: 0.88rem; border-radius: var(--r-sm); border-left: 3px solid var(--line); overflow-wrap: anywhere; }
+.cloud05-slot-budget-why.ok { border-left-color: var(--teal); }
+.cloud05-slot-budget-why.miss { border-left-color: var(--rose); }

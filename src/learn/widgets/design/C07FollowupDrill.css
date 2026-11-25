@@ -1,0 +1,15 @@
+.design-followup-drill-lede { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.design-followup-drill-designs { display: grid; gap: 6px; margin-bottom: 10px; }
+.design-followup-drill-design { text-align: left; white-space: normal; min-height: 44px; }
+.design-followup-drill-bar { margin-bottom: 8px; justify-content: space-between; }
+.design-followup-drill-clock.is-late { color: var(--rose); }
+.design-followup-drill-ask { margin: 0 0 6px; font-weight: 600; }
+.design-followup-drill-options { display: grid; gap: 8px; margin-bottom: 10px; }
+.design-followup-drill-opt { width: 100%; text-align: left; white-space: normal; line-height: 1.4; min-height: 44px; }
+.design-followup-drill-opt.is-wrong { border-color: var(--rose); }
+.design-followup-drill-opt.is-right { border-color: var(--teal); }
+.design-followup-drill-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.design-followup-drill-why { margin: 4px 0 0; padding: 6px 8px; font-size: 0.85rem; color: var(--muted); border-radius: var(--r-sm); }
+.design-followup-drill-why.ok { border-left: 2px solid var(--good); }
+.design-followup-drill-why.miss { border-left: 2px solid var(--bad); }
+.design-followup-drill-foot { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }

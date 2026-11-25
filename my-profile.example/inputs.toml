@@ -1,0 +1,202 @@
+# What this candidate changes. Nothing else in the repo holds these numbers.
+# The engine reads it through process/constants.ts. server/held.ts, phone/lib.ts, phone/publish.ts,
+# vite.config.ts, src/data/files.ts and src/data/outreach.ts read it too, so check them all when a
+# key is renamed. Markdown names the key, never the value.
+
+[targets]
+# The job they want most. The matcher scores fd_30 against this.
+primary = []  # set me
+# Also in scope, on the same rubric.
+secondary = []  # set me
+# Titles that often mean the same job under another name.
+equivalent_titles = []  # set me
+# The employment type the hunt looks for.
+employment = ""  # set me
+
+[search]
+# Easy Apply window floor, in minutes. The window starts when the last hunt started and is kept between these two keys.
+linkedin_ea_window_min_minutes = 30
+# Easy Apply window ceiling, in minutes.
+linkedin_ea_window_max_minutes = 180
+# Searched on every hunt. Short phrases reach more title variants.
+primary = []  # set me
+# Added when the primaries return little.
+rotation = []  # set me
+# LinkedIn location filter, as a geo id.
+linkedin_geo_id = ""  # set me
+# LinkedIn posting age filters, as f_TPR values: r plus seconds. r1800 is the last 30 minutes
+# and r86400 the last 24 hours. The ex window is for the external-link lane.
+linkedin_ex_posted_within = ""  # set me
+# Lanes the hunt works. A lane is a source, or one half of a split source: LinkedIn is
+# linkedin-ea (Easy Apply) and linkedin-ex (external link). A lane is live when it is listed here
+# and has a runner file in process/runners/. Turning on a dormant lane needs this one edit.
+# career_page is live but has no harvest: it gets no sweep agent, and `engine.ts outreach jobs`
+# files its rows.
+live_sources = []  # set me
+# A company here is never applied to under any title. List a company you have been rejected by, or that you rule out.
+blocked_companies = []
+
+[reach]
+# Places they can work on-site, hybrid or remote. A match scores reach 20.
+home_tokens = []  # set me
+# Remote that names no country. Scores 20, the same as home.
+anywhere_tokens = []  # set me
+# Regions that contain their home country. Scores 14.
+near_tokens = []  # set me
+# A bare "Remote" with no country scores this until the JD is read.
+unstated_points = 0  # set me
+# Work at a Startup roles scoped to another country are capped here, not dropped.
+waas_foreign_remote_cap = 0  # set me
+
+[pay]
+# Floor for hourly contract work, in USD an hour. An hourly band wholly below it is held under R1 decision row 2.
+contract_floor_usd_hour = 0  # set me
+# The hourly rate the candidate would like, in USD an hour. A form that asks for an expected hourly rate gets this one.
+contract_ideal_usd_hour = 0  # set me
+# Their current pay at home, in lakh rupees a year.
+current_inr_lakh = 0  # set me
+# The pay they expect from a home role, in lakh rupees a year.
+expected_india_inr_lakh = 0  # set me
+# Floor for a salaried role paid outside the home country. A band wholly below it is held under R1 decision row 2.
+floor_abroad_usd_year = 0  # set me
+# The ask shown to founders on Work at a Startup.
+waas_ask_usd_year = 0  # set me
+# The longest notice period they will accept, in days.
+notice_days_max = 0  # set me
+
+[linkedin]
+# Easy Apply "top choice" flag. Spent only on very strong matches.
+top_choice_per_month = 3
+# The lowest match that may spend a top choice flag.
+top_choice_min_match = 95
+# A link to share where a channel takes no file. Empty means no link is shared.
+resume_url = ""  # set me
+
+[budgets]
+# Held rows older than this many days are aged out, counted from the newest held_on.
+held_max_age_days = 14
+# A run with no write for this many hours is stale and no longer blocks a sitting.
+live_run_stale_hours = 6
+# Ours tags older than this many days are listed for review.
+ours_review_days = 30
+# /profile offers a Naukri change when the last one is older than this many days.
+naukri_refresh_days = 3
+# Roles extracted per hunt. What is not reached stays queued for the next hunt.
+extract = 30
+# Roles triaged per hunt. What is not reached stays queued for the next hunt.
+triage = 30
+# Roles applied to per hunt. What is not reached stays queued for the next hunt.
+apply = 10
+# Easy Apply takes at most this share of the apply budget when external rows exist.
+easy_apply_share = 0.5
+# At least this many external applications per hunt when the queue has them.
+external_min = 3
+# A new row older than this is skipped as "aged out, never reached".
+stale_days = 14
+# Founder messages drafted on Work at a Startup per hunt. The cap counts sends, not roles worked.
+# Rows past it stay `scored` with the note "founder cap" and lead the next hunt.
+waas_messages = 8
+
+[scores]
+# The one bar. Under it, a role never reaches the candidate.
+match_floor = 55
+# Wrong-job test. Under semantic_floor the role is wrong_job.
+semantic_floor = 50
+# At or above this, semantic never holds a role.
+semantic_proceed = 65
+# Between the two, the role needs at least this match, or it is held for review.
+semantic_middle_min_match = 70
+# Easy Apply takes a role only at or above this match. Under it the role is skipped and /outreach works it instead. Added 2026-11-22 on the candidate's answer in /retro (`stated` 2026-11-22).
+ea_match_floor = 80
+# Work at a Startup founder send bar. Under it, the role is held for review, not messaged.
+waas_send_match_min = 60
+# A dimension below its floor holds the role, whatever the total. This is the fd floor.
+collapse_fd = 12
+# The ai dimension floor.
+collapse_ai = 10
+# The level dimension floor.
+collapse_level = 6
+# The stack dimension floor.
+collapse_stack = 4
+
+[concurrency]
+# Agents at once. LinkedIn throttles readers above linkedin_readers.
+matching = 4
+# Resume tailoring agents at once.
+tailoring = 2
+# Applying agents at once.
+applying = 3
+# Agents reading LinkedIn at once.
+linkedin_readers = 3
+# A row that fails this many times in one hunt is left for the next.
+max_attempts = 2
+
+[outreach]
+# Sent threads newer than this many days are re-read for a reply.
+recheck_sent_days = 14
+# Pay figures the candidate has said are safe to give a recruiter. Never the ## Private pay floors.
+# Leave a quote commented out until the candidate gives it. An absent quote is an open question.
+# USD an hour for contract work.
+# quote_contract_usd_hour = 0
+# A full-time annual figure with its currency, such as "USD 60000".
+# quote_fulltime_annual = "USD 0"
+# Drafts listed for approval in one /outreach run.
+max_replies_per_run = 10
+
+[prospect]
+# Hours /outreach and the LinkedIn lanes of /hunt wait after a LinkedIn security stop.
+security_cooldown_hours = 48
+# Prospect messages one /outreach run may send.
+max_sends_per_run = 8
+# Tags that mark a post as hiring, such as "#hiring". Grown in /retro.
+hiring_tags = []
+# Tags that mark a role in the candidate's field. Grown in /retro.
+role_tags = []
+# Tags that name a place. Read when judging location, never searched. Grown in /retro.
+place_tags = []
+# Tags /retro decided against. They are never proposed again.
+ignored_tags = []
+# LinkedIn's datePosted value: past-24h, past-week or past-month. Also the oldest post a run keeps.
+posted_within = "past-24h"
+# Search result pages one run may load across all queries. Guards against a runaway loop.
+max_search_pages = 60
+# Connection requests sent, per calendar day and per rolling 7 days.
+invites_per_day = 10
+invites_per_week = 50
+# Withdraw a connection request still pending after this many days.
+withdraw_after_days = 7
+# Never let pending requests from this lane exceed this.
+max_pending_invites = 100
+# InMails this lane may spend in a calendar month.
+inmail_per_month = 5
+# Connection note length on Premium. LinkedIn Help a6239760.
+note_max_chars = 300
+# The /outreach lanes that run: roles, posts. A bare /outreach works them in that order.
+live_lanes = ["roles", "posts"]
+# The roles lane writes to someone at each applied or held role with a match at or above this.
+roles_match_min = 70
+# Roles the roles lane works in one run.
+roles_per_run = 5
+# LinkedIn pages the roles lane may load in one run to find people: job pages, people searches and profiles.
+people_searches_per_run = 20
+
+[phone]
+# The GitHub account that phone:publish may publish to. A different gh login is refused.
+github_login = ""
+
+[boards]
+# The remote boards the remote_boards lane reads, in order. Each name needs its <name>_url key below.
+feeds = ["himalayas", "remotive", "remoteok", "weworkremotely"]
+remoteok_url = "https://remoteok.com/api"
+# {q} is one search term and {page} is the page number.
+himalayas_url = "https://himalayas.app/jobs/api/search?q={q}&worldwide=true&page={page}"
+remotive_url = "https://remotive.com/api/remote-jobs?category=software-development"
+weworkremotely_url = "https://weworkremotely.com/remote-jobs.rss"
+# Search terms for the boards. Set me, for example the titles in search.primary.
+terms = []
+# The most rows one sweep stages, across all boards.
+max_rows_per_run = 40
+# The most feed requests one sweep makes, across all boards.
+max_requests_per_run = 12
+# A role posted longer ago than this many days is left out.
+posted_within_days = 7

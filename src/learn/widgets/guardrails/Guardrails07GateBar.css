@@ -1,0 +1,15 @@
+.guardrails07-gate-bar { display: grid; gap: 12px; }
+.guardrails07-gate-bar-note { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.guardrails07-gate-bar-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.guardrails07-gate-bar-controls .w-label { display: block; margin-bottom: 6px; }
+.guardrails07-gate-bar-slider { display: grid; gap: 6px; }
+.guardrails07-gate-bar-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 6px; margin: 0; }
+.guardrails07-gate-bar-stats div { border: 1px solid var(--line); border-radius: var(--r-ctl); padding: 6px 8px; background: var(--surface); }
+.guardrails07-gate-bar-stats dt { font-size: 0.74rem; color: var(--muted); }
+.guardrails07-gate-bar-stats dd { margin: 0; font-size: 1rem; font-weight: 650; }
+.guardrails07-gate-bar-challenge { border: 1px solid var(--line); border-radius: var(--r-ctl); padding: 10px 12px; margin: 0; min-width: 0; display: grid; gap: 10px; }
+.guardrails07-gate-bar-challenge legend { padding: 0 6px; }
+.guardrails07-gate-bar-sizes { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.9rem; }
+.guardrails07-gate-bar-size.solved { color: var(--teal); font-weight: 650; }
+.guardrails07-gate-bar-hint { margin: 0; font-size: 0.84rem; color: var(--muted); }
+.guardrails07-gate-bar-msg { margin: 0; font-size: 0.92rem; }

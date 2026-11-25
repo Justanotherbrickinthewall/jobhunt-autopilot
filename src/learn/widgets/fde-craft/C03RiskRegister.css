@@ -1,0 +1,8 @@
+.fde-craft-risk-register-lede { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.fde-craft-risk-register-list { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+.fde-craft-risk-register-list li { padding: 10px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid transparent; }
+.fde-craft-risk-register-list li.is-raise { border-color: var(--accent); }
+.fde-craft-risk-register-list li > p { margin: 0 0 6px; font-size: 0.92rem; }
+.fde-craft-risk-register-sel { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--muted); }
+.fde-craft-risk-register-note { margin: 6px 0 0; font-size: 0.84rem; color: var(--muted); }
+.fde-craft-risk-register-hint, .fde-craft-risk-register-foot { margin: 6px 0; font-size: 0.78rem; color: var(--muted); }

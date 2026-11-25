@@ -1,0 +1,18 @@
+.evals03-judge-grid-hint { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.evals03-judge-grid-rule { margin: 0 0 10px; font-size: 0.85rem; }
+.evals03-judge-grid-card { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; margin-bottom: 10px; background: var(--surface); }
+.evals03-judge-grid-note { margin: 2px 0 8px; color: var(--muted); font-size: 0.85rem; }
+.evals03-judge-grid-table { border-collapse: collapse; width: 100%; max-width: 360px; margin-bottom: 8px; font-size: 0.85rem; }
+.evals03-judge-grid-table th, .evals03-judge-grid-table td { border: 1px solid var(--line); padding: 4px 8px; text-align: center; }
+.evals03-judge-grid-table th { font-weight: 600; color: var(--muted); }
+.evals03-judge-grid-table td.ok { border-color: var(--teal); }
+.evals03-judge-grid-table td.bad { border-color: var(--rose); }
+.evals03-judge-grid-table td.warn { border-color: var(--line); }
+.evals03-judge-grid-cap { text-align: left; font-size: 0.75rem; color: var(--muted); padding-bottom: 2px; caption-side: top; }
+.evals03-judge-grid-opts { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
+.evals03-judge-grid-opt { cursor: pointer; text-align: left; }
+.evals03-judge-grid-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.evals03-judge-grid-opt.is-on { background: var(--accent-soft); border-color: var(--accent); }
+.evals03-judge-grid-fix { margin: 4px 0 0; padding: 6px 8px; font-size: 0.85rem; border-radius: var(--r-sm); }
+.evals03-judge-grid-fix.ok { border-left: 2px solid var(--good); }
+.evals03-judge-grid-fix.miss { border-left: 2px solid var(--bad); }

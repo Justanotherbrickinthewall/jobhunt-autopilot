@@ -1,0 +1,10 @@
+.llm-tune-or-not { display: grid; gap: 14px; }
+.llm-tune-or-not-note { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.llm-tune-or-not-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.llm-tune-or-not-item { display: grid; gap: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); }
+.llm-tune-or-not-item.miss { border-color: var(--rose); background: var(--rose-soft); }
+.llm-tune-or-not-text { margin: 0; font-size: 0.92rem; line-height: 1.5; }
+.llm-tune-or-not-why { margin: 0; font-size: 0.88rem; line-height: 1.5; }
+.llm-tune-or-not-why.ok { color: var(--ink); font-weight: 600; }
+.llm-tune-or-not-why.no { color: var(--ink); }
+.llm-tune-or-not .w-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

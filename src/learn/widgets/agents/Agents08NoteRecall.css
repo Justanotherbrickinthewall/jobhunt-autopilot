@@ -1,0 +1,17 @@
+.agents08-note-recall { display: grid; gap: 14px; }
+.agents08-note-recall-block { display: grid; gap: 8px; min-width: 0; }
+.agents08-note-recall-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.agents08-note-recall-note { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); font-size: 0.9rem; }
+.agents08-note-recall-note.in { border-color: var(--teal); }
+.agents08-note-recall-note.out { opacity: 0.6; }
+.agents08-note-recall-text { min-width: 0; overflow-wrap: anywhere; }
+.agents08-note-recall-text mark { background: var(--accent-soft); color: var(--ink); border-radius: 3px; padding: 0 2px; }
+.agents08-note-recall-meta { color: var(--muted); font-size: 0.78rem; }
+.agents08-note-recall-hint { margin: 0; color: var(--muted); font-size: 0.82rem; }
+.agents08-note-recall-prompt { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.82rem; }
+.agents08-note-recall-goals { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: 0.88rem; color: var(--muted); }
+.agents08-note-recall-goals li.done { color: var(--teal); }
+@media (max-width: 480px) {
+  .agents08-note-recall-note { grid-template-columns: 1fr; }
+  .agents08-note-recall-note .w-chip { justify-self: start; }
+}

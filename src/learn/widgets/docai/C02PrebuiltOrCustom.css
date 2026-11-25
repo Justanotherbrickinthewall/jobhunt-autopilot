@@ -1,0 +1,5 @@
+.docai-prebuilt-or-custom-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.docai-prebuilt-or-custom-card { margin-bottom: 10px; }
+.docai-prebuilt-or-custom-text { font-size: 0.9rem; margin: 0 0 8px; }
+.docai-prebuilt-or-custom-opts { display: flex; gap: 6px; flex-wrap: wrap; }
+.docai-prebuilt-or-custom-why { font-size: 0.86rem; margin: 8px 0 0; color: var(--muted); }

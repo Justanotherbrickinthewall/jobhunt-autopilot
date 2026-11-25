@@ -1,0 +1,24 @@
+.architecture03-tie-or-win { display: grid; gap: 14px; }
+.architecture03-tie-or-win-count { font-size: 0.8rem; color: var(--muted, inherit); }
+.architecture03-tie-or-win .w-chip { justify-self: start; }
+.architecture03-tie-or-win-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface-2); }
+.architecture03-tie-or-win-table th,
+.architecture03-tie-or-win-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); font-weight: var(--w-text); }
+.architecture03-tie-or-win-table thead th { font-weight: 600; font-size: 0.8rem; color: var(--muted, inherit); }
+.architecture03-tie-or-win-table tbody th { font-weight: 600; }
+.architecture03-tie-or-win-table tbody tr:last-child th,
+.architecture03-tie-or-win-table tbody tr:last-child td { border-bottom: 0; }
+.architecture03-tie-or-win-note { margin: 0; font-size: 0.9rem; line-height: 1.45; }
+.architecture03-tie-or-win-group { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.architecture03-tie-or-win-opts { display: grid; gap: 6px; }
+.architecture03-tie-or-win-opt { all: unset; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.9rem; line-height: 1.4; }
+.architecture03-tie-or-win-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.architecture03-tie-or-win-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.architecture03-tie-or-win-opt:disabled { cursor: default; }
+@media (max-width: 480px) {
+  .architecture03-tie-or-win-table th,
+  .architecture03-tie-or-win-table td { padding: 6px 8px; font-size: 0.85rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .architecture03-tie-or-win * { transition: none; animation: none; }
+}

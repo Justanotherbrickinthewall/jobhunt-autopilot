@@ -1,0 +1,39 @@
+/* Widgets for chapter 11 (choosing the stack). Every class is prefixed c11s-. */
+
+.c11s-note { font-size: 0.85rem; color: var(--muted); margin: 0.5rem 0 0; }
+.c11s-h { font-size: 0.72rem; letter-spacing: 0; font-weight: 700; color: var(--muted); margin: 1rem 0 0.4rem; }
+.c11s-fs { border: 1px solid var(--line); border-radius: var(--r-ctl); padding: 0.5rem 0.8rem 0.7rem; margin: 0 0 0.7rem; min-width: 0; }
+.c11s-fs legend { font-size: 0.82rem; font-weight: 650; padding: 0 0.3rem; }
+.c11s-opts { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.c11s-pick {
+  cursor: pointer; padding: 0.3rem 0.8rem; border-radius: var(--r-tag); border: 1px solid var(--line);
+  background: var(--surface-2); color: var(--ink); font-size: 0.85rem; line-height: 1.35;
+  transition: border-color var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease);
+}
+.c11s-pick:hover { border-color: var(--accent); }
+.c11s-pick[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.c11s-pick:disabled { cursor: default; opacity: 0.75; }
+.c11s-pick.is-right { background: var(--teal-soft); border-color: var(--teal); color: var(--teal); font-weight: 600; }
+.c11s-pick.is-wrong { background: var(--rose-soft); border-color: var(--rose); color: var(--rose); }
+.c11s-reasons { margin: 0.6rem 0 0; padding-left: 1.2rem; font-size: 0.9rem; line-height: 1.5; }
+.c11s-reasons li { margin: 0.2rem 0; }
+
+.c11s-card { border: 1px solid var(--line); border-radius: var(--r-ctl); padding: 0.8rem 1rem; margin: 0 0 0.8rem; background: var(--surface); }
+.c11s-card p { margin: 0 0 0.5rem; font-size: 0.95rem; line-height: 1.5; }
+.c11s-card.is-done { background: var(--surface-2); }
+.c11s-explain { margin-top: 0.6rem; font-size: 0.9rem; line-height: 1.5; }
+
+.c11s-slider { width: 100%; accent-color: var(--accent); margin: 0.4rem 0; }
+.c11s-ticks { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); gap: 0.3rem; }
+.c11s-ticks span { flex: 1; text-align: center; line-height: 1.25; }
+.c11s-ticks span[data-on="true"] { color: var(--accent); font-weight: 700; }
+.c11s-meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.6rem 1rem; margin: 0.8rem 0; }
+.c11s-mh { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem; }
+.c11s-mh b { font-family: var(--font-mono); font-weight: 600; }
+.c11s-bar { width: 100%; height: 8px; display: block; }
+.c11s-bar-track { fill: var(--surface-2); }
+.c11s-bar-fill { fill: var(--teal); }
+.c11s-bar-fill.is-risk { fill: var(--amber); }
+.c11s-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.c11s-two ul { margin: 0.2rem 0 0; padding-left: 1.1rem; font-size: 0.85rem; line-height: 1.45; }
+@media (max-width: 520px) { .c11s-two { grid-template-columns: 1fr; } }

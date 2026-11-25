@@ -1,0 +1,27 @@
+.agents08-trim-window { display: grid; gap: 12px; }
+.agents08-trim-window-note { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.agents08-trim-window-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.agents08-trim-window-item { display: grid; gap: 3px; }
+.agents08-trim-window-btn { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: center; width: 100%; text-align: left; font: inherit; font-size: 0.88rem; color: var(--ink); padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; }
+.agents08-trim-window-btn:disabled { cursor: default; }
+.agents08-trim-window-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.agents08-trim-window-item.human .agents08-trim-window-btn { border-left: 2px solid var(--line-strong); }
+.agents08-trim-window-item.call .agents08-trim-window-btn { border-left: 2px solid var(--line-strong); }
+.agents08-trim-window-item.result .agents08-trim-window-btn { border-left: 2px solid var(--good); }
+.agents08-trim-window-item.answer .agents08-trim-window-btn { border-left: 2px solid var(--line-strong); }
+.agents08-trim-window-item.in-view .agents08-trim-window-btn { background: var(--accent-soft); }
+.agents08-trim-window-item.chosen .agents08-trim-window-btn { border-color: var(--accent); }
+.agents08-trim-window-n { font-family: var(--font-mono); color: var(--muted); text-align: center; }
+.agents08-trim-window-text { min-width: 0; overflow-wrap: anywhere; }
+.agents08-trim-window-role { font-size: 0.72rem; font-weight: 600; letter-spacing: 0; color: var(--muted); margin-right: 4px; }
+.agents08-trim-window-tokens { color: var(--muted); font-size: 0.8rem; }
+.agents08-trim-window-why { font-size: 0.78rem; color: var(--muted); padding-left: 36px; }
+.agents08-trim-window-why.stop { color: var(--rose); }
+.agents08-trim-window-why.lead { color: var(--amber); }
+.agents08-trim-window-why.fits, .agents08-trim-window-why.current { color: var(--teal); }
+.agents08-trim-window-meter { font-size: 0.9rem; }
+@media (max-width: 480px) {
+  .agents08-trim-window-btn { grid-template-columns: 22px 1fr; }
+  .agents08-trim-window-tokens { grid-column: 2; }
+  .agents08-trim-window-why { padding-left: 4px; }
+}

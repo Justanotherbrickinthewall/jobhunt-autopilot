@@ -1,0 +1,86 @@
+.interview h1 { margin-bottom: 0.6em; }
+.lrn-tabs { display: inline-flex; gap: 0.25rem; padding: 0.25rem; background: var(--surface-2); border-radius: var(--r); margin-bottom: var(--s5); flex-wrap: wrap; }
+.tab { border: 0; background: transparent; padding: var(--s1) var(--s4); border-radius: var(--r-sm); font-size: var(--fs); font-weight: 600; color: var(--muted); transition: all var(--t-fast); }
+.tab:hover { color: var(--ink); }
+.tab.on { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-1); }
+.filters { display: grid; gap: 0.6rem; margin-bottom: 1rem; }
+.lrn-q-list { display: grid; margin-top: 0.8rem; border-top: 1px solid var(--line); }
+.q-card {
+  text-align: left; display: grid; gap: 0.6rem; width: 100%; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  padding: var(--s3); font-size: var(--fs-lg); line-height: 1.45;
+}
+@media (hover: hover) { button.q-card:hover { background: var(--hover); } }
+.q-card strong { font-weight: var(--w-title); font-size: var(--fs-lg); }
+
+.practice { display: grid; gap: 1rem; font-size: var(--fs-lg); padding: 1.5rem; }
+.practice-q { font-size: var(--fs-2xl); margin: 0; line-height: 1.3; }
+.ideal p { margin: 0.4rem 0 0.7rem; font-size: var(--fs-lg); }
+.chip-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+.answer-box { display: grid; gap: 0.6rem; }
+.interim { font-style: italic; color: var(--muted); border-left: 2px solid var(--line-strong); padding-left: 0.8rem; font-size: var(--fs-md); }
+.rec-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--rose); opacity: 0.6; }
+.rec-dot.on { opacity: 1; animation: pulse 1s ease-in-out infinite; }
+.w-btn.rec { border-color: var(--bad); color: var(--bad); }
+.timer { font-family: var(--font-mono); font-size: var(--fs-xl); font-weight: 600; font-variant-numeric: tabular-nums; }
+.timer small { font-family: var(--font-body); font-weight: var(--w-text); font-size: var(--fs-sm); color: var(--muted); }
+.timer.over { color: var(--amber); }
+
+.grading { display: flex; gap: 1rem; align-items: center; background: var(--surface-2); border-radius: var(--r-ctl); padding: 1rem 1.2rem; }
+.grading-bar { height: 4px; width: 220px; max-width: 100%; margin-top: 0.6rem; border-radius: 99px; background: var(--line); overflow: hidden; }
+.grading-bar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, transparent, var(--accent), transparent); background-size: 50% 100%; background-repeat: no-repeat; animation: slide 1.4s ease-in-out infinite; }
+@keyframes slide { from { background-position: -100% 0; } to { background-position: 200% 0; } }
+
+.result { display: grid; gap: 1.4rem; border-top: 1px solid var(--line); padding-top: 1.4rem; }
+.result-top { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-around; }
+.dial { position: relative; display: grid; place-items: center; }
+.dial svg { position: absolute; inset: 0; }
+.dial-text { position: relative; text-align: center; line-height: 1.1; }
+.dial-text b { display: block; font-size: var(--fs-title); font-weight: 600; }
+.dial-text span { font-size: var(--fs-sm); color: var(--muted); }
+.radar { width: min(100%, 260px); height: auto; }
+.dim-bars { display: grid; gap: 0.9rem; }
+.dim p { margin: 0.25rem 0 0; font-size: var(--fs); line-height: 1.45; }
+.dim-track { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; margin-top: 0.3rem; }
+.dim-track i { display: block; height: 100%; border-radius: inherit; }
+.two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
+.plain-list { margin: 0.4rem 0 0; padding-left: 1.1rem; font-size: var(--fs-md); }
+.plain-list li { margin: 0.35rem 0; }
+.plain-list.good li::marker { color: var(--teal); }
+.plain-list.bad li::marker { color: var(--rose); }
+.better p { margin: 0.4rem 0 0; font-size: 15px; line-height: 24px; font-weight: var(--w-read); }
+.followups { display: grid; gap: 0.5rem; margin-top: 0.5rem; }
+.followup { text-align: left; display: grid; gap: 0.2rem; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-ctl); padding: 0.7rem 1rem; transition: border-color var(--t-fast), transform var(--t-fast); }
+.followup:hover:not(:disabled) { border-color: var(--line-strong); }
+.followup span { font-size: var(--fs); }
+.history { border-top: 1px solid var(--line); padding-top: 1rem; }
+
+/* The bank sits in the Interview prep tab, which stays nearly monochrome, so its colour tokens resolve to greys. The rest of Learn keeps its colours. */
+.bank {
+  --accent: var(--ink);
+  --accent-soft: var(--line);
+  --on-accent: var(--surface);
+  --teal: var(--ink);
+  --teal-soft: var(--surface);
+  --amber: var(--muted);
+  --amber-soft: var(--surface);
+  --rose: var(--muted);
+  --rose-soft: var(--surface);
+}
+.bank .progress-bar > i { background: var(--muted); }
+/* Hit and missed keywords sit side by side, so a missed one needs a cue beyond colour. */
+.bank .w-chip.bad { border-style: dashed; }
+
+/* The bank is a list and detail (browse) or a centred reading page (drill and mock). Filters are neutral tags. */
+.bank-wrap.browse { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.bank-top { flex: none; padding: var(--s4) var(--gutter) var(--s3); border-bottom: 1px solid var(--line); }
+.bank-top h1, .bank-read h1 { margin: 0 0 var(--s3); font-size: 17px; line-height: 24px; font-weight: var(--w-title); letter-spacing: -0.02em; font-family: var(--font-body); }
+.bank-top .lrn-tabs { margin-bottom: var(--s3); }
+.bank-top .filters { margin-bottom: 0; }
+.bank-read { width: 100%; max-width: calc(880px + 2 * var(--gutter)); margin: 0 auto; padding: var(--s5) var(--gutter) var(--s7); }
+.bank .ld-wrap { max-width: 880px; }
+.bank-wrap.browse .practice { border-top: 0; }
+.bank .w-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.bank button.tag { height: 24px; padding: 0 var(--s3); border: 0; cursor: pointer; }
+@media (hover: hover) { .bank button.tag:not([aria-pressed='true']):hover { color: var(--ink); } }
+.bank button.tag[aria-pressed='true'] { background: var(--ink); color: var(--bg); }
+.bank .ld-row .lr-foot { flex-wrap: wrap; white-space: normal; gap: 4px; }

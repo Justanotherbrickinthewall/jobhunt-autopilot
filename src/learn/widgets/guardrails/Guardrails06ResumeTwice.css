@@ -1,0 +1,24 @@
+.guardrails06-resume-twice { display: grid; gap: 12px; }
+.guardrails06-resume-twice-note { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.guardrails06-resume-twice-opts { border: 0; margin: 0; padding: 0; display: grid; gap: 6px; min-width: 0; }
+.guardrails06-resume-twice-opts legend { padding: 0; margin-bottom: 6px; }
+.guardrails06-resume-twice-opt { display: grid; grid-template-columns: 20px 1fr; gap: 8px; align-items: start; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; }
+.guardrails06-resume-twice-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.guardrails06-resume-twice-opt:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.guardrails06-resume-twice-opt input { margin-top: 3px; accent-color: var(--accent); }
+.guardrails06-resume-twice-opt strong { display: block; font-size: 0.9rem; }
+.guardrails06-resume-twice-desc { display: block; font-size: 0.8rem; color: var(--muted); }
+.guardrails06-resume-twice-opts:disabled .guardrails06-resume-twice-opt { cursor: default; opacity: 0.85; }
+.guardrails06-resume-twice-trace { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.guardrails06-resume-twice-line { display: grid; grid-template-columns: 64px 1fr; gap: 10px; align-items: start; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); }
+.guardrails06-resume-twice-line.pass2 { border-color: var(--accent); }
+.guardrails06-resume-twice-gap { grid-column: 1 / -1; margin: -2px 0 4px; font-size: 0.76rem; font-weight: 600; color: var(--amber); }
+.guardrails06-resume-twice-badge { justify-self: start; }
+.guardrails06-resume-twice-text { display: grid; gap: 2px; min-width: 0; }
+.guardrails06-resume-twice-text .w-mono { overflow-wrap: anywhere; font-size: 0.8rem; }
+.guardrails06-resume-twice-nt { font-size: 0.78rem; color: var(--muted); font-style: italic; }
+.guardrails06-resume-twice-sum { margin: 0; font-weight: 600; font-size: 0.9rem; }
+.guardrails06-resume-twice-case { margin: 0; font-size: 0.9rem; }
+@media (max-width: 480px) {
+  .guardrails06-resume-twice-line { grid-template-columns: 1fr; gap: 4px; }
+}

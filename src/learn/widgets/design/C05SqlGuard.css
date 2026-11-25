@@ -1,0 +1,14 @@
+.design-sql-guard-hint { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.design-sql-guard-policy { margin-bottom: 10px; font-size: 0.85rem; }
+.design-sql-guard-policy ul { margin: 4px 0 0; padding-left: 18px; }
+.design-sql-guard-list { display: grid; gap: 8px; margin-bottom: 10px; }
+.design-sql-guard-card { text-align: left; border: 1px solid var(--line); border-radius: var(--r-sm); padding: 8px 10px; background: var(--surface); color: inherit; cursor: pointer; min-width: 0; }
+.design-sql-guard-card.is-on { border-color: var(--accent); }
+.design-sql-guard-card.is-bad { border-color: var(--rose); }
+.design-sql-guard-card:disabled { cursor: default; }
+.design-sql-guard-card:focus-visible, .design-sql-guard .w-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.design-sql-guard-sql { margin: 4px 0 0; font-family: var(--font-mono); font-size: 0.78rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.design-sql-guard-ask { margin: 6px 0; font-weight: 600; }
+.design-sql-guard-why { margin: 8px 0 0; padding: 6px 8px; font-size: 0.85rem; border-radius: var(--r-sm); }
+.design-sql-guard-why.miss { border-left: 2px solid var(--bad); }
+.design-sql-guard-why p, .design-sql-guard .w-verdict p { margin: 0 0 6px; }

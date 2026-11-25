@@ -1,0 +1,24 @@
+.evals06-path-grader { display: grid; gap: 14px; }
+.evals06-path-grader-hint { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.evals06-path-grader-item { display: grid; gap: 4px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface-2); }
+.evals06-path-grader-item p { margin: 0; }
+.evals06-path-grader-q { font-size: 0.95rem; line-height: 1.45; }
+.evals06-path-grader-fields { font-size: 0.85rem; line-height: 1.45; }
+.evals06-path-grader-count { font-size: 0.8rem; color: var(--muted); }
+.evals06-path-grader-story { margin: 0; font-size: 0.9rem; line-height: 1.45; }
+.evals06-path-grader-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; counter-reset: step; }
+.evals06-path-grader-steps li { counter-increment: step; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); font-size: 0.85rem; }
+.evals06-path-grader-steps li::before { content: counter(step); min-width: 1.1em; color: var(--muted); font-size: 0.8rem; }
+.evals06-path-grader-steps code { font-family: var(--font-mono); font-size: 0.85em; overflow-wrap: anywhere; }
+.evals06-path-grader-agent { color: var(--muted); font-size: 0.8rem; }
+.evals06-path-grader-tag { padding: 0 6px; border: 1px solid var(--line); border-radius: var(--r-tag); font-size: 0.72rem; color: var(--muted); }
+.evals06-path-grader-tag.warn { border-color: var(--amber); background: var(--amber-soft); color: var(--amber); }
+.evals06-path-grader-facts { margin: 0; font-size: 0.85rem; }
+.evals06-path-grader-checks { display: grid; gap: 10px; }
+.evals06-path-grader-check { display: grid; gap: 6px; }
+.evals06-path-grader-check-name { font-size: 0.9rem; font-weight: 600; }
+.evals06-path-grader-why { margin: 0; font-size: 0.85rem; line-height: 1.45; }
+.evals06-path-grader code { font-family: var(--font-mono); font-size: 0.86em; }
+@media (max-width: 480px) {
+  .evals06-path-grader-steps li { padding: 6px 8px; }
+}

@@ -1,0 +1,6 @@
+.docai-digital-or-scan-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.docai-digital-or-scan-file { margin-bottom: 10px; }
+.docai-digital-or-scan-name { font-size: 0.85rem; font-weight: 600; }
+.docai-digital-or-scan-facts { font-size: 0.88rem; margin: 4px 0 8px; }
+.docai-digital-or-scan-opts { display: flex; gap: 6px; flex-wrap: wrap; }
+.docai-digital-or-scan-why { font-size: 0.86rem; margin: 8px 0 0; color: var(--muted); }

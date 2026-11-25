@@ -1,0 +1,16 @@
+.agents15-latency-cost-note { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.agents15-latency-cost-group { margin: 0 0 10px; padding: 0; border: 0; min-width: 0; }
+.agents15-latency-cost-legend { padding: 0; margin-bottom: 4px; font-size: 0.82rem; color: var(--muted); }
+.agents15-latency-cost-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.agents15-latency-cost-opt { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); font-size: 0.84rem; cursor: pointer; }
+.agents15-latency-cost-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.agents15-latency-cost-opt:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.agents15-latency-cost-bars { margin: 12px 0; display: grid; gap: 4px; }
+.agents15-latency-cost-label { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+.agents15-latency-cost-track { display: flex; flex-direction: column; gap: 3px; }
+.agents15-latency-cost-bar { height: 14px; border-radius: 4px; background: var(--accent); min-width: 4px; }
+.agents15-latency-cost-bar.slow { background: var(--amber); }
+.agents15-latency-cost-bar.seq { display: inline-block; }
+.agents15-latency-cost-seq { display: flex; flex-wrap: nowrap; gap: 2px; }
+.agents15-latency-cost-facts { margin: 0; font-size: 0.88rem; line-height: 1.5; }
+@media (max-width: 480px) { .agents15-latency-cost-opt { flex: 1 1 100%; } }

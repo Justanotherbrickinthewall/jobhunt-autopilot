@@ -1,0 +1,47 @@
+.agents05-call-trace { display: grid; gap: 12px; }
+.agents05-call-trace-note { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+.agents05-call-trace-guess { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; min-width: 0; }
+.agents05-call-trace-guess legend { padding: 0; margin-bottom: 2px; }
+.agents05-call-trace-q { margin: 0; font-size: 0.95rem; }
+.agents05-call-trace-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.agents05-call-trace-opt { all: unset; box-sizing: border-box; padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.9rem; }
+.agents05-call-trace-opt:focus-visible, .agents05-call-trace-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.agents05-call-trace-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.agents05-call-trace-guess:disabled .agents05-call-trace-opt { cursor: default; }
+.agents05-call-trace-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.agents05-call-trace-tab { all: unset; box-sizing: border-box; padding: 6px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.9rem; }
+.agents05-call-trace-tab.on { border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+.agents05-call-trace-panel { display: grid; gap: 10px; }
+.agents05-call-trace-blurb { margin: 0; font-size: 0.92rem; }
+.agents05-call-trace-empty { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.agents05-call-trace-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.agents05-call-trace-row {
+  display: grid;
+  grid-template-columns: 1.6rem auto minmax(0, 1fr) auto;
+  grid-template-areas: "num who did tok" ". bar bar bar";
+  align-items: center;
+  gap: 4px 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-ctl);
+  background: var(--surface);
+}
+.agents05-call-trace-row.now { border-color: var(--accent); background: var(--accent-soft); }
+.agents05-call-trace-num { grid-area: num; font-family: var(--font-mono); color: var(--muted); font-size: 0.85rem; }
+.agents05-call-trace-row .w-chip { grid-area: who; }
+.agents05-call-trace-did { grid-area: did; font-size: 0.9rem; line-height: 1.35; }
+.agents05-call-trace-tok { grid-area: tok; white-space: nowrap; color: var(--muted); }
+.agents05-call-trace-bar { grid-area: bar; display: block; height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+.agents05-call-trace-bar > span { display: block; height: 100%; background: var(--accent); transition: width 0.25s ease; }
+.agents05-call-trace-totals { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.agents05-call-trace-totals strong { font-family: var(--font-mono); }
+@media (prefers-reduced-motion: reduce) {
+  .agents05-call-trace-bar > span { transition: none; }
+}
+@media (max-width: 560px) {
+  .agents05-call-trace-row {
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    grid-template-areas: "num who" ". did" ". tok" ". bar";
+  }
+  .agents05-call-trace-row .w-chip { justify-self: start; }
+}

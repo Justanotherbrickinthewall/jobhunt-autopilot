@@ -1,0 +1,26 @@
+.evals06-pass-k { display: grid; gap: 14px; }
+.evals06-pass-k-hint { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.evals06-pass-k-runs { display: flex; flex-wrap: wrap; gap: 6px; }
+.evals06-pass-k-run { min-height: 40px; }
+.evals06-pass-k-run:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.evals06-pass-k-count { margin: 0; font-size: 0.9rem; }
+.evals06-pass-k-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.evals06-pass-k-table caption { text-align: left; padding-bottom: 6px; }
+.evals06-pass-k-table th, .evals06-pass-k-table td { padding: 5px 6px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.evals06-pass-k-table thead th { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+.evals06-pass-k-table tr.focus { background: var(--surface-2); }
+.evals06-pass-k-bar { display: inline-block; width: 52px; height: 8px; margin-right: 8px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); vertical-align: middle; overflow: hidden; }
+.evals06-pass-k-fill { display: block; height: 100%; transition: width var(--t-fast, 120ms) ease; }
+.evals06-pass-k-fill.at { background: var(--teal); }
+.evals06-pass-k-fill.pow { background: var(--accent); }
+.evals06-pass-k-num { font-family: var(--font-mono); font-size: 0.86em; }
+.evals06-pass-k-note { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.evals06-pass-k-challenge { display: grid; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface-2); }
+.evals06-pass-k-challenge p { margin: 0; font-size: 0.9rem; line-height: 1.45; }
+.evals06-pass-k-status { font-weight: 600; }
+@media (prefers-reduced-motion: reduce) {
+  .evals06-pass-k-fill { transition: none; }
+}
+@media (max-width: 480px) {
+  .evals06-pass-k-bar { width: 36px; margin-right: 6px; }
+}

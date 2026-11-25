@@ -1,0 +1,17 @@
+.agents01-workflow-or-agent-hint { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.agents01-workflow-or-agent-list { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+.agents01-workflow-or-agent-item { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; background: var(--surface); display: grid; gap: 8px; }
+.agents01-workflow-or-agent-item.good { border-color: var(--teal); background: var(--teal-soft); }
+.agents01-workflow-or-agent-item.bad { border-color: var(--rose); background: var(--rose-soft); }
+.agents01-workflow-or-agent-text { margin: 0; font-size: 0.92rem; line-height: 1.45; }
+.agents01-workflow-or-agent-choices { display: flex; flex-wrap: wrap; gap: 6px; }
+.agents01-workflow-or-agent-why { margin: 0; font-size: 0.88rem; line-height: 1.45; }
+.agents01-workflow-or-agent-count { color: var(--muted); font-size: 0.82rem; }
+.agents01-workflow-or-agent-fig { margin: 0; }
+.agents01-workflow-or-agent-fig figcaption { font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; }
+.agents01-workflow-or-agent-fig svg { width: 100%; height: auto; display: block; }
+.agents01-workflow-or-agent-lab { font-size: 11px; fill: var(--muted); font-family: var(--font-mono); }
+.agents01-workflow-or-agent-key { margin: 4px 0 0; font-size: 0.8rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.agents01-workflow-or-agent-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.agents01-workflow-or-agent-dot.wf { background: var(--teal); }
+.agents01-workflow-or-agent-dot.ag { background: var(--amber); margin-left: 8px; }

@@ -1,0 +1,8 @@
+.llm-distil-cost { display: grid; gap: 14px; }
+.llm-distil-cost-note { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+.llm-distil-cost-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.llm-distil-cost-item { display: grid; gap: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); }
+.llm-distil-cost-item.miss { border-color: var(--rose); background: var(--rose-soft); }
+.llm-distil-cost-text { margin: 0; font-size: 0.92rem; line-height: 1.5; }
+.llm-distil-cost-why { margin: 0; font-size: 0.82rem; color: var(--ink); }
+.llm-distil-cost .w-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

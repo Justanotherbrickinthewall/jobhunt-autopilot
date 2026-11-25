@@ -1,0 +1,29 @@
+.c10pl-root { display: grid; gap: 14px; }
+.c10pl-lead { margin: 0; font-size: 0.95rem; }
+.c10pl-docs { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.c10pl-doc { display: grid; grid-template-columns: 22px 1fr; gap: 2px 8px; padding: 8px 10px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface); font-size: 0.9rem; }
+.c10pl-doc.no { border-color: var(--rose); }
+.c10pl-doc.ok { border-color: var(--teal); }
+.c10pl-rank { grid-row: span 2; font-family: var(--font-mono, monospace); color: var(--muted); }
+.c10pl-tag { font-size: 0.78rem; color: var(--muted); }
+.c10pl-doc.no .c10pl-tag { color: var(--rose); }
+.c10pl-doc.ok .c10pl-tag { color: var(--teal); }
+.c10pl-fs { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; margin: 0; min-width: 0; display: grid; gap: 6px; }
+.c10pl-fs legend { font-weight: 600; padding: 0 6px; }
+.c10pl-opt { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: var(--r-sm); border: 1px solid transparent; cursor: pointer; font-size: 0.92rem; }
+.c10pl-opt:hover { background: var(--surface-2); }
+.c10pl-opt.is-on { background: var(--accent-soft); border-color: var(--accent); }
+.c10pl-opt input { margin-top: 3px; accent-color: var(--accent); }
+.c10pl-svg { width: 100%; height: auto; display: block; }
+.c10pl-edge { stroke: var(--line); stroke-width: 2; }
+.c10pl-node { fill: var(--surface-2); stroke: var(--line); }
+.c10pl-nt { fill: var(--ink); font-size: 12px; }
+.c10pl-gate { fill: var(--amber); }
+.c10pl-gt { fill: var(--bg); font-size: 11px; font-weight: 700; }
+.c10pl-gl { stroke: var(--amber); stroke-width: 2; stroke-dasharray: 4 3; }
+.c10pl-cap { margin: 0 0 6px; font-weight: 600; font-size: 0.92rem; }
+.c10pl-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.c10pl-chip { font-size: 0.82rem; padding: 4px 10px; border-radius: var(--r-tag); border: 1px solid var(--line); }
+.c10pl-chip.ok { border-color: var(--teal); }
+.c10pl-chip.no { border-color: var(--rose); background: var(--surface-2); color: var(--rose); }
+.c10pl-final { display: grid; gap: 8px; }

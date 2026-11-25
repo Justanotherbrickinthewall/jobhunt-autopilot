@@ -1,0 +1,27 @@
+.forgetting-curve-lede { margin: 0 0 8px; font-size: 0.9rem; color: var(--muted); }
+.forgetting-curve-svg { width: 100%; max-width: 520px; display: block; margin: 0 auto; cursor: crosshair; touch-action: manipulation; }
+.forgetting-curve-grid { stroke: var(--line); stroke-width: 1; }
+.forgetting-curve-axis { fill: var(--muted); font-size: 9px; }
+.forgetting-curve-exam { fill: var(--rose); font-weight: 600; }
+.forgetting-curve-examline { stroke: var(--rose); stroke-width: 1; stroke-dasharray: 3 3; }
+.forgetting-curve-base { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 2 3; opacity: 0.7; }
+.forgetting-curve-deck { stroke: var(--teal); stroke-width: 2; stroke-dasharray: 6 3; }
+.forgetting-curve-mine { stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+.forgetting-curve-mark { stroke: var(--accent); stroke-width: 1; opacity: 0.35; }
+.forgetting-curve-dot { fill: var(--accent); stroke: var(--surface); stroke-width: 1.5; }
+.forgetting-curve-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.78rem; color: var(--muted); justify-content: center; margin: 4px 0 8px; }
+.forgetting-curve-sw { display: inline-block; width: 16px; height: 0; border-top: 3px solid; margin-right: 5px; vertical-align: middle; }
+.forgetting-curve-sw.is-mine { border-color: var(--accent); }
+.forgetting-curve-sw.is-base { border-color: var(--muted); border-top-style: dotted; }
+.forgetting-curve-sw.is-deck { border-color: var(--teal); border-top-style: dashed; }
+.forgetting-curve-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+.forgetting-curve-stats div { background: var(--surface-2); border-radius: var(--r-sm); padding: 8px; text-align: center; }
+.forgetting-curve-stats strong { display: block; font-size: 1.2rem; }
+.forgetting-curve-stats span { font-size: 0.72rem; color: var(--muted); }
+.forgetting-curve-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 8px; }
+.forgetting-curve-slider { flex: 1 1 180px; display: grid; gap: 4px; font-size: 0.85rem; }
+.forgetting-curve-slider input { width: 100%; accent-color: var(--accent); }
+.forgetting-curve-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.forgetting-curve-chip { cursor: pointer; }
+.forgetting-curve-preset { padding: 4px 10px; font-size: 0.8rem; }
+.forgetting-curve-note { font-size: 0.75rem; color: var(--muted); margin: 8px 0 0; }

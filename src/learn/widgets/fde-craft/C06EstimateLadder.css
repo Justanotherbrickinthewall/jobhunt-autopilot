@@ -1,0 +1,21 @@
+.fde-craft-estimate-ladder-lede { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.fde-craft-estimate-ladder-facts { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 4px; font-size: 0.86rem; }
+.fde-craft-estimate-ladder-facts li { padding: 6px 10px; border-radius: var(--r-sm); background: var(--surface-2); }
+.fde-craft-estimate-ladder-dep { display: block; color: var(--muted); font-size: 0.8rem; }
+.fde-craft-estimate-ladder-seq { margin: 6px 0 10px; padding-left: 20px; font-size: 0.88rem; }
+.fde-craft-estimate-ladder-add { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.fde-craft-estimate-ladder-add .w-btn { white-space: normal; text-align: left; min-height: 44px; }
+.fde-craft-estimate-ladder-msg { margin: 8px 0; font-size: 0.86rem; color: var(--muted); }
+.fde-craft-estimate-ladder-chart { display: grid; gap: 6px; margin: 8px 0 10px; }
+.fde-craft-estimate-ladder-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; padding: 6px 8px; border-radius: var(--r-sm); border: 1px solid transparent; font-size: 0.84rem; }
+.fde-craft-estimate-ladder-row.is-crit { border-color: var(--accent); }
+.fde-craft-estimate-ladder-track { position: relative; display: block; height: 10px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.fde-craft-estimate-ladder-hi, .fde-craft-estimate-ladder-lo { position: absolute; top: 0; bottom: 0; }
+.fde-craft-estimate-ladder-hi { background: var(--accent-soft); }
+.fde-craft-estimate-ladder-lo { background: var(--accent); }
+.fde-craft-estimate-ladder-wk { font-size: 0.76rem; color: var(--muted); }
+.fde-craft-estimate-ladder-sum { margin: 0 0 12px; font-size: 0.9rem; }
+.fde-craft-estimate-ladder-opts { list-style: none; margin: 6px 0 10px; padding: 0; display: grid; gap: 6px; }
+.fde-craft-estimate-ladder-opt { width: 100%; text-align: left; white-space: normal; min-height: 44px; border-radius: var(--r-sm); }
+.fde-craft-estimate-ladder-res { margin: 0 0 10px; padding-left: 18px; font-size: 0.86rem; color: var(--muted); }
+.fde-craft-estimate-ladder-foot { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }

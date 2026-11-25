@@ -1,0 +1,15 @@
+.c02-parse-damage-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.c02-parse-damage-page { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 10px; font-family: var(--font-mono, monospace); font-size: 0.78rem; line-height: 1.9; overflow-x: auto; }
+.c02-parse-damage-line { display: block; white-space: pre-wrap; }
+.c02-parse-damage-seg { font: inherit; color: var(--ink); background: transparent; border: 0; border-bottom: 1.5px dotted var(--line); padding: 0; margin: 0; cursor: pointer; white-space: pre-wrap; text-align: left; }
+.c02-parse-damage-seg:hover { background: var(--accent-soft); }
+.c02-parse-damage-seg:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.c02-parse-damage-seg.is-flag { background: var(--amber-soft); border-bottom: 1.5px solid var(--amber); }
+.c02-parse-damage-seg.is-hit { background: var(--surface); border-bottom: 2px solid var(--teal); }
+.c02-parse-damage-seg.is-miss { background: var(--surface); border-bottom: 2px dashed var(--rose); }
+.c02-parse-damage-seg.is-false { background: var(--surface); border-bottom: 2px solid var(--rose); text-decoration: line-through; }
+.c02-parse-damage-bar { display: flex; align-items: center; gap: 10px; margin: 10px 0; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); }
+.c02-parse-damage-list { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 0.88rem; }
+.c02-parse-damage-list li { padding: 7px 10px; border-radius: var(--r-sm); background: var(--surface-2); border-left: 3px solid var(--line); }
+.c02-parse-damage-list li.is-hit { border-left-color: var(--teal); }
+.c02-parse-damage-list li.is-miss { border-left-color: var(--rose); }

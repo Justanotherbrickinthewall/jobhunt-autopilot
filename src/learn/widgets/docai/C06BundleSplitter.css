@@ -1,0 +1,8 @@
+.docai-bundle-splitter-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.docai-bundle-splitter-pages { list-style: none; margin: 0; padding: 0; }
+.docai-bundle-splitter-item { margin: 0; }
+.docai-bundle-splitter-page { display: flex; gap: 10px; align-items: baseline; font-size: 0.88rem; padding: 0.5rem 0.8rem; }
+.docai-bundle-splitter-num { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); min-width: 2.2rem; }
+.docai-bundle-splitter-gap { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 4px 0 4px 2.9rem; }
+.docai-bundle-splitter-why { font-size: 0.84rem; color: var(--muted); flex: 1 1 14rem; }
+.docai-bundle-splitter-actions { margin: 10px 0; display: flex; gap: 8px; }

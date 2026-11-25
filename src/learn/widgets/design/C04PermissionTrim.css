@@ -1,0 +1,16 @@
+.design-permission-trim { display: grid; gap: 12px; }
+.design-permission-trim-head { justify-content: space-between; flex-wrap: wrap; gap: 6px 12px; }
+.design-permission-trim-setup { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.45; }
+.design-permission-trim-opts { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 6px; }
+.design-permission-trim-opts legend { padding: 0; margin-bottom: 6px; }
+.design-permission-trim-opt { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; min-height: 44px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); cursor: pointer; font-size: 0.92rem; line-height: 1.35; }
+.design-permission-trim-opt.is-on { border-color: var(--accent); background: var(--accent-soft); }
+.design-permission-trim-opt input { margin-top: 3px; accent-color: var(--accent); flex: none; }
+.design-permission-trim-out { display: grid; gap: 8px; }
+.design-permission-trim-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.9rem; }
+.design-permission-trim-list li { padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface-2); border-left: 3px solid var(--line); }
+.design-permission-trim-list li.is-ok { border-left-color: var(--teal); }
+.design-permission-trim-list li.is-leak { border-left-color: var(--rose); }
+.design-permission-trim-none { margin: 0; font-size: 0.9rem; color: var(--muted); }
+.design-permission-trim-explain { font-size: 0.9rem; line-height: 1.45; }
+.design-permission-trim-foot { margin: 0; font-size: 0.8rem; color: var(--muted); }

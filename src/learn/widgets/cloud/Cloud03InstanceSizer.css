@@ -1,0 +1,16 @@
+.cloud03-instance-sizer { display: grid; gap: 12px; }
+.cloud03-instance-sizer-note { margin: 0; font-size: 0.82rem; color: var(--muted); }
+.cloud03-instance-sizer-scenario { margin: 0; font-size: 0.9rem; line-height: 1.45; }
+.cloud03-instance-sizer-presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.cloud03-instance-sizer-controls { display: grid; gap: 10px; }
+.cloud03-instance-sizer-field { display: grid; gap: 4px; min-width: 0; }
+.cloud03-instance-sizer-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.cloud03-instance-sizer-row { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); }
+.cloud03-instance-sizer-box { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 1px dashed var(--line); border-radius: var(--r-sm); font-size: 0.8rem; color: var(--muted); }
+.cloud03-instance-sizer-box.used { border-style: solid; border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
+.cloud03-instance-sizer-box.beyond { border-style: solid; border-color: var(--rose); background: var(--rose-soft); color: var(--ink); }
+.cloud03-instance-sizer-box.beyond:not(.used) { opacity: 0.4; }
+.cloud03-instance-sizer-sums { margin: 0; padding-left: 1.1rem; display: grid; gap: 4px; font-size: 0.88rem; line-height: 1.45; }
+@media (max-width: 480px) {
+  .cloud03-instance-sizer-box { width: 30px; height: 30px; }
+}

@@ -1,0 +1,23 @@
+.guardrails02-held-stream { display: grid; gap: 14px; }
+.guardrails02-held-stream-count { font-size: 0.8rem; color: var(--muted, inherit); }
+.guardrails02-held-stream-setup { margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface-2); font-size: 0.9rem; line-height: 1.45; }
+.guardrails02-held-stream-group { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.guardrails02-held-stream-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.guardrails02-held-stream-opt { all: unset; box-sizing: border-box; padding: 10px 12px; min-height: 44px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.92rem; line-height: 1.4; text-align: center; }
+.guardrails02-held-stream-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.guardrails02-held-stream-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.guardrails02-held-stream-opt:disabled { cursor: default; }
+.guardrails02-held-stream-chart { width: 100%; max-width: 420px; height: auto; justify-self: center; }
+.guardrails02-held-stream-bar { stroke-width: 1.5; }
+.guardrails02-held-stream-bar.tools { fill: var(--surface-2); stroke: var(--line); }
+.guardrails02-held-stream-bar.write { fill: var(--accent-soft); stroke: var(--accent); }
+.guardrails02-held-stream-bar.reask { fill: var(--amber-soft); stroke: var(--amber); }
+.guardrails02-held-stream-bar.wait { fill: var(--surface-2); stroke: var(--line); stroke-dasharray: 4 3; }
+.guardrails02-held-stream-bar.shown { fill: var(--teal-soft); stroke: var(--teal); }
+.guardrails02-held-stream-mark { stroke: var(--teal); stroke-width: 2; }
+.guardrails02-held-stream-tick { stroke: var(--line); stroke-width: 1.5; }
+.guardrails02-held-stream-text { font-size: 10px; fill: currentColor; font-family: inherit; }
+.guardrails02-held-stream-text.small { font-size: 9px; }
+@media (min-width: 560px) {
+  .guardrails02-held-stream-opts { grid-template-columns: repeat(4, 1fr); }
+}

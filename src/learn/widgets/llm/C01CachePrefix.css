@@ -1,0 +1,10 @@
+.llm-cache-prefix-list { list-style: none; margin: 12px 0; padding: 0; display: grid; gap: 6px; }
+.llm-cache-prefix-part { display: grid; grid-template-columns: 1fr 44px 64px auto; gap: 8px; align-items: center; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); }
+.llm-cache-prefix-part.hit { border-color: var(--teal); background: var(--teal-soft); }
+.llm-cache-prefix-part.varies .llm-cache-prefix-tag { color: var(--amber); }
+.llm-cache-prefix-tag { font-size: 0.75rem; letter-spacing: 0; color: var(--muted); }
+.llm-cache-prefix-sum { margin: 0 0 8px; }
+@media (max-width: 480px) {
+  .llm-cache-prefix-part { grid-template-columns: 1fr auto; }
+  .llm-cache-prefix-part .w-row { grid-column: 1 / -1; }
+}

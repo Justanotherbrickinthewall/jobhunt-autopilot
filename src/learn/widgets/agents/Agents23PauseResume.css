@@ -1,0 +1,11 @@
+.agents23-pause-resume-note { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.agents23-pause-resume-card { margin: 10px 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); min-width: 0; }
+.agents23-pause-resume-legend { padding: 0 4px; font-size: 0.78rem; color: var(--muted); }
+.agents23-pause-resume-text { margin: 0 0 6px; font-size: 0.92rem; line-height: 1.45; }
+.agents23-pause-resume-opts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+.agents23-pause-resume-opt { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); font-size: 0.82rem; cursor: pointer; }
+.agents23-pause-resume-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.agents23-pause-resume-opt:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.agents23-pause-resume-log { margin: 10px 0 4px; padding: 10px 12px; background: var(--surface-2); border-radius: var(--r-sm); font-family: var(--font-mono, monospace); font-size: 0.78rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.agents23-pause-resume-out { margin: 0 0 8px; font-size: 0.86rem; }
+@media (max-width: 480px) { .agents23-pause-resume-opt, .agents23-pause-resume .w-btn { flex: 1 1 100%; } }

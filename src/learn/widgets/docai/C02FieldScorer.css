@@ -1,0 +1,10 @@
+.docai-field-scorer-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.docai-field-scorer-case { margin-bottom: 12px; }
+.docai-field-scorer-title { margin: 0 0 6px; font-weight: 600; font-size: 0.92rem; }
+.docai-field-scorer-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 0 0 8px; }
+.docai-field-scorer-table th, .docai-field-scorer-table td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); }
+.docai-field-scorer-table .is-miss { color: var(--amber); }
+.docai-field-scorer-table .is-wrong { color: var(--rose); }
+.docai-field-scorer-q { margin: 8px 0 4px; font-size: 0.88rem; }
+.docai-field-scorer-opts { display: flex; gap: 6px; flex-wrap: wrap; }
+.docai-field-scorer-why { margin: 6px 0 0; font-size: 0.85rem; }

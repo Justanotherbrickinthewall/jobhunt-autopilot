@@ -1,0 +1,3 @@
+.llm-reason-or-not .w-verdict { margin: 12px 0; }
+.llm-reason-or-not .w-inset { margin: 8px 0; word-break: break-word; }
+.llm-reason-or-not .w-chip:focus-visible, .llm-reason-or-not .w-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

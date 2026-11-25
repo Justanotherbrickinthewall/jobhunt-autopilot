@@ -1,0 +1,583 @@
+import type { Chapter } from "../types";
+
+const chapter: Chapter = {
+  id: "agents-24-capstone-core",
+  course: "agents",
+  number: 24,
+  title: "PayDesk 1: build the deterministic core, where code sees the money and the model sees signals",
+  tagline: "How do I build a desk that moves money when the model can't be trusted with money?",
+  minutes: 75,
+  objectives: [
+    "Describe the PayDesk problem, name its pattern and say which PayDesk chapter builds which files.",
+    "Build the domain in `models.py`: integer pence, the statuses, the five steps and a simulated clock.",
+    "Build a store whose SQL is fixed, and say why the flow has no free-text-to-SQL step.",
+    "Build `calculate.py`, and explain why it is the only code that sees amounts and what a signal is.",
+    "Generate seeded customers whose labels carry the expected outcome, so the desk can be scored.",
+    "Apply the rebalance rule to a seeded add-on customer and read the real output.",
+    "Name the core's limits, and give the 30-second answer on the design.",
+  ],
+  sections: [
+    {
+      id: "s1-the-problem",
+      title: "Meridian Tours' desk automates three payment chores, and four PayDesk chapters build it",
+      goal: "What must the desk do, and how much of it may the model touch?",
+      blocks: [
+        {
+          kind: "p",
+          text: "Chapter 23 ended by asking how the course's pieces combine into one desk that moves money. The next four chapters answer it with one app. This chapter starts with the question underneath. How do you build a desk that moves money when the model can't be trusted with money?",
+        },
+        {
+          kind: "p",
+          text: "Meridian Tours is a fictional travel operator. It sells itineraries that customers pay for in instalments. A £7,150 trip might split 25/30/30/15, with a due date on each. When a salesperson saves the itinerary, the instalments are recorded.",
+        },
+        {
+          kind: "p",
+          text: "Staff then do three chores by hand. They chase late payments. They refund customers who paid too much. They re-spread the unpaid instalments when a customer adds an extra to the trip. The capstone builds a desk, called PayDesk, that does all three.",
+        },
+        {
+          kind: "p",
+          text: "Part 1 of this course built the PEP desk on LangGraph, and Part 2 built each architecture by hand. The capstone uses those ideas on a new problem. Money raises the stakes. A wrong answer about a PEP is embarrassing. A wrong refund costs real money.",
+        },
+        {
+          kind: "p",
+          text: "A normal day runs like this. A 09:00 schedule finds the instalments due today and puts one `payment_due` event for each on a topic. A consumer pulls an event and runs a graph for that one instalment ID. The graph calculates, decides, acts, mails and closes. At 00:00 a nightly job checks every itinerary's payments against its plan.",
+        },
+        {
+          kind: "p",
+          text: "The pattern is the deterministic workflow from chapter 12: code routes, and the model picks from a fixed set. In PayDesk that set holds five steps, and code checks every pick. The model never computes an amount, never writes a query and never sees a customer's name.",
+        },
+        {
+          kind: "p",
+          text: "So the desk splits in two. The core holds the money, and it is deterministic: the same input always gives the same output. The model, the graph and the topic sit around it. This chapter builds the core.",
+        },
+        {
+          kind: "compare",
+          caption: "The four PayDesk chapters, and the files each one adds",
+          columns: ["Chapter", "What it builds", "Files in `src/paydesk/`"],
+          rows: [
+            ["PayDesk 1, chapter 24, this one", "The domain, the store, the core and the seeded data", "`models.py`, `clock.py`, `store.py`, `calculate.py`, `data.py`, `rebalance.py`"],
+            ["PayDesk 2, chapter 25", "The decision model, the graph, the topic and the schedules", "`provider.py`, `mailer.py`, `topic.py`, `policy.py`, `graph.py`, `jobs.py`, `walk.py`"],
+            ["PayDesk 3, chapter 26", "The evals, the guards, the release gate and the driver", "`guard.py`, `evals.py`, `simulate.py`, and a check added to `mailer.py`"],
+            ["PayDesk 4, chapter 27", "Failure, recovery and deployment", "`recovery.py`, its hooks in `simulate.py`, and the deployment notes"],
+          ],
+        },
+        {
+          kind: "p",
+          text: "Interviewers often open by asking which pattern a design follows. Name it in your first sentence.",
+        },
+        {
+          kind: "callout",
+          tone: "interview",
+          title: "Name the pattern first",
+          text: "PayDesk is a deterministic workflow, the pattern from chapter 12. Code routes. The model picks the next step from a fixed set of five, and code checks that the pick is allowed. It is not a free agent. Say this in the first sentence of any answer about the design.",
+        },
+        {
+          kind: "quiz",
+          id: "agents24-q1",
+          question: "In PayDesk, which task is done by the model?",
+          options: [
+            "Working out how much a customer still owes.",
+            "Picking the next step from a fixed set, such as send a reminder or hand to sales.",
+            "Rebalancing the unpaid instalments after an add-on.",
+            "Deciding which events the 09:00 schedule creates.",
+          ],
+          answer: 1,
+          explain:
+            "Arithmetic, rebalancing and scheduling are plain code, because they must be exact and repeatable. The model's one job is choosing among five steps, and code still checks the choice.",
+        },
+        {
+          kind: "p",
+          text: "The core comes first, because everything else reads it. It starts with the words the desk uses for its money and its runs. The next section writes them.",
+        },
+      ],
+    },
+    {
+      id: "s2-domain",
+      title: "The domain is three records and two fixed vocabularies, all in `models.py`",
+      goal: "Which records and vocabularies does the desk need, and how does it keep time?",
+      blocks: [
+        {
+          kind: "p",
+          text: "Run everything from `src` in your own repository, and create the package first. You build one file at a time. Where a file arrives in several steps, add each piece below the last, after two blank lines. The reference copy is `my-learn/capstone/src/paydesk/`.",
+        },
+        {
+          kind: "step",
+          id: "agents24-s1",
+          title: "Create the package",
+          text: "Make the folder and an empty `__init__.py`. Each PayDesk chapter adds files here.",
+          lang: "bash",
+          code: "mkdir -p src/paydesk && touch src/paydesk/__init__.py",
+        },
+        {
+          kind: "p",
+          text: "An **itinerary** has a value. An **instalment** is one slice of it with a due day. A **payment** is money received. All amounts are integers in pence, so no float touches money anywhere. The instalment ID, such as `IT0001-2`, is the key that everything else hangs off.",
+        },
+        {
+          kind: "step",
+          id: "agents24-s2",
+          title: "Write the domain",
+          text: "`Status` is the life of one run. `Step` is the fixed set the model picks from. Nothing outside those five values can happen. `split_value` gives the last slot the rounding remainder, so a plan always sums to the value.",
+          lang: "python",
+          file: "src/paydesk/models.py",
+          code: "\"\"\"The domain: itineraries, instalments, payments, and the two vocabularies the graph uses.\"\"\"\n\nfrom dataclasses import dataclass\nfrom enum import StrEnum\n\n\nclass Status(StrEnum):\n    INITIALIZED = \"initialized\"\n    CALCULATED = \"calculated\"\n    LINK_GENERATED = \"link_generated\"\n    EMAIL_SENT = \"email_sent\"\n    CLOSED = \"closed\"\n    HANDED = \"handed_to_sales\"\n\n\nTERMINAL = {Status.CLOSED, Status.HANDED}\n\n\nclass Step(StrEnum):\n    \"\"\"The fixed set the model picks from. Nothing else can happen.\"\"\"\n\n    SEND_LINK = \"send_link\"\n    SEND_REMINDER = \"send_reminder\"\n    REFUND = \"refund\"\n    CLOSE = \"close\"\n    HAND_TO_SALES = \"hand_to_sales\"\n\n\n@dataclass(frozen=True)\nclass Itinerary:\n    id: str\n    name: str\n    value: int  # pence, so there is no float money anywhere\n    cancelled: bool = False\n\n\n@dataclass(frozen=True)\nclass Instalment:\n    id: str  # \"IT0001-2\": the key everything else hangs off\n    itinerary_id: str\n    seq: int  # 1-based\n    of: int\n    amount: int\n    due_day: int\n\n\n@dataclass(frozen=True)\nclass Payment:\n    id: str\n    itinerary_id: str\n    amount: int\n    at: int  # simulated minutes\n\n\ndef split_value(value: int, weights: list[int]) -> list[int]:\n    \"\"\"Spread `value` over `weights`. The last slot takes the rounding remainder.\"\"\"\n    parts = [value * w // sum(weights) for w in weights]\n    parts[-1] += value - sum(parts)\n    return parts\n\n\ndef money(pence: int) -> str:\n    return f\"£{pence / 100:,.2f}\"",
+        },
+        {
+          kind: "p",
+          text: "The statuses are `initialized`, `calculated`, `link_generated`, `email_sent` and `closed`, plus `handed_to_sales` for cases the desk will not touch. The last two are terminal. A run that reaches either one is finished.",
+        },
+        {
+          kind: "step",
+          id: "agents24-s3",
+          title: "Write the simulated clock",
+          text: "Time is a count of minutes. Nothing in the package reads the wall clock, so a two-month run takes seconds and gives the same result every time. `at` never moves backwards, because a long backlog of events can run past the next scheduled time.",
+          lang: "python",
+          file: "src/paydesk/clock.py",
+          code: "\"\"\"Simulated time in minutes. Nothing in the package reads the wall clock.\"\"\"\n\n\nclass Clock:\n    def __init__(self) -> None:\n        self.now = 0\n\n    def at(self, day: int, hour: int = 0, minute: int = 0) -> None:\n        # Never moves backwards: a long queue can run past the next scheduled time.\n        self.now = max(self.now, day * 1440 + hour * 60 + minute)\n\n    def advance(self, minutes: int) -> None:\n        self.now += minutes\n\n    @property\n    def day(self) -> int:\n        return self.now // 1440",
+        },
+        {
+          kind: "quiz",
+          id: "agents24-q2",
+          question: "Why does `split_value` give the rounding remainder to the last instalment?",
+          options: [
+            "The last instalment is always the smallest.",
+            "So the instalments always sum to the value exactly, to the penny.",
+            "Because the customer pays the last one first.",
+            "To make the model's choice easier.",
+          ],
+          answer: 1,
+          explain:
+            "Integer division loses pence. Putting the loss in one slot keeps the total exact. A plan that sums to one penny less than the value would show a false shortfall forever.",
+        },
+        {
+          kind: "fold",
+          tone: "hood",
+          title: "Why `Step` is an enum and not a prompt",
+          text: "The model returns one of five strings. `Step(value)` raises if the string is outside the set, so a made-up step fails at the boundary. The prompt asks politely, and the enum enforces the rule.",
+        },
+        {
+          kind: "p",
+          text: "These records need somewhere to live between runs. The next section builds the store, and with it the first safety rule.",
+        },
+      ],
+    },
+    {
+      id: "s3-store",
+      title: "The store uses fixed SQL, so there is no free-text-to-SQL step",
+      goal: "Where does the desk keep its state, and why does no model ever write a query?",
+      blocks: [
+        {
+          kind: "p",
+          text: "State lives in SQLite. There are six tables: itineraries, instalments, payments, refunds, runs and a sales queue. The `runs` table holds one row for each instalment ID, saved after every node of the graph. That row is what lets PayDesk 4 (chapter 27) pick up a run that stopped halfway.",
+        },
+        {
+          kind: "step",
+          id: "agents24-s4",
+          title: "Write the schema and the query helper",
+          text: "`q` runs one parameterised statement inside a transaction. Every query in the package goes through it, and every one passes its values as `?` parameters.",
+          lang: "python",
+          file: "src/paydesk/store.py",
+          code: "\"\"\"SQLite state. One row per instalment ID in `runs`, saved after every node.\"\"\"\n\nimport json\nimport sqlite3\n\nfrom paydesk.models import TERMINAL, Instalment, Itinerary, Payment\n\nSCHEMA = \"\"\"\ncreate table itineraries (id text primary key, name text, value int, cancelled int default 0);\ncreate table instalments (id text primary key, itinerary_id text, seq int, of int, amount int, due_day int);\ncreate table payments (id text primary key, itinerary_id text, amount int, at int);\ncreate table refunds (key text primary key, itinerary_id text, amount int, at int);\ncreate table runs (instalment_id text primary key, status text, state text, opened_at int, updated_at int);\ncreate table sales_queue (instalment_id text primary key, itinerary_id text, reason text, at int, released int default 0);\n\"\"\"\n\n\nclass Store:\n    def __init__(self, path: str = \":memory:\") -> None:\n        self.db = sqlite3.connect(path)\n        self.db.row_factory = sqlite3.Row\n        self.db.executescript(SCHEMA)\n\n    def q(self, sql: str, *args):\n        with self.db:\n            return self.db.execute(sql, args)",
+        },
+        {
+          kind: "step",
+          id: "agents24-s5",
+          title: "Add itineraries and plans",
+          text: "Save an itinerary with its instalments, and read them back in order. `set_amounts` is the write the nightly rebalance uses.",
+          lang: "python",
+          file: "src/paydesk/store.py",
+          code: "    # itineraries and plans\n    def save_itinerary(self, it: Itinerary, parts: list[Instalment]) -> None:\n        self.q(\"insert into itineraries values (?,?,?,0)\", it.id, it.name, it.value)\n        for p in parts:\n            self.q(\"insert into instalments values (?,?,?,?,?,?)\", p.id, p.itinerary_id, p.seq, p.of, p.amount, p.due_day)\n\n    def itinerary(self, iid: str) -> Itinerary:\n        r = self.q(\"select * from itineraries where id=?\", iid).fetchone()\n        return Itinerary(r[\"id\"], r[\"name\"], r[\"value\"], bool(r[\"cancelled\"]))\n\n    def itineraries(self) -> list[Itinerary]:\n        rows = self.q(\"select * from itineraries order by id\").fetchall()\n        return [Itinerary(r[\"id\"], r[\"name\"], r[\"value\"], bool(r[\"cancelled\"])) for r in rows]\n\n    def instalments(self, itinerary_id: str) -> list[Instalment]:\n        rows = self.q(\"select * from instalments where itinerary_id=? order by seq\", itinerary_id).fetchall()\n        return [Instalment(r[\"id\"], r[\"itinerary_id\"], r[\"seq\"], r[\"of\"], r[\"amount\"], r[\"due_day\"]) for r in rows]\n\n    def instalment(self, iid: str) -> Instalment:\n        itin = iid.rsplit(\"-\", 1)[0]\n        return next(i for i in self.instalments(itin) if i.id == iid)\n\n    def set_value(self, itinerary_id: str, value: int) -> None:\n        self.q(\"update itineraries set value=? where id=?\", value, itinerary_id)\n\n    def set_amounts(self, itinerary_id: str, amounts: list[int]) -> None:\n        for seq, a in enumerate(amounts, 1):\n            self.q(\"update instalments set amount=? where itinerary_id=? and seq=?\", a, itinerary_id, seq)\n\n    def cancel(self, itinerary_id: str) -> None:\n        self.q(\"update itineraries set cancelled=1 where id=?\", itinerary_id)",
+        },
+        {
+          kind: "step",
+          id: "agents24-s6",
+          title: "Add money in and money out",
+          text: "Both inserts use `insert or ignore` on a primary key. A payment ID or a refund key that already exists changes nothing, so a repeat is harmless. `net_received` is payments minus refunds.",
+          lang: "python",
+          file: "src/paydesk/store.py",
+          code: "    # money in and out. The primary keys make both inserts idempotent.\n    def add_payment(self, p: Payment) -> None:\n        self.q(\"insert or ignore into payments values (?,?,?,?)\", p.id, p.itinerary_id, p.amount, p.at)\n\n    def add_refund(self, key: str, itinerary_id: str, amount: int, at: int) -> bool:\n        return self.q(\"insert or ignore into refunds values (?,?,?,?)\", key, itinerary_id, amount, at).rowcount == 1\n\n    def net_received(self, itinerary_id: str) -> int:\n        paid = self.q(\"select coalesce(sum(amount),0) from payments where itinerary_id=?\", itinerary_id).fetchone()[0]\n        back = self.q(\"select coalesce(sum(amount),0) from refunds where itinerary_id=?\", itinerary_id).fetchone()[0]\n        return paid - back",
+        },
+        {
+          kind: "step",
+          id: "agents24-s7",
+          title: "Add the run state",
+          text: "`start_run` and `save_run` store the whole state as JSON next to its status and times. `open_runs` returns the runs that have not reached a terminal status. PayDesk 2 (chapter 25) writes these rows, and PayDesk 4 reads them back.",
+          lang: "python",
+          file: "src/paydesk/store.py",
+          code: "    # runs\n    def start_run(self, state: dict, now: int) -> None:\n        self.q(\"insert or replace into runs values (?,?,?,?,?)\", state[\"iid\"], state[\"status\"], json.dumps(state), now, now)\n\n    def save_run(self, state: dict, now: int) -> None:\n        self.q(\"update runs set status=?, state=?, updated_at=? where instalment_id=?\", state[\"status\"], json.dumps(state), now, state[\"iid\"])\n\n    def load_run(self, iid: str) -> dict | None:\n        r = self.q(\"select state from runs where instalment_id=?\", iid).fetchone()\n        return json.loads(r[\"state\"]) if r else None\n\n    def open_runs(self) -> list[tuple[dict, int]]:\n        rows = self.q(\"select state, opened_at, status from runs\").fetchall()\n        return [(json.loads(r[\"state\"]), r[\"opened_at\"]) for r in rows if r[\"status\"] not in TERMINAL]",
+        },
+        {
+          kind: "step",
+          id: "agents24-s8",
+          title: "Add the sales queue",
+          text: "A case the desk will not handle goes to a sales queue with a reason, and `release` takes it back off. `stale_runs` returns the runs that never reached a terminal status. It also returns runs handed over with the reason `timeout`, which PayDesk 4 creates and sweeps up each night.",
+          lang: "python",
+          file: "src/paydesk/store.py",
+          code: "    # the hand-to-sales queue\n    def hand_to_sales(self, iid: str, itinerary_id: str, reason: str, now: int) -> None:\n        self.q(\"insert or replace into sales_queue values (?,?,?,?,0)\", iid, itinerary_id, reason, now)\n\n    def in_sales(self, itinerary_id: str) -> bool:\n        return bool(self.q(\"select 1 from sales_queue where itinerary_id=? and released=0\", itinerary_id).fetchone())\n\n    def sales_queue(self) -> list[sqlite3.Row]:\n        return self.q(\"select * from sales_queue where released=0 order by at\").fetchall()\n\n    def release(self, iid: str) -> None:\n        self.q(\"update sales_queue set released=1 where instalment_id=?\", iid)\n\n    def stale_runs(self) -> list[dict]:\n        \"\"\"Runs that never closed, plus runs the 5-minute sweep force-closed.\"\"\"\n        timed_out = {r[\"instalment_id\"] for r in self.sales_queue() if r[\"reason\"] == \"timeout\"}\n        rows = self.q(\"select state, status from runs\").fetchall()\n        return [json.loads(r[\"state\"]) for r in rows if r[\"status\"] not in TERMINAL or json.loads(r[\"state\"])[\"iid\"] in timed_out]",
+        },
+        {
+          kind: "p",
+          text: "Look at what is missing. No model ever receives a schema. No prompt says write a query for the customer's payments. Every method above runs a fixed statement with its values passed in. Search the package for a query built from text, and you find none.",
+        },
+        {
+          kind: "step",
+          id: "agents24-s9",
+          title: "Check that no SQL is built from text",
+          text: "The grep looks for a query helper or `execute` called with an f-string. Every statement in the store is a literal. Run it from `src`.",
+          lang: "bash",
+          code: "grep -rnE '(q|execute)\\(f' paydesk || echo \"no SQL is built from text\"",
+          expect: "no SQL is built from text",
+        },
+        {
+          kind: "p",
+          text: "Interviewers ask about this directly, because text-to-SQL is a common way to wire a model to data. Be ready to say why PayDesk has none.",
+        },
+        {
+          kind: "callout",
+          tone: "interview",
+          title: "There is no free-text-to-SQL step",
+          text: "Say it directly if asked. Calculate is deterministic code over the store. The model never sees a table, never writes SQL and never reads a row. A text-to-SQL step would put a model between the question and the money, and it would need its own guard. PayDesk avoids the problem by never needing it.",
+        },
+        {
+          kind: "quiz",
+          id: "agents24-q3",
+          question: "A reviewer asks how the model looks up what a customer has paid. What is the accurate answer?",
+          options: [
+            "It writes a SQL query from the customer's message, and a guard checks the query.",
+            "It doesn't. Calculate reads the store with fixed methods and passes the model derived signals.",
+            "It calls a search tool over the payments table.",
+            "It reads the table once at startup and caches it.",
+          ],
+          answer: 1,
+          explain:
+            "No model touches the data layer. Fixed methods read the store, and only signals travel on. That removes a whole class of failures, such as a bad query, an injection and a leak of rows.",
+        },
+        {
+          kind: "fold",
+          tone: "hood",
+          title: "Why `insert or ignore` matters before PayDesk has a topic",
+          text: "A topic can deliver the same event twice, as chapter 20 showed. If a payment or refund insert could succeed twice, a redelivered event could pay out a refund twice. A primary key with `insert or ignore` makes the second attempt a no-op at the lowest level. PayDesk 2 adds idempotency keys to the provider and the mailer. The provider's refund key is the one this table stores.",
+        },
+        {
+          kind: "p",
+          text: "The store holds the money, but nothing yet reads it as a whole. The next section writes the one function that does.",
+        },
+      ],
+    },
+    {
+      id: "s4-calculate",
+      title: "Calculate is the only code that sees amounts, and the model sees only its signals",
+      goal: "What does calculate return, and which part of it may travel towards the model?",
+      blocks: [
+        {
+          kind: "p",
+          text: "Calculate compares what was expected with what was received for an itinerary. It returns two things. One is a `Signals` record. The other is the amount still owed on this instalment. They go to different places.",
+        },
+        {
+          kind: "p",
+          text: "A **signal** is a fact derived from the money that carries no money and no identity. The sign of the delta is one: short, on target or ahead. Whether the link has expired is another. So are the days since the last mail, whether the plan has changed and the instalment's position. The model sees these and nothing else.",
+        },
+        {
+          kind: "step",
+          id: "agents24-s10",
+          title: "Write the signals and the allocation rule",
+          text: "`allocate` pays the instalments in order, and an instalment counts as paid when its slot is full. `first_unpaid` uses it to find the instalment to chase. This module imports only `models.py` and `store.py`, because `calculate` takes plain values from its caller.",
+          lang: "python",
+          file: "src/paydesk/calculate.py",
+          code: "\"\"\"Deterministic expected-versus-received, and the derived signals.\n\nAmounts stay in this module's return value for the code that fills mail. Only `Signals` goes toward the model.\n\"\"\"\n\nfrom dataclasses import dataclass\n\nfrom paydesk.models import Instalment\nfrom paydesk.store import Store\n\n\n@dataclass(frozen=True)\nclass Signals:\n    delta_sign: int  # -1 short, 0 on target, 1 ahead\n    overpaid: bool\n    link_expired: bool\n    days_since_mail: int  # 99 means never mailed\n    plan_changed: bool  # the value moved and the nightly rebalance has not run yet\n    position: str  # first, middle or last\n    days_overdue: int\n    cancelled: bool\n\n\ndef allocate(amounts: list[int], received: int) -> list[int]:\n    \"\"\"Pay the instalments in order. An instalment counts as paid when its slot is full.\"\"\"\n    out, left = [], max(received, 0)\n    for a in amounts:\n        take = min(a, left)\n        out.append(take)\n        left -= take\n    return out\n\n\ndef first_unpaid(store: Store, itinerary_id: str) -> Instalment | None:\n    parts = store.instalments(itinerary_id)\n    paid = allocate([p.amount for p in parts], store.net_received(itinerary_id))\n    return next((p for p, got in zip(parts, paid) if got < p.amount), None)",
+        },
+        {
+          kind: "step",
+          id: "agents24-s11",
+          title: "Write calculate",
+          text: "Read the plan and the money as they stand. Work out the delta against the instalments up to this one. Derive each signal. The caller passes the day of the last mail and whether the link is still valid, so this module needs nothing from PayDesk 2. Return the signals together with the amount still owed. The amount stays in code, where the mail filler reads it later.",
+          lang: "python",
+          file: "src/paydesk/calculate.py",
+          code: "def calculate(store: Store, iid: str, now: int, last_mail: int | None, link_valid: bool) -> tuple[Signals, int]:\n    inst = store.instalment(iid)\n    it = store.itinerary(inst.itinerary_id)\n    amounts = [p.amount for p in store.instalments(it.id)]\n    received = store.net_received(it.id)\n    delta = received - sum(amounts[: inst.seq])\n    signals = Signals(\n        delta_sign=(delta > 0) - (delta < 0),\n        overpaid=received > it.value,\n        link_expired=not link_valid,\n        days_since_mail=99 if last_mail is None else now // 1440 - last_mail,\n        plan_changed=sum(amounts) != it.value,\n        position=\"first\" if inst.seq == 1 else \"last\" if inst.seq == inst.of else \"middle\",\n        days_overdue=max(0, now // 1440 - inst.due_day),\n        cancelled=it.cancelled,\n    )\n    return signals, inst.amount - allocate(amounts, received)[inst.seq - 1]",
+        },
+        {
+          kind: "step",
+          id: "agents24-s12",
+          title: "Calculate for a part-paid instalment",
+          text: "There are no customers yet, so save one by hand. It is an £8,250 trip on the 25/30/30/15 plan, due on days 9, 19, 29 and 39. Pay half of the first instalment and calculate two days after it fell due. The first line is everything the model gets. The second is what code keeps.",
+          lang: "bash",
+          code: "uv run --offline python - <<'PY'\nfrom paydesk.calculate import calculate\nfrom paydesk.models import Instalment, Itinerary, Payment, money, split_value\nfrom paydesk.store import Store\n\nstore = Store()\nit = Itinerary(\"IT0001\", \"A customer\", 825_000)  # £8,250.00\namounts = split_value(it.value, [25, 30, 30, 15])\nparts = [Instalment(f\"IT0001-{s}\", it.id, s, len(amounts), a, d) for s, (a, d) in enumerate(zip(amounts, [9, 19, 29, 39]), 1)]\nstore.save_itinerary(it, parts)\nfirst = store.instalments(it.id)[0]\nstore.add_payment(Payment(\"P1\", it.id, first.amount // 2, 0))\nnow = (first.due_day + 2) * 1440 + 9 * 60  # 09:00, two days after the due date\nsignals, owed = calculate(store, first.id, now, last_mail=None, link_valid=False)\nprint(signals)\nprint(\"owed, kept in code:\", money(owed))\nPY",
+          expect: "Signals(delta_sign=-1, overpaid=False, link_expired=True, days_since_mail=99, plan_changed=False, position='first', days_overdue=2, cancelled=False)\nowed, kept in code: £1,031.25",
+        },
+        {
+          kind: "widget",
+          id: "agents24-model-sees",
+          intro:
+            "Ten fields exist in a run. Decide which may reach the model and which stay in code. Predict before you check. The test is whether a field carries money or a person.",
+        },
+        {
+          kind: "quiz",
+          id: "agents24-q4",
+          question: "The model is shown `delta_sign=-1`. Which of these can it work out from the signals alone?",
+          options: [
+            "That the customer is short, but not by how much.",
+            "That the customer owes £1,031.25.",
+            "The customer's name.",
+            "The itinerary value.",
+          ],
+          answer: 0,
+          explain:
+            "A sign says short, on target or ahead. The model needs that to pick between a reminder and a refund. It never needs the figure, and the figure stays in code until the mail is filled.",
+        },
+        {
+          kind: "fold",
+          tone: "industry",
+          title: "Derived signals are a general privacy and safety pattern",
+          text: "Teams often strip identities and figures before a prompt and keep a lookup table in code. Here the stripping is built into the data flow. The model never has the raw values to leak, so a prompt-leak check in PayDesk 3 can assert that none ever appeared.",
+        },
+        {
+          kind: "p",
+          text: "That customer was typed in by hand. A desk needs hundreds, and it needs a way to tell a right outcome from a wrong one. The next section generates both from one seed.",
+        },
+      ],
+    },
+    {
+      id: "s5-data",
+      title: "Every seeded label carries its expected outcome, so the desk can be scored",
+      goal: "How do you test a payment desk without real customers?",
+      blocks: [
+        {
+          kind: "p",
+          text: "You cannot test a payment desk on real customers. The generator makes 200 itineraries from one seed, and the same seed gives the same customers every time. Together they are PayDesk's golden set. Each carries a label, from chapter 21, which names the behaviour the case tests.",
+        },
+        {
+          kind: "p",
+          text: "The seven labels are on time, late, partial, overpaid, never pays, add-on and cancelled. Each label also carries an **expected outcome**, the final status a golden itinerary should reach. An overpaid customer should end refunded. A customer who never pays should be handed to sales. The label is the answer key that PayDesk 3 (chapter 26) scores against.",
+        },
+        {
+          kind: "step",
+          id: "agents24-s15",
+          title: "Write the labels and the generator",
+          text: "`EXPECTED` maps each label to the outcome the desk should reach. `WEIGHTS` sets how common each label is. A `Case` is one itinerary with its behaviour, and `generate` draws them from a seeded random generator.",
+          lang: "python",
+          file: "src/paydesk/data.py",
+          code: "\"\"\"Seeded synthetic customers. Every label carries its expected outcome, so the evals have ground truth.\"\"\"\n\nimport random\nfrom dataclasses import dataclass\n\nfrom paydesk.calculate import allocate\nfrom paydesk.models import Instalment, Itinerary, Payment, split_value\nfrom paydesk.store import Store\n\nEXPECTED = {  # label -> the outcome the desk should reach\n    \"on_time\": \"paid\",\n    \"late\": \"paid\",\n    \"partial\": \"paid\",\n    \"overpaid\": \"refunded\",\n    \"never_pays\": \"handed_to_sales\",\n    \"add_on\": \"paid\",\n    \"cancelled\": \"cancelled\",\n}\nWEIGHTS = [40, 18, 10, 7, 7, 10, 8]\nPLANS = [(25, 30, 30, 15), (40, 30, 30), (50, 50), (20, 20, 20, 20, 20)]\nFIRST = [\"Asha\", \"Ben\", \"Chloe\", \"Dev\", \"Elif\", \"Farid\", \"Greta\", \"Hugo\", \"Isla\", \"Jonas\", \"Kira\", \"Leo\"]\nLAST = [\"Marlow\", \"Nakamura\", \"Okafor\", \"Prentice\", \"Quill\", \"Rossi\", \"Sandoval\", \"Thorne\", \"Underhill\", \"Voss\"]\nGAP = 10  # days between instalments\n\n\n@dataclass(frozen=True)\nclass Case:\n    itinerary: Itinerary\n    plan: tuple[int, ...]\n    first_due: int\n    label: str\n    delay: int  # days late for the late and partial payers\n    addon_value: int = 0  # the new value, set on the second due date\n    cancel_day: int = 0\n\n    @property\n    def due_days(self) -> list[int]:\n        return [self.first_due + GAP * i for i in range(len(self.plan))]\n\n\ndef generate(seed: int, n: int = 200) -> list[Case]:\n    rng = random.Random(seed)\n    cases = []\n    for k in range(n):\n        label = rng.choices(list(EXPECTED), WEIGHTS)[0]\n        value = rng.randrange(80_000, 900_000, 5_000)\n        plan, first = rng.choice(PLANS), rng.randint(1, 12)\n        it = Itinerary(f\"IT{k + 1:04d}\", f\"{rng.choice(FIRST)} {rng.choice(LAST)}\", value)\n        cases.append(Case(\n            it, plan, first, label, delay=rng.randint(2, 6),\n            addon_value=value * rng.randint(110, 130) // 100 if label == \"add_on\" else 0,\n            cancel_day=first - 1 if label == \"cancelled\" else 0,\n        ))\n    return cases",
+        },
+        {
+          kind: "step",
+          id: "agents24-s16",
+          title: "Write load and the sales actions",
+          text: "`load` is what a salesperson's save does: it records the instalments. `sales_actions` cancels the cancelled customers before their first due date. It raises the value of the add-on customers on their second due date.",
+          lang: "python",
+          file: "src/paydesk/data.py",
+          code: "def load(store: Store, cases: list[Case]) -> None:\n    \"\"\"What happens when a salesperson saves the itinerary: the instalments are recorded.\"\"\"\n    for c in cases:\n        amounts = split_value(c.itinerary.value, list(c.plan))\n        parts = [Instalment(f\"{c.itinerary.id}-{s}\", c.itinerary.id, s, len(amounts), a, d)\n                 for s, (a, d) in enumerate(zip(amounts, c.due_days), 1)]\n        store.save_itinerary(c.itinerary, parts)\n\n\ndef sales_actions(store: Store, cases: list[Case], day: int) -> None:\n    for c in cases:\n        if c.label == \"cancelled\" and c.cancel_day == day:\n            store.cancel(c.itinerary.id)\n        if c.label == \"add_on\" and c.due_days[1] == day:\n            store.set_value(c.itinerary.id, c.addon_value)",
+        },
+        {
+          kind: "step",
+          id: "agents24-s17",
+          title: "Write the customers' payments",
+          text: "At 17:00 each day, every customer acts out their label. A late payer pays after their delay. A partial payer pays half on the day and the rest later. An overpaid customer pays 110% of the value on the first instalment. Amounts are read from the plan as it stands, so a rebalance is respected.",
+          lang: "python",
+          file: "src/paydesk/data.py",
+          code: "def customer_payments(store: Store, cases: list[Case], day: int, now: int) -> None:\n    \"\"\"What each customer does at 17:00. Amounts are read from the plan as it stands, so a rebalance is respected.\"\"\"\n    for c in cases:\n        iid = c.itinerary.id\n        parts = store.instalments(iid)\n        got = allocate([p.amount for p in parts], store.net_received(iid))\n        for p, paid in zip(parts, got):\n            offset = day - p.due_day\n            owed = p.amount - paid\n            amount = {\n                \"on_time\": owed if offset == 0 else 0,\n                \"late\": owed if offset == c.delay else 0,\n                \"add_on\": owed if offset == 1 else 0,\n                \"partial\": p.amount // 2 if offset == 0 else owed if offset == c.delay else 0,\n                \"overpaid\": c.itinerary.value * 11 // 10 if offset == 0 and p.seq == 1 else 0,\n            }.get(c.label, 0)\n            if amount > 0:\n                store.add_payment(Payment(f\"PAY-{p.id}-{day}\", iid, amount, now))",
+        },
+        {
+          kind: "step",
+          id: "agents24-s18",
+          title: "Generate and read the labels",
+          text: "Generate with seed 7. The counts are fixed for that seed. The last line shows one label with its expected outcome.",
+          lang: "bash",
+          code: "uv run --offline python - <<'PY'\nfrom collections import Counter\n\nfrom paydesk import data\n\ncases = data.generate(7)\nprint(len(cases), dict(Counter(c.label for c in cases)))\nc = next(c for c in cases if c.label == \"overpaid\")\nprint(c.itinerary.id, c.label, \"->\", data.EXPECTED[c.label])\nPY",
+          expect: "200 {'on_time': 93, 'late': 31, 'add_on': 14, 'partial': 23, 'never_pays': 15, 'overpaid': 12, 'cancelled': 12}\nIT0010 overpaid -> refunded",
+        },
+        {
+          kind: "step",
+          id: "agents24-s19",
+          title: "Load a customer and read its plan",
+          text: "Record one itinerary's instalments in the store, as a salesperson's save would, and print them. Money is formatted only for display, from integer pence.",
+          lang: "bash",
+          code: "uv run --offline python - <<'PY'\nfrom paydesk import data\nfrom paydesk.models import money\nfrom paydesk.store import Store\n\nstore = Store()\ncases = data.generate(7)\ndata.load(store, cases)\nc = next(c for c in cases if c.plan == (25, 30, 30, 15))\nprint(c.itinerary.id, c.label, money(c.itinerary.value), c.plan)\nfor p in store.instalments(c.itinerary.id):\n    print(p.id, money(p.amount), \"due day\", p.due_day)\nPY",
+          expect: "IT0002 on_time £8,250.00 (25, 30, 30, 15)\nIT0002-1 £2,062.50 due day 9\nIT0002-2 £2,475.00 due day 19\nIT0002-3 £2,475.00 due day 29\nIT0002-4 £1,237.50 due day 39",
+        },
+        {
+          kind: "p",
+          text: "It is the same plan you typed by hand for calculate.",
+        },
+        {
+          kind: "quiz",
+          id: "agents24-q6",
+          question: "Why does each label carry an expected outcome, and not just a name?",
+          options: [
+            "So the report reads better.",
+            "So an eval can compare what the desk did with what it should have done, and score it.",
+            "Because the model reads the label at runtime.",
+            "To choose the payment plan.",
+          ],
+          answer: 1,
+          explain:
+            "A label alone says how the customer behaves. The expected outcome says what a correct desk does about it. PayDesk 3 scores the desk against that pair.",
+        },
+        {
+          kind: "fold",
+          tone: "industry",
+          title: "Synthetic data with labels is a standard way to test agents",
+          text: "When real data holds money and names, teams generate lookalike data with known behaviour. Seeding makes a failure reproducible. Labelled outcomes make the score automatic. The weak point is realism, so the weights should be reviewed against real traffic.",
+        },
+        {
+          kind: "p",
+          text: "Seed 7 makes 14 add-on customers, whose trip value rises on their second due date. Their plans no longer sum to the value. The next section writes the rule that fixes them.",
+        },
+      ],
+    },
+    {
+      id: "s6-rebalance",
+      title: "Rebalance leaves paid instalments untouched and spreads the new value over the unpaid ones",
+      goal: "When a trip's value rises, which instalments change, and by how much?",
+      blocks: [
+        {
+          kind: "p",
+          text: "A customer adds an extra to the trip, so the itinerary value rises. The plan no longer sums to the value. The rule has two halves. Instalments already paid stay exactly as they are. The unpaid ones share the new value, less what is paid, in their original proportions.",
+        },
+        {
+          kind: "step",
+          id: "agents24-s13",
+          title: "Write rebalance",
+          text: "The weights are the unpaid amounts themselves, so the original proportions carry over. `split_value` spreads the rest, and the last slot absorbs the rounding. The assert states the two guarantees in code. It fails loudly if either is ever broken.",
+          lang: "python",
+          file: "src/paydesk/rebalance.py",
+          code: "\"\"\"Rebalance after a value change. Paid instalments stay as they are.\"\"\"\n\nfrom paydesk.calculate import allocate\nfrom paydesk.models import split_value\n\n\ndef rebalance(amounts: list[int], received: int, new_value: int) -> list[int]:\n    paid = [got >= a for a, got in zip(amounts, allocate(amounts, received))]\n    keep = sum(a for a, p in zip(amounts, paid) if p)\n    weights = [a for a, p in zip(amounts, paid) if not p]  # the original proportions of the unpaid ones\n    if not weights:\n        return amounts\n    spread = iter(split_value(new_value - keep, weights))\n    out = [a if p else next(spread) for a, p in zip(amounts, paid)]\n    assert sum(out) == new_value and all(o == a for o, a, p in zip(out, amounts, paid) if p)\n    return out",
+        },
+        {
+          kind: "step",
+          id: "agents24-s14",
+          title: "Run a real add-on",
+          text: "Take the first seeded add-on customer on the 25/30/30/15 plan. It is the £7,150 trip from the opening. The first instalment is paid, and the value rises to £8,437.00. The instalment lines show the rule as numbers.",
+          lang: "bash",
+          code: "uv run --offline python - <<'PY'\nfrom paydesk import data\nfrom paydesk.models import money\nfrom paydesk.rebalance import rebalance\nfrom paydesk.store import Store\n\nstore = Store()\ncases = data.generate(7)\ndata.load(store, cases)\nc = next(c for c in cases if c.label == \"add_on\" and c.plan == (25, 30, 30, 15))\namounts = [p.amount for p in store.instalments(c.itinerary.id)]\npaid = amounts[0]  # the customer has paid the first instalment\nafter = rebalance(amounts, paid, c.addon_value)\nprint(\"value\", money(c.itinerary.value), \"->\", money(c.addon_value))\nfor i, (a, b) in enumerate(zip(amounts, after), 1):\n    print(f\"instalment {i}: {money(a):>10} -> {money(b):>10}\", \"paid, untouched\" if i == 1 else \"\")\nprint(\"sum\", money(sum(after)), \"= new value:\", sum(after) == c.addon_value)\nprint(\"unpaid shares before:\", [round(a / sum(amounts[1:]), 3) for a in amounts[1:]])\nprint(\"unpaid shares after: \", [round(b / sum(after[1:]), 3) for b in after[1:]])\nPY",
+          expect: "value £7,150.00 -> £8,437.00\ninstalment 1:  £1,787.50 ->  £1,787.50 paid, untouched\ninstalment 2:  £2,145.00 ->  £2,659.80 \ninstalment 3:  £2,145.00 ->  £2,659.80 \ninstalment 4:  £1,072.50 ->  £1,329.90 \nsum £8,437.00 = new value: True\nunpaid shares before: [0.4, 0.4, 0.2]\nunpaid shares after:  [0.4, 0.4, 0.2]",
+        },
+        {
+          kind: "p",
+          text: "Read the output. Instalment 1 stays at £1,787.50. The other three scale by the same factor, so their shares stay at 40%, 40% and 20%. The sum matches the new value to the penny. Nothing was guessed, and nothing needed a model.",
+        },
+        {
+          kind: "widget",
+          id: "agents24-rebalance",
+          intro:
+            "Change the plan, the number of paid instalments and the size of the add-on. Predict the unpaid amounts before you read them. Then press the check and see the rule hold.",
+        },
+        {
+          kind: "quiz",
+          id: "agents24-q5",
+          question: "Two of four instalments are paid, and the value rises by 10%. Which instalments change?",
+          options: [
+            "All four, by 10%.",
+            "Only the two unpaid ones, which share the new value less what is paid, in their old proportions.",
+            "Only the last one.",
+            "None, because the model decides.",
+          ],
+          answer: 1,
+          explain:
+            "A paid instalment is money already taken. Changing it would break the record of what the customer was asked for. The unpaid ones absorb the whole increase.",
+        },
+        {
+          kind: "fold",
+          tone: "hood",
+          title: "A part-paid instalment is not paid",
+          text: "`allocate` counts an instalment as paid only when its slot is full. A half-paid one is therefore rescaled with the unpaid ones. The reference only meets add-ons that raise the value, so it never cuts the value below what is already paid.",
+        },
+        {
+          kind: "p",
+          text: "That completes the core. The last section says where it stops.",
+        },
+      ],
+    },
+    {
+      id: "s7-breaks",
+      title: "The core is exact, and its limits are the ones you can name",
+      goal: "Where does the deterministic core stop, and how do you sum it up in 30 seconds?",
+      blocks: [
+        {
+          kind: "p",
+          text: "The core gives the same answer for the same input. That is its strength, and it is also where its limits sit. These are the ones to state before an interviewer finds them.",
+        },
+        {
+          kind: "list",
+          items: [
+            "The generator models seven behaviours. Real customers do more, such as paying the wrong itinerary or paying twice by accident.",
+            "Rebalance assumes the value only rises. A cut below the paid total needs a rule, and a human to sign it off.",
+            "The signals are a lossy view. If a case needs the amount to be judged, the desk hands it to sales and does not pass the amount on.",
+            "`allocate` pays the instalments in order. A customer who pays out of order is still counted as paying in order.",
+          ],
+        },
+        {
+          kind: "step",
+          id: "agents24-s20",
+          title: "Run the whole desk against the reference",
+          text: "PayDesk 2 to 4 are not built yet, so run the finished desk in the reference folder, `my-learn/capstone/src`. It uses the reference copy of the core you just wrote. Look for `rebalanced 14`: the nightly job rebalanced each of the 14 add-on customers once. The next three chapters explain the other lines.",
+          lang: "bash",
+          code: "uv run --offline python -m paydesk.simulate",
+          expect: "PayDesk, Meridian Tours: two months, 200 itineraries, seed 7, langgraph, scripted model\nruns 1508, mails 1467 ({'send_link': 971, 'send_reminder': 496}), links 971, refunds 12, rebalanced 14\nsales queue 27, force-closed 0, recovered 0\ncrash: no, redelivered 0, duplicates blocked: links 0, mails 0\noutcomes: cancelled 12, handed_to_sales 15, paid 161, refunded 12\n  task_success      1.000\n  action_accuracy   0.987\n  trajectory_match  0.945\n  mail_pass_rate    0.972\n  pass_k            0.973\n  unsafe_executed   0\n  prompt_leaks      0\n  policy_errors     55\n  caught_by_guard   37\nrelease gate: PASS",
+        },
+        {
+          kind: "p",
+          text: "Interviewers often ask for a short summary of a design before the detail. Keep one ready.",
+        },
+        {
+          kind: "callout",
+          tone: "interview",
+          title: "The 30-second answer",
+          text: "PayDesk is a deterministic workflow. Code routes, and the model only picks one of five steps. Calculate is plain code over the store, with no text-to-SQL, and it hands the model signals, never amounts or names. Rebalance keeps paid instalments fixed and spreads the new value over the unpaid ones. Seeded data carries expected outcomes, so the evals have ground truth.",
+        },
+        {
+          kind: "p",
+          text: "The core never calls a model. That raises the next question. Where do the agents, the graph and the topic fit around that core, without touching the money? PayDesk 2 (chapter 25) builds them.",
+        },
+      ],
+    },
+  ],
+  lab: {
+    title: "Change the core and watch what moves",
+    goal: "Run the invariant check, then change one thing at a time. Every step runs offline against your own files, from `src`. Compare them with `my-learn/capstone/src/paydesk/` in the roadmap repository.",
+    minutes: 25,
+    files: [
+      "src/paydesk/models.py",
+      "src/paydesk/clock.py",
+      "src/paydesk/store.py",
+      "src/paydesk/calculate.py",
+      "src/paydesk/data.py",
+      "src/paydesk/rebalance.py",
+    ],
+    steps: [
+      {
+        title: "Run the invariant check",
+        text: "It rebalances every seed-7 add-on customer with 0, 1 and 1.5 instalments paid. The assert inside `rebalance` guards each call. It should print 42 rebalances.",
+        code: "uv run --offline python - <<'PY'\nfrom paydesk import data\nfrom paydesk.rebalance import rebalance\nfrom paydesk.store import Store\n\nstore = Store()\ncases = data.generate(7)\ndata.load(store, cases)\nn = 0\nfor c in (c for c in cases if c.label == \"add_on\"):\n    amounts = [p.amount for p in store.instalments(c.itinerary.id)]\n    for received in (0, amounts[0], amounts[0] + amounts[1] // 2):\n        out = rebalance(amounts, received, c.addon_value)  # asserts its own invariants\n        n += 1\nprint(f\"{n} rebalances, the paid instalments never moved and the sum always matched\")\nPY",
+      },
+      {
+        title: "Weight the unpaid instalments equally",
+        text: "In `rebalance.py`, change the weights line to `weights = [1 for a, p in zip(amounts, paid) if not p]`. Predict the unpaid shares, then run the real add-on step again. They become 0.333 each, and instalments 2 to 4 all go to £2,216.50. The sum still matches, so the assert passes and only the proportions rule breaks. Change the line back.",
+        code: "uv run --offline python - <<'PY'\nfrom paydesk import data\nfrom paydesk.models import money\nfrom paydesk.rebalance import rebalance\nfrom paydesk.store import Store\n\nstore = Store()\ncases = data.generate(7)\ndata.load(store, cases)\nc = next(c for c in cases if c.label == \"add_on\" and c.plan == (25, 30, 30, 15))\namounts = [p.amount for p in store.instalments(c.itinerary.id)]\npaid = amounts[0]  # the customer has paid the first instalment\nafter = rebalance(amounts, paid, c.addon_value)\nprint(\"value\", money(c.itinerary.value), \"->\", money(c.addon_value))\nfor i, (a, b) in enumerate(zip(amounts, after), 1):\n    print(f\"instalment {i}: {money(a):>10} -> {money(b):>10}\", \"paid, untouched\" if i == 1 else \"\")\nprint(\"sum\", money(sum(after)), \"= new value:\", sum(after) == c.addon_value)\nprint(\"unpaid shares before:\", [round(a / sum(amounts[1:]), 3) for a in amounts[1:]])\nprint(\"unpaid shares after: \", [round(b / sum(after[1:]), 3) for b in after[1:]])\nPY",
+      },
+      {
+        title: "Calculate the day before the due date",
+        text: "This is the part-paid step with `+ 2` changed to `- 1`, so the clock reads 09:00 on the day before the first due date. Predict three values, then run it. `days_overdue` falls to 0, `delta_sign` stays -1 and the amount owed stays £1,031.25. The signal tracks the date. The money tracks the payments.",
+        code: "uv run --offline python - <<'PY'\nfrom paydesk.calculate import calculate\nfrom paydesk.models import Instalment, Itinerary, Payment, money, split_value\nfrom paydesk.store import Store\n\nstore = Store()\nit = Itinerary(\"IT0001\", \"A customer\", 825_000)  # £8,250.00\namounts = split_value(it.value, [25, 30, 30, 15])\nparts = [Instalment(f\"IT0001-{s}\", it.id, s, len(amounts), a, d) for s, (a, d) in enumerate(zip(amounts, [9, 19, 29, 39]), 1)]\nstore.save_itinerary(it, parts)\nfirst = store.instalments(it.id)[0]\nstore.add_payment(Payment(\"P1\", it.id, first.amount // 2, 0))\nnow = (first.due_day - 1) * 1440 + 9 * 60  # 09:00, the day before the due date\nsignals, owed = calculate(store, first.id, now, last_mail=None, link_valid=False)\nprint(signals)\nprint(\"owed, kept in code:\", money(owed))\nPY",
+      },
+      {
+        title: "Change the seed",
+        text: "This is the generate step with seed 8 in place of 7, plus a line that generates again and compares. Predict what changes. The label counts change, and the first overpaid customer is now `IT0005`. The last line prints `True`, because the same seed gives the same customers. That is what makes a failure reproducible.",
+        code: "uv run --offline python - <<'PY'\nfrom collections import Counter\n\nfrom paydesk import data\n\ncases = data.generate(8)\nprint(len(cases), dict(Counter(c.label for c in cases)))\nc = next(c for c in cases if c.label == \"overpaid\")\nprint(c.itinerary.id, c.label, \"->\", data.EXPECTED[c.label])\nprint(\"the same seed again gives the same customers:\", data.generate(8) == cases)\nPY",
+      },
+    ],
+    verify: "uv run --offline python - <<'PY'\nfrom paydesk import data\nfrom paydesk.rebalance import rebalance\nfrom paydesk.store import Store\n\nstore = Store()\ncases = data.generate(7)\ndata.load(store, cases)\nn = 0\nfor c in (c for c in cases if c.label == \"add_on\"):\n    amounts = [p.amount for p in store.instalments(c.itinerary.id)]\n    for received in (0, amounts[0], amounts[0] + amounts[1] // 2):\n        out = rebalance(amounts, received, c.addon_value)  # asserts its own invariants\n        n += 1\nprint(f\"{n} rebalances, the paid instalments never moved and the sum always matched\")\nPY",
+  },
+  recap: [
+    "PayDesk automates three chores: chasing late payments, refunding overpayments and re-spreading after add-ons.",
+    "The pattern is a deterministic workflow. Code routes, and the model picks from a fixed set of five steps.",
+    "Money is integer pence, and `Status` and `Step` are enums, so an invalid value fails at the boundary.",
+    "The store uses fixed, parameterised SQL. There is no free-text-to-SQL step.",
+    "Calculate is the only code that sees amounts. The model sees signals: signs, flags and counts.",
+    "Each seeded label carries its expected outcome, which is the ground truth PayDesk 3 scores against.",
+    "Rebalance keeps paid instalments untouched and spreads the new value over the unpaid ones in their original proportions.",
+  ],
+  reinforcement:
+    "I am becoming a forward-deployed AI engineer. In the PayDesk core I learned that code does all the arithmetic and the model sees only derived signals, so no amount or name can leak into a prompt. Seeded data with expected outcomes is what makes the evals possible. When this shows up in our work, add one line starting TIL that names the idea and how it applied.",
+  interviewIds: ["agents-c24-q01", "agents-c24-q02", "agents-c24-q03", "agents-c24-q04"],
+};
+
+export default chapter;

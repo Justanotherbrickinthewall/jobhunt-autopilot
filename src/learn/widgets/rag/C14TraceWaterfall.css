@@ -1,0 +1,15 @@
+.c14tw-root { display: grid; gap: 12px; }
+.c14tw-lead { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.c14tw-chips { flex-wrap: wrap; gap: 8px; }
+.c14tw-chip.is-on { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); }
+.c14tw-query { margin: 0; font-weight: 600; font-size: 0.95rem; }
+.c14tw-json { margin: 0; padding: 10px 12px; background: var(--surface-2); border-radius: var(--r-sm); font-family: var(--font-mono, monospace); font-size: 0.78rem; white-space: pre-wrap; word-break: break-word; }
+.c14tw-guess { border: 0; padding: 0; margin: 0; min-width: 0; }
+.c14tw-guess legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+.c14tw-svg { width: 100%; height: auto; display: block; }
+.c14tw-lbl { fill: var(--muted); font-size: 12px; font-family: var(--font-mono, monospace); }
+.c14tw-bar { fill: var(--teal); opacity: 0.85; }
+.c14tw-bar.big { fill: var(--amber); opacity: 1; }
+.c14tw-ms { fill: var(--ink); font-size: 11px; font-family: var(--font-mono, monospace); }
+.c14tw-total { fill: var(--muted); font-size: 12px; font-family: var(--font-mono, monospace); }
+.c14tw-toggle { display: flex; gap: 8px; align-items: center; font-size: 0.92rem; }

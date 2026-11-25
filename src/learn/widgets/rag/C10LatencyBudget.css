@@ -1,0 +1,24 @@
+.c10lb-root { display: grid; gap: 14px; }
+.c10lb-lead { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.c10lb-guess { border: 0; padding: 0; margin: 0; min-width: 0; }
+.c10lb-guess legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+.c10lb-chips { flex-wrap: wrap; gap: 8px; }
+.c10lb-chip.is-on { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); }
+.c10lb-note { margin: 10px 0 0; font-size: 0.95rem; }
+.c10lb-note.ok { color: var(--teal); }
+.c10lb-note.no { color: var(--rose); }
+.c10lb-step { margin: 0; font-weight: 600; }
+.c10lb-svg { width: 100%; height: auto; display: block; }
+.c10lb-track { fill: var(--surface-2); }
+.c10lb-target { stroke: var(--rose); }
+.c10lb-tl { fill: var(--muted); font-size: 12px; font-family: var(--font-mono, monospace); }
+.c10lb-tl.bad { fill: var(--rose); }
+.c10lb-tl.good { fill: var(--teal); }
+.c10lb-sliders { display: grid; gap: 12px; }
+.c10lb-row { display: grid; gap: 4px; }
+.c10lb-label { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; font-weight: 600; }
+.c10lb-swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.c10lb-val { margin-left: auto; font-family: var(--font-mono, monospace); font-weight: 500; color: var(--muted); }
+.c10lb-row input[type="range"] { width: 100%; accent-color: var(--accent); }
+.c10lb-hint { font-size: 0.85rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.c10lb-skip { display: inline-flex; gap: 6px; align-items: center; color: var(--ink); }

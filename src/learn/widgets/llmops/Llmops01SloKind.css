@@ -1,0 +1,17 @@
+.llmops01-slo-kind-count { margin: 6px 0 0; }
+.llmops01-slo-kind-complaint { margin: 8px 0 10px; font-size: 0.95rem; line-height: 1.5; overflow-wrap: anywhere; }
+.llmops01-slo-kind-pick { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; margin: 10px 0; min-width: 0; }
+.llmops01-slo-kind-pick legend { font-weight: 600; font-size: 0.9rem; padding: 0 4px; }
+.llmops01-slo-kind-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.llmops01-slo-kind-opt { all: unset; box-sizing: border-box; display: grid; gap: 2px; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; line-height: 1.35; }
+.llmops01-slo-kind-opt:hover { border-color: var(--accent); }
+.llmops01-slo-kind-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.llmops01-slo-kind-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.llmops01-slo-kind-opt.right { border-color: var(--teal); background: var(--teal-soft); }
+.llmops01-slo-kind-name { font-weight: 600; }
+.llmops01-slo-kind-sub { font-size: 0.8rem; color: var(--muted); }
+.llmops01-slo-kind-slo { display: block; margin-top: 8px; overflow-wrap: anywhere; }
+.llmops01-slo-kind fieldset:disabled .llmops01-slo-kind-opt { cursor: default; }
+@media (max-width: 480px) {
+  .llmops01-slo-kind-opts { grid-template-columns: minmax(0, 1fr); }
+}

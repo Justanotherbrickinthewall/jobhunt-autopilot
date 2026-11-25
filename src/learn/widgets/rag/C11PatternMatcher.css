@@ -1,0 +1,17 @@
+.c11pm-root { display: grid; gap: 12px; }
+.c11pm-lead { margin: 0; font-size: 0.95rem; }
+.c11pm-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 14px; }
+@media (max-width: 640px) { .c11pm-grid { grid-template-columns: 1fr; } }
+.c11pm-col { display: grid; gap: 8px; align-content: start; }
+.c11pm-h { margin: 0; font-size: 0.78rem; letter-spacing: 0; color: var(--muted); }
+.c11pm-btn { text-align: left; padding: 9px 11px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 0.9rem; cursor: pointer; }
+.c11pm-btn:hover:not(:disabled) { border-color: var(--accent); }
+.c11pm-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.c11pm-btn:disabled { cursor: default; opacity: 0.85; }
+.c11pm-btn.sel { background: var(--accent-soft); border-color: var(--accent); }
+.c11pm-btn.done { border-color: var(--teal); background: var(--surface-2); color: var(--muted); }
+.c11pm-btn.f:disabled:not(.done) { opacity: 0.6; }
+.c11pm-tag { display: block; margin-top: 4px; color: var(--teal); font-size: 0.8rem; font-weight: 600; }
+.c11pm-msg { margin: 0; font-size: 0.92rem; }
+.c11pm-msg.ok { color: var(--teal); }
+.c11pm-msg.no { color: var(--rose); }

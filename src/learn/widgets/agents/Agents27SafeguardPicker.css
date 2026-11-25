@@ -1,0 +1,4 @@
+.agents27-safeguard-picker-note { margin: 0 0 6px; color: var(--muted); font-size: 0.86rem; }
+.agents27-safeguard-picker-case { margin: 0 0 10px; font-size: 0.95rem; line-height: 1.45; }
+.agents27-safeguard-picker-opts { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+@media (max-width: 480px) { .agents27-safeguard-picker-opts .w-btn { flex: 1 1 100%; } }

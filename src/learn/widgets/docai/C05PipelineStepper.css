@@ -1,0 +1,11 @@
+.docai-pipeline-stepper-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.docai-pipeline-stepper-doc { margin-bottom: 10px; }
+.docai-pipeline-stepper-name { font-size: 0.85rem; font-weight: 600; }
+.docai-pipeline-stepper-script { font-size: 0.88rem; margin: 4px 0 8px; }
+.docai-pipeline-stepper-opts { display: flex; gap: 6px; flex-wrap: wrap; }
+.docai-pipeline-stepper-reveal { margin-top: 8px; font-size: 0.85rem; }
+.docai-pipeline-stepper-reveal ol { margin: 0 0 6px; padding-left: 1.3em; font-size: 0.78rem; color: var(--muted); }
+.docai-pipeline-stepper-reveal p { margin: 0; }
+.docai-pipeline-stepper-step { margin-top: 8px; }
+.docai-pipeline-stepper-why { font-size: 0.85rem; margin: 6px 0 0; }
+.docai-pipeline-stepper-end { font-size: 0.85rem; margin: 10px 0 0; }

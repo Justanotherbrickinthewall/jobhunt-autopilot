@@ -1,0 +1,13 @@
+.fde-craft-roi-calc-lede { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.fde-craft-roi-calc-count { font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+.fde-craft-roi-calc-brief { margin: 0 0 10px; font-size: 0.95rem; }
+.fde-craft-roi-calc-sliders { display: grid; gap: 10px; margin-bottom: 10px; }
+.fde-craft-roi-calc-sliders label { display: grid; gap: 4px; }
+.fde-craft-roi-calc-sliders input[type="range"] { width: 100%; min-height: 32px; }
+.fde-craft-roi-calc-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 0.9rem; }
+.fde-craft-roi-calc-table th { text-align: left; font-weight: 500; color: var(--muted); padding: 4px 0; }
+.fde-craft-roi-calc-table td { text-align: right; padding: 4px 0; }
+.fde-craft-roi-calc-table tr + tr { border-top: 1px solid var(--line); }
+.fde-craft-roi-calc-choices { display: grid; gap: 6px; margin-bottom: 10px; }
+.fde-craft-roi-calc-choices .w-btn { width: 100%; text-align: left; white-space: normal; min-height: 44px; }
+.fde-craft-roi-calc-foot { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }

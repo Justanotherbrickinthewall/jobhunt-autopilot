@@ -1,0 +1,6 @@
+.evals07-weak-slices-note { margin: 8px 0; font-size: 0.92rem; }
+.evals07-weak-slices-list { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 6px; }
+.evals07-weak-slices-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; background: var(--surface-2); border-radius: var(--r-sm); padding: 8px 10px; }
+.evals07-weak-slices-detail { color: var(--muted); font-size: 0.85rem; overflow-wrap: anywhere; }
+.evals07-weak-slices-room { margin-left: auto; font-size: 0.85rem; }
+.evals07-weak-slices .w-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

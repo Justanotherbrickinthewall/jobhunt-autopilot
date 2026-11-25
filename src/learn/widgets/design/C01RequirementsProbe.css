@@ -1,0 +1,8 @@
+.design-requirements-probe-lede { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.design-requirements-probe-count { margin-bottom: 8px; }
+.design-requirements-probe-list { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 6px; }
+.design-requirements-probe-q { width: 100%; text-align: left; white-space: normal; line-height: 1.35; padding: 8px 12px; border-radius: var(--r-sm); min-height: 44px; }
+.design-requirements-probe-q.is-right { border-color: var(--teal); }
+.design-requirements-probe-q.is-wrong { border-color: var(--rose); }
+.design-requirements-probe-note { margin: 4px 4px 0; font-size: 0.84rem; color: var(--muted); }
+.design-requirements-probe-foot { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }

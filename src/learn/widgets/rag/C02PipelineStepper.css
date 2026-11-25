@@ -1,0 +1,25 @@
+.c02-pipeline-stepper-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.c02-pipeline-stepper-svg { width: 100%; display: block; margin: 4px 0 8px; }
+.c02-pipeline-stepper-node { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; transition: fill 0.2s, stroke 0.2s; }
+.c02-pipeline-stepper-node.is-done { fill: var(--surface-2); }
+.c02-pipeline-stepper-node.is-now { fill: var(--accent-soft); stroke: var(--accent); }
+.c02-pipeline-stepper-node.is-query.is-now { fill: var(--amber-soft); stroke: var(--amber); }
+.c02-pipeline-stepper-name { fill: var(--ink); font-size: 9.5px; text-anchor: middle; }
+.c02-pipeline-stepper-lane { fill: var(--muted); font-size: 9.5px; letter-spacing: 0; }
+.c02-pipeline-stepper-link { stroke: var(--line); stroke-width: 1.5; fill: none; }
+.c02-pipeline-stepper-index { fill: var(--surface-2); stroke: var(--teal); stroke-width: 1.5; }
+.c02-pipeline-stepper-dot { fill: var(--accent); }
+.c02-pipeline-stepper-card { background: var(--surface-2); border-radius: var(--r-sm); padding: 10px 12px; font-size: 0.9rem; min-height: 8.5em; }
+.c02-pipeline-stepper-card h4 { margin: 0 0 6px; font-size: 1rem; }
+.c02-pipeline-stepper-card dl { margin: 0; display: grid; grid-template-columns: 4.2em 1fr; gap: 3px 8px; }
+.c02-pipeline-stepper-card dt { color: var(--muted); font-size: 0.78rem; letter-spacing: 0; padding-top: 2px; }
+.c02-pipeline-stepper-card dd { margin: 0; }
+.c02-pipeline-stepper-card code { font-size: 0.82em; }
+.c02-pipeline-stepper-nav { display: flex; gap: 8px; margin: 8px 0; align-items: center; flex-wrap: wrap; }
+.c02-pipeline-stepper-nav span { font-size: 0.8rem; color: var(--muted); }
+.c02-pipeline-stepper-triage h4 { margin: 14px 0 6px; font-size: 1rem; }
+.c02-pipeline-stepper-symptom { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 8px 10px; margin-bottom: 8px; background: var(--surface); }
+.c02-pipeline-stepper-symptom p { margin: 0 0 6px; font-size: 0.92rem; }
+.c02-pipeline-stepper-picks { display: flex; flex-wrap: wrap; gap: 5px; }
+.c02-pipeline-stepper-picks .w-btn { padding: 4px 9px; font-size: 0.8rem; }
+.c02-pipeline-stepper-note { margin: 6px 0 0; font-size: 0.86rem; }

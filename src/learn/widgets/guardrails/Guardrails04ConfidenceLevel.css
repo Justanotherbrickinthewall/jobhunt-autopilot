@@ -1,0 +1,27 @@
+.guardrails04-confidence-level { display: grid; gap: 12px; }
+.guardrails04-confidence-level-note { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.guardrails04-confidence-level-blurb { margin: 0; font-size: 0.92rem; }
+.guardrails04-confidence-level-hint { font-size: 0.82rem; color: var(--muted); }
+.guardrails04-confidence-level-svg { width: 100%; height: auto; display: block; max-width: 420px; justify-self: center; }
+.guardrails04-confidence-level-ax { fill: var(--muted); font-size: 10px; }
+.guardrails04-confidence-level-axis { stroke: var(--line); stroke-width: 1; }
+.guardrails04-confidence-level-dot.bad { fill: none; stroke: var(--rose); stroke-width: 2; }
+.guardrails04-confidence-level-dot.good { fill: none; stroke: var(--teal); stroke-width: 2; }
+.guardrails04-confidence-level-dot.bad.blocked { fill: var(--rose); }
+.guardrails04-confidence-level-dot.good.blocked { fill: var(--teal); }
+.guardrails04-confidence-level-line { stroke: var(--amber); stroke-width: 2; stroke-dasharray: 4 3; }
+.guardrails04-confidence-level-levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; }
+.guardrails04-confidence-level-lv { all: unset; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.82rem; text-align: center; }
+.guardrails04-confidence-level-lv:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.guardrails04-confidence-level-lv.on { border-color: var(--accent); background: var(--accent-soft); }
+.guardrails04-confidence-level-lv:disabled { cursor: default; }
+.guardrails04-confidence-level-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 6px; margin: 0; }
+.guardrails04-confidence-level-stats div { border: 1px solid var(--line); border-radius: var(--r-ctl); padding: 6px 8px; background: var(--surface); }
+.guardrails04-confidence-level-stats dt { font-size: 0.74rem; color: var(--muted); }
+.guardrails04-confidence-level-stats dd { margin: 0; font-size: 1.05rem; font-weight: 650; }
+.guardrails04-confidence-level-out { display: grid; gap: 14px; }
+.guardrails04-confidence-level-card { display: grid; gap: 6px; }
+.guardrails04-confidence-level-cap { margin: 0; font-weight: 600; }
+.guardrails04-confidence-level-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.guardrails04-confidence-level-table th, .guardrails04-confidence-level-table td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.guardrails04-confidence-level-table tr.best td { background: var(--teal-soft); font-weight: 600; }

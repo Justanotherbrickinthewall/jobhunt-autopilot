@@ -1,0 +1,22 @@
+.llmops06-burn-rule-tester { display: grid; gap: 12px; }
+.llmops06-burn-rule-tester-hint { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.llmops06-burn-rule-tester-card { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; background: var(--surface); display: grid; gap: 8px; }
+.llmops06-burn-rule-tester-title { margin: 0; font-size: 1rem; }
+.llmops06-burn-rule-tester-note { margin: 0; font-size: 0.9rem; }
+.llmops06-burn-rule-tester-choices { display: flex; flex-wrap: wrap; gap: 6px; }
+.llmops06-burn-rule-tester-choice:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.llmops06-burn-rule-tester-choice.on { background: var(--accent-soft); border-color: var(--accent); }
+.llmops06-burn-rule-tester-choice.right { border-color: var(--teal); }
+.llmops06-burn-rule-tester-choice:disabled { cursor: default; }
+.llmops06-burn-rule-tester-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.llmops06-burn-rule-tester-table th,
+.llmops06-burn-rule-tester-table td { padding: 3px 6px; text-align: left; border-bottom: 1px solid var(--line); }
+.llmops06-burn-rule-tester-table thead th { color: var(--muted); font-weight: 600; }
+.llmops06-burn-rule-tester-table tbody th { font-weight: var(--w-text); }
+.llmops06-burn-rule-tester-table tr.over { background: var(--rose-soft); }
+.llmops06-burn-rule-tester-why { margin: 0; padding: 6px 8px; font-size: 0.88rem; border-radius: var(--r-sm); border-left: 3px solid var(--line); }
+.llmops06-burn-rule-tester-why.ok { border-left-color: var(--teal); }
+.llmops06-burn-rule-tester-why.miss { border-left-color: var(--rose); }
+@media (max-width: 560px) {
+  .llmops06-burn-rule-tester-table { font-size: 0.8rem; }
+}

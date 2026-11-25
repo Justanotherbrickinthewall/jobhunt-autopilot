@@ -1,0 +1,210 @@
+/* Palette and type follow docs/dashboard-design.md: one white work area, a ladder of cool greys, harbor and accent blues,
+   four status tones, six avatar tones. light-dark() reads color-scheme: the system's choice by default, and data-theme on
+   the root (set by the top bar's theme button) overrides it. Learn must not redeclare these. */
+:root {
+  color-scheme: light dark;
+  /* Greys, from the work area out to the faintest count */
+  --bg: light-dark(#ffffff, #121618);           /* the work area, from the top bar down */
+  --sub: light-dark(#f6f8f9, #171c1f);          /* the rail, thread messages, board lanes */
+  --sunk: light-dark(#f1f4f5, #1f2629);         /* default tag, segmented track, fit track */
+  --line: light-dark(#e6ebed, #263034);         /* every hairline */
+  --line-strong: light-dark(#d7dfe2, #36424a);  /* button rings, dashed filter chips, separators */
+  --ink: light-dark(#1d303a, #e4ebee);          /* primary text */
+  --body: light-dark(#2b3f4a, #ccd6db);         /* long-form body copy */
+  --nav: light-dark(#3e535f, #b8c4ca);          /* rail items */
+  --text-2: light-dark(#5f6f78, #9cabb2);       /* muted: secondary text, icons in buttons */
+  --text-3: light-dark(#8d9aa1, #7a8a92);       /* faint: sub-lines, caps */
+  --label: light-dark(#93a1a8, #73838b);        /* table headers, rail group labels */
+  --count: light-dark(#a3afb5, #6b7a81);        /* small counts, the small part of a fraction */
+  --sep: light-dark(#b7c3c9, #4f5c63);          /* the top bar crumb separator */
+  --dot-sep: light-dark(#c3ccd1, #4a575e);      /* the dot between sub-line parts */
+  --harbor: light-dark(#244b62, #8cbbd6);       /* primary button, brand, active icon, active tab */
+  --accent: light-dark(#2d6c8f, #6fa8c9);       /* links, selected bar, checkbox, fit fill */
+  --accent-soft: light-dark(#e8f1f6, #1a2c37);
+  --on-accent: light-dark(#ffffff, #0f1416);
+  --selected: light-dark(#f3f8fb, #16232b);     /* a selected row */
+  /* Four status tones, text on a soft fill. Neutral is the muted state label. */
+  --good: light-dark(#1c7f55, #5cc08f);
+  --good-soft: light-dark(#e6f4ec, #14291e);
+  --wait: light-dark(#9a5d07, #e0a94f);
+  --wait-soft: light-dark(#fbf1df, #2d2313);
+  --bad: light-dark(#b13d36, #ea837c);
+  --bad-soft: light-dark(#fbeceb, #301a19);
+  --violet: light-dark(#5d4fb0, #aa9df0);
+  --violet-soft: light-dark(#efedfb, #231f3a);
+  --blue-soft: light-dark(#ebf3f8, #1a2c37);
+  --neutral: light-dark(#7f8f97, #87969d);
+  --live: light-dark(#27a26b, #3fbf83);         /* a status dot that means running or verified */
+  --alert: light-dark(#d9463d, #ef6a61);        /* the rail's failure dot and the top bar badge */
+  --warm: light-dark(#c46a0c, #e59a4a);         /* a warm note, such as the LinkedIn pause */
+  --tile-warm: light-dark(#faf4ef, #2a221b);    /* the agent card's icon tile */
+  /* A card rises on --ring. Menus, the drawer and dialogs float on --float. */
+  --ring: 0 0 0 1px var(--line), 0 1px 2px light-dark(rgb(29 48 58 / 0.04), rgb(0 0 0 / 0.3));
+  --float: 0 0 0 1px light-dark(rgb(29 48 58 / 0.08), rgb(255 255 255 / 0.08)), 0 4px 10px light-dark(rgb(29 48 58 / 0.06), rgb(0 0 0 / 0.35)), 0 24px 48px light-dark(rgb(29 48 58 / 0.25), rgb(0 0 0 / 0.55));
+  /* The page under the content. It is the white work area everywhere. */
+  --page: var(--bg);
+}
+:root[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark'] { color-scheme: dark; }
+
+/* Older names stay as aliases, so component and Learn CSS keep working. */
+:root {
+  --surface: var(--bg);
+  --surface-2: var(--sunk);
+  --muted: var(--text-2);
+  --amber: var(--wait);
+  --rose: var(--bad);
+  --teal: var(--good);
+  --amber-soft: var(--wait-soft);
+  --teal-soft: var(--good-soft);
+  --rose-soft: var(--bad-soft);
+  --karaoke-word: color-mix(in srgb, var(--wait) 38%, transparent);
+  --shadow-1: 0 1px 2px light-dark(rgb(29 48 58 / 0.05), rgb(0 0 0 / 0.3));
+  --shadow-2: var(--float);
+  --shadow: var(--float);
+  --hover: color-mix(in srgb, var(--ink) 4%, transparent);
+  --border: var(--line);
+  --border-strong: var(--line-strong);
+  --text: var(--ink);
+  --focus: var(--accent);
+
+  /* The old hue names map onto the status tones. */
+  --gray: var(--neutral);
+  --slate: var(--neutral);
+  --blue: var(--accent);
+  --cyan: var(--accent);
+  --orange: var(--wait);
+  --green: var(--good);
+  --red: var(--bad);
+  --pink: var(--bad);
+
+  /* Type: Geist for the interface, titles and numbers. Newsreader for long reading only. JetBrains Mono for code only. */
+  --font-display: 'Newsreader Variable', Georgia, serif;
+  --font-body: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font: var(--font-body);
+  --w-text: 450;
+  --w-read: 500;
+  --w-small: 500;
+  --w-title: 550;
+  --mono: var(--font-mono);
+  /* The interface base is 13px. The scale below stays for the screens that read it, Learn included. */
+  --fs-base: calc(13px * var(--text-scale, 1));
+  --fs-xs: calc(12px * var(--text-scale, 1));
+  --fs-sm: calc(13px * var(--text-scale, 1));
+  --fs: calc(14px * var(--text-scale, 1));
+  --fs-md: calc(15px * var(--text-scale, 1));
+  --fs-lg: calc(16px * var(--text-scale, 1));
+  --fs-xl: calc(18px * var(--text-scale, 1));
+  --fs-2xl: calc(22px * var(--text-scale, 1));
+  --fs-title: calc(28px * var(--text-scale, 1));
+  --lh-xs: calc(16px * var(--text-scale, 1));
+  --lh-sm: calc(18px * var(--text-scale, 1));
+  --lh: calc(20px * var(--text-scale, 1));
+  --lh-md: calc(22px * var(--text-scale, 1));
+  --lh-lg: calc(24px * var(--text-scale, 1));
+  --lh-xl: calc(28px * var(--text-scale, 1));
+  --lh-2xl: calc(30px * var(--text-scale, 1));
+  --lh-title: calc(36px * var(--text-scale, 1));
+
+  /* Space, shape, motion */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --r-tag: 5px;      /* tags, chips, small badges */
+  --r-sm: 7px;       /* buttons, inputs, rail items */
+  --r: 10px;         /* cards, menus, popovers */
+  --r-lg: 12px;      /* the drawer and dialogs */
+  --r-card: var(--r);
+  --r-ctl: var(--r-sm);
+  --row: 40px;
+  --row-2: 54px;
+  --ctl: 30px;
+  --gutter: 20px;
+  --content-w: 1180px;
+  --rail-w: 226px;
+  --topbar-h: 52px;
+  --drawer-w: min(640px, 100vw);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --t-fast: 150ms;
+  --t-med: 250ms;
+  --dur: var(--t-fast);
+
+  /* Reading pages */
+  --col: 720px;
+  --col-wide: 960px;
+  --measure: 68ch;
+
+  /* Prep tab density: one centred reading column with tight blocks */
+  --prep-w: 960px;
+  --prep-fs: var(--fs-md);
+  --prep-lh: 1.5;
+  --prep-fs-label: var(--fs-xs);
+  --prep-fs-meta: var(--fs-xs);
+  --prep-pad-y: 10px;
+  --prep-pad-x: 12px;
+  --prep-gap: 8px;
+  --prep-gap-tight: 5px;
+  --prep-label-gap: 3px;
+}
+
+/* Base */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: var(--w-text) var(--fs-base)/1.45 var(--font);
+  letter-spacing: -0.005em;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  transition: background-color var(--t-med) var(--ease), color var(--t-med) var(--ease);
+}
+::selection { background: var(--accent-soft); }
+button, input { font: inherit; color: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+a { color: var(--accent); text-decoration: none; }
+@media (hover: hover) { a:hover { text-decoration: underline; } }
+code, kbd { font-family: var(--mono); font-size: 0.92em; letter-spacing: 0; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; border-radius: var(--r-sm); }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--text-3); }
+.grow { flex: 1; min-width: 0; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+kbd {
+  display: inline-block;
+  min-width: 18px;
+  padding: 0 4px;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--r-tag);
+  font-size: var(--fs-xs);
+  line-height: 15px;
+  text-align: center;
+  color: var(--text-2);
+  background: var(--surface);
+}
+/* Lucide icons draw at stroke 1.75 in currentColor. Size is set where they sit. */
+.lucide { flex: none; stroke-width: 1.75; }
+
+/* Tones: each sets --tone for text, dots and edges, and --tone-soft for a tag's fill */
+.tone-gray, .tone-slate { --tone: var(--neutral); --tone-soft: var(--sunk); }
+.tone-blue, .tone-cyan { --tone: var(--accent); --tone-soft: var(--blue-soft); }
+.tone-violet { --tone: var(--violet); --tone-soft: var(--violet-soft); }
+.tone-amber, .tone-orange { --tone: var(--wait); --tone-soft: var(--wait-soft); }
+.tone-green, .tone-teal { --tone: var(--good); --tone-soft: var(--good-soft); }
+.tone-red, .tone-pink { --tone: var(--bad); --tone-soft: var(--bad-soft); }
+
+/* Six avatar tones. A name picks one by a stable hash, in toneIndex() in src/components/Chip.tsx. */
+.av-0 { --av: light-dark(#2d6c8f, #8cc0dd); --av-bg: light-dark(#e3eef5, #1b2e3a); }
+.av-1 { --av: light-dark(#2f7354, #7cc39f); --av-bg: light-dark(#e5f0e9, #17291f); }
+.av-2 { --av: light-dark(#8a5f1d, #d9b277); --av-bg: light-dark(#f5ecdc, #2c2416); }
+.av-3 { --av: light-dark(#9a4545, #e09a9a); --av-bg: light-dark(#f6e6e6, #2f1c1c); }
+.av-4 { --av: light-dark(#4b5a68, #aab6c2); --av-bg: light-dark(#e8ebef, #232a31); }
+.av-5 { --av: #ffffff; --av-bg: light-dark(#244b62, #2f5f7a); }

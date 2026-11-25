@@ -1,0 +1,18 @@
+{
+  "skillOverrides": { "run": "off" },
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [ { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-start.sh", "timeout": 120 } ] }
+    ],
+    "PreToolUse": [
+      { "matcher": "Bash",
+        "hooks": [ { "type": "command", "if": "Bash(git commit *)", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/commit-gate.sh", "timeout": 300 } ] },
+      { "matcher": "mcp__claude-in-chrome__.*",
+        "hooks": [ { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/chrome-pin.sh pre" } ] }
+    ],
+    "PostToolUse": [
+      { "matcher": "mcp__claude-in-chrome__select_browser",
+        "hooks": [ { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/chrome-pin.sh post" } ] }
+    ]
+  }
+}

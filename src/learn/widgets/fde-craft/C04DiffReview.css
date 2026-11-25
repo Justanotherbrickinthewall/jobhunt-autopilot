@@ -1,0 +1,12 @@
+.fde-craft-diff-review-lede { margin: 0 0 8px; color: var(--muted); font-size: 0.9rem; }
+.fde-craft-diff-review-repo { margin: 0 0 8px; font-size: 0.84rem; padding: 6px 10px; background: var(--surface-2); border-radius: var(--r-sm); }
+.fde-craft-diff-review-code { display: grid; gap: 1px; margin-bottom: 12px; border: 1px solid var(--line); border-radius: var(--r-sm); overflow-x: auto; background: var(--surface-2); }
+.fde-craft-diff-review-line { display: flex; gap: 10px; align-items: baseline; width: 100%; text-align: left; background: transparent; border: 0; color: var(--ink); padding: 3px 8px; min-height: 28px; cursor: pointer; font: inherit; }
+.fde-craft-diff-review-line code { font-family: var(--font-mono); font-size: 0.8rem; white-space: pre; }
+.fde-craft-diff-review-n { flex: none; width: 1.6em; color: var(--muted); font-family: var(--font-mono); font-size: 0.74rem; text-align: right; }
+.fde-craft-diff-review-line:hover { background: var(--accent-soft); }
+.fde-craft-diff-review-line.is-flag { background: var(--amber-soft); }
+.fde-craft-diff-review-line.is-flaw { background: var(--rose-soft); }
+.fde-craft-diff-review-line.is-wrong { background: var(--amber-soft); outline: 1px dashed var(--amber); }
+.fde-craft-diff-review-why { margin: 0; padding: 4px 10px 6px 3.2em; font-size: 0.84rem; color: var(--ink); background: var(--rose-soft); }
+.fde-craft-diff-review-foot { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }

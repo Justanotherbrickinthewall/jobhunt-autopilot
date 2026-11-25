@@ -1,0 +1,25 @@
+.agents02-error-replay-note { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.agents02-error-replay-designs { display: grid; gap: 6px; margin: 0 0 12px; }
+.agents02-error-replay-design dt { font-weight: 600; font-size: 0.92rem; }
+.agents02-error-replay-design dd { margin: 2px 0 0; color: var(--muted); font-size: 0.88rem; }
+.agents02-error-replay-faults { display: grid; gap: 10px; margin-bottom: 12px; }
+.agents02-error-replay-fault { display: grid; gap: 4px; }
+.agents02-error-replay-cells { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.agents02-error-replay-cell { all: unset; box-sizing: border-box; display: grid; gap: 2px; padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.82rem; line-height: 1.3; text-align: left; }
+.agents02-error-replay-cell strong { font-size: 0.9rem; }
+.agents02-error-replay-cell:hover { border-color: var(--accent); }
+.agents02-error-replay-cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.agents02-error-replay-cell.is-good { border-color: var(--teal); background: var(--teal-soft); }
+.agents02-error-replay-cell.is-bad { border-color: var(--rose); background: var(--rose-soft); }
+.agents02-error-replay-cell.is-active { outline: 2px solid var(--accent); outline-offset: 1px; }
+.agents02-error-replay-run { display: grid; gap: 8px; margin-bottom: 10px; }
+.agents02-error-replay-setup { margin: 0; font-size: 0.9rem; color: var(--muted); }
+.agents02-error-replay-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.agents02-error-replay-lines li { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: 8px; align-items: baseline; }
+.agents02-error-replay-lines .w-mono { overflow-wrap: anywhere; font-size: 0.82rem; }
+.agents02-error-replay-who { font-size: 0.75rem; letter-spacing: 0; color: var(--muted); }
+.agents02-error-replay-progress { margin: 0 0 10px; color: var(--muted); font-size: 0.85rem; }
+.agents02-error-replay-pick { border: 0; padding: 0; margin: 0 0 10px; min-width: 0; }
+.agents02-error-replay-pick legend { padding: 0; margin-bottom: 6px; }
+.agents02-error-replay-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.agents02-error-replay .w-verdict { margin-top: 4px; }

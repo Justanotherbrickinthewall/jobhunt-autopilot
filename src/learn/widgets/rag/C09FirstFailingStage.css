@@ -1,0 +1,21 @@
+.rag-first-failing-stage-hint { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.rag-first-failing-stage-qa p { margin: 0 0 4px; font-size: 0.92rem; }
+.rag-first-failing-stage-list { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; }
+.rag-first-failing-stage-row {
+  position: relative; display: grid; grid-template-columns: 5.5rem 1fr; gap: 4px 10px; align-items: start;
+  text-align: left; width: 100%; padding: 8px 10px; cursor: pointer; font: inherit; color: inherit;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
+}
+.rag-first-failing-stage-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.rag-first-failing-stage-row.on { background: var(--accent-soft); border-color: var(--accent); }
+.rag-first-failing-stage-row.broke { border-color: var(--rose); border-width: 2px; }
+.rag-first-failing-stage-row.knock { opacity: 0.65; }
+.rag-first-failing-stage-row:disabled { cursor: default; }
+.rag-first-failing-stage-name { font-weight: 600; font-size: 0.85rem; }
+.rag-first-failing-stage-text { font-size: 0.85rem; color: var(--muted); }
+.rag-first-failing-stage-tag { grid-column: 2; justify-self: start; font-size: 0.72rem; font-weight: 600; color: var(--rose); }
+.rag-first-failing-stage-tag.quiet { color: var(--muted); }
+@media (max-width: 480px) {
+  .rag-first-failing-stage-row { grid-template-columns: 1fr; }
+  .rag-first-failing-stage-tag { grid-column: 1; }
+}

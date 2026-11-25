@@ -1,0 +1,16 @@
+.fde-craft-rounds-lede { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.fde-craft-rounds-meter { margin-bottom: 10px; }
+.fde-craft-rounds-bar { flex: 1 1 80px; min-width: 80px; height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.fde-craft-rounds-bar > span { display: block; height: 100%; background: var(--accent); transition: width 0.25s ease; }
+@media (prefers-reduced-motion: reduce) { .fde-craft-rounds-bar > span { transition: none; } }
+.fde-craft-rounds-done { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 6px; font-size: 0.88rem; }
+.fde-craft-rounds-done li { padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface-2); border-left: 3px solid var(--line); }
+.fde-craft-rounds-done li.is-good { border-left-color: var(--teal); }
+.fde-craft-rounds-done li.is-bad { border-left-color: var(--rose); }
+.fde-craft-rounds-fb { color: var(--muted); margin-top: 2px; }
+.fde-craft-rounds-card { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px; background: var(--surface-2); }
+.fde-craft-rounds-card p { margin: 0 0 4px; font-size: 1rem; }
+.fde-craft-rounds-count { font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; }
+.fde-craft-rounds-choices { display: grid; gap: 6px; margin-top: 8px; }
+.fde-craft-rounds-choice { width: 100%; text-align: left; white-space: normal; line-height: 1.35; min-height: 44px; }
+.fde-craft-rounds-foot { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }

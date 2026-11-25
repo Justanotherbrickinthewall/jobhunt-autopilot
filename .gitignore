@@ -1,0 +1,39 @@
+# Sessions
+my-sessions/
+
+# Application folders and the candidate profile
+my-applications/
+my-interviews/
+my-notebook/
+my-learn/
+my-phone/
+my-profile/
+take-home/
+
+# Machine-specific values
+process/local.json
+.claude/settings.local.json
+.claude/worktrees/
+
+# Locks
+*.lock
+
+# macOS
+.DS_Store
+
+# TeX build files
+*.aux
+*.log
+*.out
+*.synctex.gz
+
+# Node
+node_modules/
+dist/
+scratchpad/
+
+# Playwright browser profile for the LinkedIn trial, holds a live session
+.playwright/
+
+# The private data backup, see process/tools/my-data.sh
+.my-data.git/

@@ -1,0 +1,14 @@
+.cloud06-pipeline-failures-note { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.cloud06-pipeline-failures-card { margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); min-width: 0; }
+.cloud06-pipeline-failures-card.right { border-color: var(--teal); background: var(--teal-soft); }
+.cloud06-pipeline-failures-card.wrong { border-color: var(--rose); background: var(--rose-soft); }
+.cloud06-pipeline-failures-legend { padding: 0 4px; font-size: 0.72rem; letter-spacing: 0; color: var(--muted); }
+.cloud06-pipeline-failures-what { margin: 0 0 8px; font-size: 0.92rem; line-height: 1.45; overflow-wrap: anywhere; }
+.cloud06-pipeline-failures-opts { display: grid; gap: 6px; }
+.cloud06-pipeline-failures-opt { display: flex; align-items: flex-start; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); font-size: 0.88rem; line-height: 1.4; cursor: pointer; min-width: 0; }
+.cloud06-pipeline-failures-opt span { overflow-wrap: anywhere; }
+.cloud06-pipeline-failures-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.cloud06-pipeline-failures-opt:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cloud06-pipeline-failures-jobs { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+.cloud06-pipeline-failures-jobs .w-chip { max-width: 100%; overflow-wrap: anywhere; }
+.cloud06-pipeline-failures-why { margin: 8px 0 0; font-size: 0.86rem; line-height: 1.45; overflow-wrap: anywhere; }

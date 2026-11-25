@@ -1,0 +1,27 @@
+.guardrails01-chain-run { display: grid; gap: 14px; }
+.guardrails01-chain-run-count { font-size: 0.8rem; color: var(--muted); }
+.guardrails01-chain-run-scene { display: grid; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface-2); font-size: 0.9rem; line-height: 1.45; min-width: 0; }
+.guardrails01-chain-run-scene p { margin: 0; }
+.guardrails01-chain-run-text { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.85rem; }
+.guardrails01-chain-run-guards { list-style: decimal; margin: 0; padding: 0 0 0 22px; display: grid; gap: 8px; }
+.guardrails01-chain-run-guard { border: 1px solid var(--line); border-radius: var(--r-ctl); padding: 8px 10px; background: var(--surface); display: grid; gap: 4px; min-width: 0; }
+.guardrails01-chain-run-guard::marker { color: var(--muted); font-size: 0.8rem; }
+.guardrails01-chain-run-guard.modified { background: var(--amber-soft); border-color: var(--amber); }
+.guardrails01-chain-run-guard.allowed { background: var(--teal-soft); border-color: var(--teal); }
+.guardrails01-chain-run-guard.blocked { background: var(--rose-soft); border-color: var(--rose); }
+.guardrails01-chain-run-guard.skipped, .guardrails01-chain-run-guard.never { border-style: dashed; color: var(--muted); }
+.guardrails01-chain-run-name { font-size: 0.88rem; font-weight: 600; }
+.guardrails01-chain-run-stages { display: flex; flex-wrap: wrap; gap: 4px; }
+.guardrails01-chain-run-stage { font-family: var(--font-mono); font-size: 0.72rem; padding: 1px 6px; border: 1px solid var(--line); border-radius: var(--r-tag); color: var(--muted); }
+.guardrails01-chain-run-stage.here { border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
+.guardrails01-chain-run-rule { margin: 0; font-size: 0.85rem; }
+.guardrails01-chain-run-trace { margin: 0; font-size: 0.85rem; overflow-wrap: anywhere; }
+.guardrails01-chain-run-group { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.guardrails01-chain-run-opts { display: grid; gap: 6px; }
+.guardrails01-chain-run-opt { all: unset; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.9rem; line-height: 1.4; }
+.guardrails01-chain-run-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.guardrails01-chain-run-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.guardrails01-chain-run-opt:disabled { cursor: default; }
+@media (max-width: 480px) {
+  .guardrails01-chain-run-guards { padding-left: 18px; }
+}

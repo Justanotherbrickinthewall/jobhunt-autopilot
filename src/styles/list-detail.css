@@ -1,0 +1,103 @@
+/* The list and detail frame: list pane, rows, group heads, the detail pane and its fields. Learn loads this file on its own, so it names no dashboard area. */
+.ld { display: grid; grid-template-columns: min(var(--ld-list-w, clamp(340px, 24vw, 480px)), max(180px, calc(100% - 480px))) minmax(0, 1fr); flex: 1; min-height: 0; }
+.ld > * { min-height: 0; overflow-y: auto; }
+.ld > .ld-list { grid-column: 1; grid-row: 1; }
+.ld > .ld-detail { grid-column: 2; grid-row: 1; }
+/* The list pane */
+.ld-list { border-right: 1px solid var(--line); background: light-dark(#fbfcfc, var(--sub)); }
+.ld-group-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px 8px; border-bottom: 1px solid var(--line); }
+.ld-group-head .cap { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.ld-group-head .num { flex: none; color: var(--text-2); font-size: 11.5px; font-weight: 500; }
+.ld-row {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  color: var(--text);
+  text-align: left;
+  transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+@media (hover: hover) { .ld-row:not(.selected):hover { background: light-dark(#f4f7f8, var(--hover)); } }
+.ld-row.selected { background: var(--selected); box-shadow: inset 2px 0 0 var(--accent); }
+.ld-row:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.ld-row > :is(.avatar, .tile) { margin-top: 1px; }
+.ld-row.unread .lr-dot { display: block; }
+.ld-foot-list { padding: 12px 16px; }
+/* The search and menus above the rows stay put while the rows scroll */
+.ld-top { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: light-dark(#fbfcfc, var(--sub)); }
+.ld-top .search { flex: 1 1 100%; width: auto; max-width: none; min-width: 0; }
+.ld.wrap .lr-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; white-space: normal; line-height: 19px; }
+.ld.wrap .lr-top { align-items: flex-start; }
+/* The detail pane is a size container. Its content is one group at most 1200px wide, centred. With an aside, the main
+   column sits at --measure and the aside beside it once the pane is 1100px wide; below that the aside stacks under it. */
+.ld-detail { container-type: inline-size; }
+.ld-wrap { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 0 48px; max-width: 1200px; margin: 0 auto; }
+.ld-aside { min-width: 0; margin-top: 26px; }
+@container (min-width: 1100px) {
+  .ld-wrap.has-aside { grid-template-columns: minmax(0, var(--measure)) minmax(min(var(--ld-aside-w, 300px), 100%), var(--ld-aside-w, 360px)); justify-content: center; }
+  .ld-wrap.has-aside .ld-aside { grid-column: 2; grid-row: 1; margin-top: 0; }
+  .ld-wrap.has-aside > .ld-main { grid-column: 1; grid-row: 1; }
+  .ld-wrap.has-aside > .ld-split-aside { display: block; grid-column: 2; grid-row: 1; justify-self: start; margin-left: -27.5px; }
+}
+/* The detail pane: 40px field rows on a 54px cap column, a 17px heading, body copy and the "because" box */
+.ld-detail { padding: 6px 28px 32px; }
+.ld-detail:focus { outline: none; }
+.ld-detail:focus-visible { box-shadow: inset 0 0 0 2px var(--focus); }
+.ld-field { display: grid; grid-template-columns: 54px minmax(0, 1fr); align-items: center; min-height: 40px; border-bottom: 1px solid var(--line); font-size: 13px; }
+.ld-field > .cap { color: var(--text-3); }
+.ld-field.top { align-items: start; padding: 4px 0; }
+.ld-field.top > .cap { line-height: 32px; }
+.ld-val { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--ink); }
+.ld-h { margin: 26px 0 12px; font-size: 17px; line-height: 24px; font-weight: 550; letter-spacing: -0.02em; color: var(--ink); }
+.ld-body { max-width: 62ch; color: var(--body); font-size: 14px; line-height: 1.65; }
+.ld-body p { margin: 0 0 12px; }
+.ld-foot { display: flex; align-items: center; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.ld-note { display: flex; align-items: center; gap: 6px; min-width: 0; margin-right: auto; color: var(--text-3); font-size: 12px; }
+.ld-note.good { color: var(--good); }
+.ld-note .lucide { flex: none; }
+.ld-err { margin: 8px 0 0; color: var(--bad); font-size: 12px; overflow-wrap: anywhere; }
+/* The roles a question blocks, as field values */
+.ld-roles { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+.ld-roles li { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 12px; min-height: 32px; }
+.ld-roles li + li { border-top: 1px dashed var(--line); }
+.ld-role { display: flex; align-items: center; gap: 8px; flex: 0 1 auto; min-width: 0; padding: 0; border: 0; background: none; color: var(--ink); font-size: 13px; text-align: left; }
+.ld-role .tile { width: 22px; height: 22px; border-radius: 6px; font-size: 10.5px; }
+.ld-role b { flex: none; font-weight: 500; }
+.ld-role span { overflow: hidden; color: var(--text-2); text-overflow: ellipsis; white-space: nowrap; }
+@media (hover: hover) { .ld-role:hover b { text-decoration: underline; } }
+.ld-role-note { display: flex; align-items: center; gap: 6px; flex-basis: 100%; padding: 0 0 6px 30px; color: var(--text-3); font-size: 12px; overflow-wrap: anywhere; }
+/* The answer form as a draft: a white area on a faint accent ring and halo */
+.ld-reply { margin-top: 18px; padding: 14px 16px; border-radius: 10px; background: var(--bg); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent), 0 0 0 4px color-mix(in srgb, var(--accent) 6%, transparent); }
+.ld-reply .bm-stack { gap: 12px; }
+.ld-reply .bm-field > span { color: var(--text-3); font-size: 10.5px; line-height: 14px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
+.ld-reply .bm-field textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--bg); color: var(--body); font: inherit; font-size: 13.5px; line-height: 1.55; resize: vertical; }
+.ld-reply .bm-field textarea:focus-visible { outline: none; border-color: var(--focus); box-shadow: 0 0 0 1px var(--focus); }
+.ld-reply .bm-actions { justify-content: flex-end; }
+.ld-reply .held-err { color: var(--bad); font-size: 12px; }
+
+/* At 900px the panes stack and the window scrolls. */
+@media (max-width: 900px) {
+  .ld { grid-template-columns: minmax(0, 1fr); }
+  .ld > .ld-list, .ld > .ld-detail { grid-column: 1; grid-row: auto; }
+  .ld-split, .ld-split-aside { display: none; }
+  .ld > * { overflow: visible; }
+  .ld-list { border-right: 0; border-bottom: 1px solid var(--line); }
+  .ld-detail { padding: 6px 16px 24px; }
+}
+
+/* The resize handle: a 7px hit area centred on the hairline. The hairline stays 1px; the 2px accent line shows on hover, focus and while dragging. */
+.splitter { position: relative; z-index: 3; width: 7px; cursor: col-resize; touch-action: none; }
+.splitter:focus { outline: none; }
+.splitter::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; background: var(--accent); opacity: 0; }
+@media (hover: hover) { .splitter:hover::after { opacity: 1; } }
+.splitter:focus-visible::after, .is-resizing .splitter::after { opacity: 1; }
+.ld-split { grid-column: 2; grid-row: 1; justify-self: start; margin-left: -3.5px; }
+.ld-split-aside { display: none; }
+.is-resizing, .is-resizing * { cursor: col-resize !important; user-select: none; transition: none !important; }
+
+.ld-group-note { overflow: hidden; padding: 6px 16px 0; color: var(--text-3); font-size: 12px; line-height: 17px; text-overflow: ellipsis; white-space: nowrap; }

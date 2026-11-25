@@ -1,0 +1,22 @@
+.agents06-limit-race { display: grid; gap: 12px; }
+.agents06-limit-race-hint { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.agents06-limit-race-card { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; background: var(--surface); display: grid; gap: 8px; }
+.agents06-limit-race-config { margin: 0; font-size: 0.9rem; }
+.agents06-limit-race-choices { display: flex; flex-wrap: wrap; gap: 6px; }
+.agents06-limit-race-choice { cursor: pointer; }
+.agents06-limit-race-choice:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.agents06-limit-race-choice.on { background: var(--accent-soft); border-color: var(--accent); }
+.agents06-limit-race-choice.right { border-color: var(--teal); }
+.agents06-limit-race-choice:disabled { cursor: default; }
+.agents06-limit-race-bars { display: grid; gap: 6px; }
+.agents06-limit-race-bar { display: grid; grid-template-columns: minmax(130px, 220px) 1fr; gap: 8px; align-items: center; font-size: 0.82rem; }
+.agents06-limit-race-track { display: block; height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.agents06-limit-race-fill { display: block; height: 100%; border-radius: 999px; background: var(--line); }
+.agents06-limit-race-fill.first { background: var(--rose); }
+.agents06-limit-race-why { margin: 0; padding: 6px 8px; font-size: 0.88rem; border-radius: var(--r-sm); border-left: 3px solid var(--line); }
+.agents06-limit-race-why.ok { border-left-color: var(--teal); }
+.agents06-limit-race-why.miss { border-left-color: var(--rose); }
+.agents06-limit-race-reads { margin: 0; font-size: 0.85rem; color: var(--muted); }
+@media (max-width: 480px) {
+  .agents06-limit-race-bar { grid-template-columns: 1fr; gap: 2px; }
+}

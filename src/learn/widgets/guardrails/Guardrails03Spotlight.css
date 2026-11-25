@@ -1,0 +1,17 @@
+.guardrails03-spotlight { display: grid; gap: 14px; }
+.guardrails03-spotlight-count { font-size: 0.8rem; color: var(--muted, inherit); }
+.guardrails03-spotlight-scene { display: grid; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface-2); font-size: 0.9rem; line-height: 1.45; }
+.guardrails03-spotlight-scene p { margin: 0; }
+.guardrails03-spotlight-label { margin: 0; font-size: 0.78rem; font-weight: 600; letter-spacing: 0; color: var(--muted); }
+.guardrails03-spotlight-meta { font-size: 0.82rem; }
+.guardrails03-spotlight-pre { margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.guardrails03-spotlight-esc { background: var(--amber-soft); color: inherit; border-bottom: 2px solid var(--amber); padding: 0 1px; }
+.guardrails03-spotlight-group { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.guardrails03-spotlight-opts { display: grid; gap: 6px; }
+.guardrails03-spotlight-opt { all: unset; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.9rem; line-height: 1.4; }
+.guardrails03-spotlight-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.guardrails03-spotlight-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.guardrails03-spotlight-opt:disabled { cursor: default; }
+@media (max-width: 480px) {
+  .guardrails03-spotlight-pre { font-size: 0.76rem; }
+}

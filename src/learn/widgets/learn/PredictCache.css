@@ -1,0 +1,22 @@
+.predict-cache-lede { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.predict-cache-ops { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.predict-cache-round { font-size: 0.8rem; color: var(--muted); margin-right: 4px; }
+.predict-cache-op { font-family: var(--font-mono, "JetBrains Mono Variable", monospace); font-size: 0.85rem; padding: 3px 9px; border-radius: var(--r-tag); background: var(--surface-2); border: 1px solid var(--line); color: var(--ink); transition: background 0.2s, border-color 0.2s; }
+.predict-cache-op.is-done { opacity: 0.55; }
+.predict-cache-op.is-now { background: var(--amber-soft); border-color: var(--amber); }
+.predict-cache-svg { width: 100%; max-width: 360px; display: block; margin: 4px auto 8px; }
+.predict-cache-slot { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.predict-cache-key { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+.predict-cache-keytext { fill: var(--ink); font-size: 24px; font-weight: 600; font-family: var(--font-mono, monospace); }
+.predict-cache-tag { fill: var(--muted); font-size: 9px; }
+.predict-cache-q { margin: 6px 0; font-weight: 600; }
+.predict-cache-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+.predict-cache-opt { font-family: var(--font-mono, monospace); font-size: 1rem; padding: 10px 8px; border-radius: var(--r-sm); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; white-space: pre; transition: border-color 0.15s, background 0.15s; }
+.predict-cache-opt:hover { border-color: var(--accent); }
+.predict-cache-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.predict-cache-opt.is-picked { border-color: var(--accent); background: var(--accent-soft); }
+.predict-cache-lock { margin-top: 10px; flex-wrap: wrap; }
+.predict-cache-trace { font-family: var(--font-mono, monospace); font-size: 0.9rem; margin: 4px 0; min-height: 1.4em; }
+.predict-cache-why { margin: 6px 0 10px; font-size: 0.95rem; padding: 8px 10px; border-radius: var(--r-sm); }
+.predict-cache-why.is-right { background: var(--surface-2); border-left: 2px solid var(--good); }
+.predict-cache-why.is-wrong { background: var(--surface-2); border-left: 2px solid var(--bad); }

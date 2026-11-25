@@ -1,0 +1,15 @@
+.llm-thinking-dial { display: grid; gap: 14px; }
+.llm-thinking-dial-note { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.llm-thinking-dial-ctl { display: grid; gap: 2px; }
+.llm-thinking-dial-lab { font-size: 0.9rem; font-weight: 600; }
+.llm-thinking-dial-lab b { font-weight: 500; color: var(--muted); margin-left: 6px; }
+.llm-thinking-dial-svg { width: 100%; max-width: 420px; height: auto; display: block; }
+.llm-thinking-dial-bar { fill: var(--surface-2); }
+.llm-thinking-dial-bar.on { fill: var(--teal); }
+.llm-thinking-dial-barline { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.llm-thinking-dial-tick { fill: var(--muted); font-size: 10px; }
+.llm-thinking-dial-facts { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.82rem; }
+.llm-thinking-dial-facts .ok { color: var(--teal); }
+.llm-thinking-dial-facts .no { color: var(--rose); }
+.llm-thinking-dial .w-verdict { margin: 0; }
+.llm-thinking-dial .w-btn:focus-visible, .llm-thinking-dial input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

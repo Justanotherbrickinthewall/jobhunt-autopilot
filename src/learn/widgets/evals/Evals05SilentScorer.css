@@ -1,0 +1,29 @@
+.evals05-silent-scorer { display: grid; gap: 12px; }
+.evals05-silent-scorer-guess { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; min-width: 0; }
+.evals05-silent-scorer-guess legend { padding: 0; margin-bottom: 2px; }
+.evals05-silent-scorer-q { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+.evals05-silent-scorer-opts { display: grid; gap: 6px; }
+.evals05-silent-scorer-opt { all: unset; box-sizing: border-box; padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; font-size: 0.92rem; line-height: 1.4; }
+.evals05-silent-scorer-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.evals05-silent-scorer-opt.on { border-color: var(--accent); background: var(--accent-soft); }
+.evals05-silent-scorer-guess:disabled .evals05-silent-scorer-opt { cursor: default; }
+.evals05-silent-scorer-tablewrap { overflow-x: auto; max-width: 100%; }
+.evals05-silent-scorer-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.evals05-silent-scorer-table caption { text-align: left; padding-bottom: 6px; }
+.evals05-silent-scorer-table th, .evals05-silent-scorer-table td { padding: 4px 8px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.evals05-silent-scorer-table thead th { font-weight: 600; color: var(--muted); }
+.evals05-silent-scorer-table tbody th { font-weight: 500; }
+.evals05-silent-scorer-table tr.crashed td:nth-child(3) { color: var(--rose); font-weight: 600; }
+.evals05-silent-scorer-chart { width: 100%; height: auto; display: block; }
+.evals05-silent-scorer-text { font-size: 12px; fill: var(--muted); }
+.evals05-silent-scorer-text.mono { font-family: var(--font-mono); fill: var(--ink); }
+.evals05-silent-scorer-track { fill: var(--surface-2); }
+.evals05-silent-scorer-bar.shown { fill: var(--amber); }
+.evals05-silent-scorer-bar.truth { fill: var(--teal); }
+.evals05-silent-scorer-bar.zero { fill: var(--muted); }
+.evals05-silent-scorer-panel p { margin: 0 0 6px; font-size: 0.92rem; line-height: 1.45; }
+.evals05-silent-scorer-panel ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 4px; font-size: 0.92rem; line-height: 1.45; }
+.evals05-silent-scorer-pre { margin: 0 0 8px; padding: 8px 10px; border-radius: var(--r-ctl); background: var(--surface); border: 1px solid var(--line); font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 560px) {
+  .evals05-silent-scorer-table th, .evals05-silent-scorer-table td { padding: 3px 6px; }
+}
