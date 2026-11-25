@@ -500,6 +500,9 @@ Rows 2 and 5 apply to any row whose runner has a `### Money rule` section. A ban
 cannot be read with confidence is ambiguous, so it falls to row 5, and the reason names the reading
 assumed. `ours` 2026-10-12
 
+Row 2 gives way to rows 3 and 4. A role with a deal-breaker, or a wrong job, is turned down and never
+held for its pay, so the candidate is not asked about a role they would not take. `stated` 2026-11-26
+
 ### Hard filters
 
 These are the only grounds on which a sweep may drop a row. Each is a fact no JD can change.
