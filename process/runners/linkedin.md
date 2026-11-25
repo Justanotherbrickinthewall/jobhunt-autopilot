@@ -157,12 +157,12 @@ Click `more`, then walk up from the `About the job` heading until the ancestor e
 
 ## Money rule
 
-This is the money rule that rows 2 and 7 of the R1 decision table in `process/instructions.md` cite. The floor is `pay.floor_abroad_usd_year`. The matcher never prints its value, and only the applier reads it, through `engine.ts pay value`, for a form that asks. You compare a band by running `node process/engine.ts pay below abroad <top>`, with the band's top in US dollars a year. It prints `below` or `not below`.
+This is the money rule that rows 2 and 5 of the R1 decision table in `process/instructions.md` cite. The floor is `pay.floor_abroad_usd_year`. The matcher never prints its value, and only the applier reads it, through `engine.ts pay value`, for a form that asks. You compare a band by running `node process/engine.ts pay below abroad <top>`, with the band's top in US dollars a year. It prints `below` or `not below`.
 
 1. Read the band, its currency and its period from the JD. Write all three in the role file's Score breakdown.
 2. A USD band whose top `pay below abroad` calls `below`, with an unambiguous period, is row 2. The period is unambiguous when the JD says per year, or per month, which you multiply by 12. The decision is `skipped` and the reason is `HELD: pay band below floor`, naming the band.
 3. A band whose top is `not below` passes, because it reaches or straddles the floor. Note it.
-4. A band is ambiguous when its period is unmarked or hourly, or when its currency cannot be read, for example a `$` figure that is implausible for the role. That is row 7. The decision is `skipped`, the reason starts `HELD:`, and it states the reading you assumed.
+4. A band is ambiguous when its period is unmarked or hourly, or when its currency cannot be read, for example a `$` figure that is implausible for the role. That is row 5. The decision is `skipped`, the reason starts `HELD:`, and it states the reading you assumed.
 5. `inputs.toml` holds no INR floor. An INR band never fires this rule, and `pay.current_inr_lakh` and `pay.expected_india_inr_lakh` are not floors. Write the INR band in the role file and score on.
 6. No band at all is not a drop. Score normally and note it.
 
@@ -283,6 +283,11 @@ This section serves `/retro`, where R10 of `process/instructions.md` decides wha
 Everything here runs in the pinned Chrome, in a tab of the agent's own, as the Browser rules in R6
 of `process/instructions.md` say. A sign-in wall, a challenge page or the same read failing twice
 stops the run and gets reported, never worked around. `ours` 2026-10-18, readers `ours` 2026-11-02
+
+The script `process/tools/li-msg.ts` runs first for a reply in an existing thread and for a `connect` item. `send` types at a human pace in the
+Easy Apply script's own Chrome profile, and `inbox` reads the unread, drafted and recently sent threads into `R/.stage/mail/linkedin-<id>.md`.
+The agents below do the rest, and they take over any item the script returns as `fallback`. First messages and InMails are theirs always.
+Every selector in the script is a guess until a live run confirms it. `ours` 2026-11-26
 
 ### Finding unread threads
 

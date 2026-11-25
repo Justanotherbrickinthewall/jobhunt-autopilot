@@ -560,10 +560,14 @@ my-sessions/
       approval.json                the numbered list, written by outreach list
       approved.json                send (every item approved so far), held and answers, written by outreach approve
       send/<n>.txt                 the exact text for item n, written by outreach approve
+      send/<n>.result.json         what li-msg.ts send did with item n (section 5, li-msg)
+      send/<n>.pressed             written by li-msg.ts send before a click that can send
     .stage/posts/                  the prospect lane's page files
       <n>.json                     one per search results page, `n` from 1, written by post-reader (section 5)
     .stage/jobs.json               roles found through posts, in the sweep row shape, written by post-reader
     .stage/mail/                   a `-retro` run only. <threadId>.md, one staged Gmail thread each, written by the /retro parent
+                                   linkedin-<id>.md, one staged LinkedIn thread each, written by li-msg.ts inbox (section 5, li-msg)
+    .stage/linkedin-inbox.json     the unread senders li-msg.ts inbox listed before it opened any thread, a `-retro` run only
     .stage/suggestions.md          a `-retro` run only. One line per open suggestion, written by the suggestions reader
     .stage/sweep/                  one sweep file per source per `outreach jobs` call, `<firing>-<source>-<n>.json`
     .lock                          lock file (the folder .lock.d holds the lock)
@@ -975,6 +979,46 @@ for it. An ATS link gives source `career_page` and channel `external_ats`, becau
 non-LinkedIn link under source `linkedin`. `career_page` is live (R9 of `instructions.md`), so the hunt claims that row
 like any other. `stated` 2026-10-23 Never point `ingest --session` at `R`: `syncAfterIngest` would rewrite
 `R/notes.md` into the hunt layout. `outreach jobs` hands the file to the ingest path instead.
+
+### li-msg
+
+`process/tools/li-msg.ts` writes two kinds of file. Its output lines and exit codes are in the file's usage text. `ours` 2026-11-26
+
+`send <item> --run <R> [--press]` writes `R/.stage/outreach/send/<n>.result.json` and prints `LM-RESULT <outcome> <n> <reason>`. The keys are
+`item`, `n`, `run`, `channel`, `outcome`, `route`, `reason`, `dry_run`, `thread_id`, `chars`, `attach`, `pressed`, `confirmed`, `recorded`, `seconds`, `at`, `notes`
+and `miss_sample`. `outcome` is `sent`, `dry`, `fallback`, `security` or `stopped`. `route` is `script`, or `fallback` when `outcome` is
+`fallback`. `stopped` means Send was clicked and not confirmed, so nothing may send the item again. `sent` with a `reason` starting `SENT, NOT RECORDED`
+has `recorded: false`. `miss_sample` holds up to three descriptions of a page where a selector found nothing. A `sent` result
+makes a later call for the same item return it unchanged. `send/<n>.pressed` is written before the first click that can send (Send, or Connect). An item with that file
+is never pressed again, and a later call reports `stopped`, reason `already pressed once`. After that click the outcome is `sent` or `stopped`, never `fallback`. A `stopped` result and a
+`SENT, NOT RECORDED` reason each file a `blocked` finding in the run.
+
+`inbox --run <R>` writes `R/.stage/mail/linkedin-<id>.md` for each thread, where `<id>` has every character outside `A-Z`, `a-z`, `0-9`, `_` and `-` replaced by `_`. It has the shape of
+a staged Gmail thread:
+
+```markdown
+# <the other person's name>
+
+source: linkedin
+thread: <the exact thread id, decoded>
+url: https://www.linkedin.com/messaging/thread/<id>/
+name: <the other person's name>
+headline: <their headline, which holds the title and the company>
+vanity: <the /in/ handle, or empty>
+set: <unread, drafted, recent-sent or auto-opened>
+unread: <yes or no>
+tab: <focused or other, empty for a thread not in the list>
+sponsored: <yes or no>
+message_request: <yes or no>
+inmail: <yes or no>
+
+## <sender> | <time>
+
+<the message text, then one `[attachment] <name>` line for each file>
+```
+
+`auto-opened` is the thread LinkedIn opened by itself when `/messaging/` loaded. A thread whose messages the script could not parse has one `## raw page text` block in place of the message blocks. `R/.stage/linkedin-inbox.json` holds
+`at`, `seconds`, `cards`, `unread` (name, id, tab, sponsored), `drafted`, `recent_sent`, `written`, `no_link` and `miss_sample`. It is first written before any thread opens.
 
 ## 6. Findings
 

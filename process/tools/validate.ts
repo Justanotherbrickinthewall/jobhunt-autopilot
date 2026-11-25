@@ -316,7 +316,8 @@ function prospectRows(rows: CsvRow[], errs: string[], warns: Warns): void {
         if (semI === null || semI < c.semantic_floor) {
           errs.push(`SCORED BELOW SEMANTIC FLOOR  ${who} (semantic=${sem || 'blank'}, floor=${c.semantic_floor})`)
         }
-      } else if (st === 'skipped' && mI !== null && mI >= c.match_floor && !notes.includes(C.HELD_PREFIX) &&
+      // Off when match_floor is 0: a low match no longer decides a role, and old rows were skipped under the floor that applied then.
+      } else if (st === 'skipped' && c.match_floor > 0 && mI !== null && mI >= c.match_floor && !notes.includes(C.HELD_PREFIX) &&
                  !notes.includes('closed at apply') && !notes.includes('posting closed') &&
                  !notes.includes('candidate skip:')) {
         errs.push(`SKIPPED AT OR ABOVE MATCH FLOOR W/O ${C.HELD_PREFIX}  ${who} (match=${mI})`)

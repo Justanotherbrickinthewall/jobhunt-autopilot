@@ -218,6 +218,11 @@ export const SCHEMA: readonly (readonly [string, string, Kind])[] = [
   ['scores', 'collapse_ai', 'int'],
   ['scores', 'collapse_level', 'int'],
   ['scores', 'collapse_stack', 'int'],
+  ['scores', 'junior_max_years', 'int'],
+  ['scores', 'junior_bare_min_years', 'int'],
+  ['deal_breakers', 'primary_skills', 'strs'],
+  ['deal_breakers', 'stacks_lacked', 'strs'],
+  ['deal_breakers', 'work_not_wanted', 'strs'],
   ['concurrency', 'matching', 'int'],
   ['concurrency', 'tailoring', 'int'],
   ['concurrency', 'applying', 'int'],
@@ -291,9 +296,13 @@ export function load(): Data {
   }
   FLOAT_KEYS = floatKeys(text)
   for (const [section, key, kind] of SCHEMA) {
+    if (section === 'deal_breakers' && !isDict(data[section])) data[section] = {}   // optional, so an older profile loads
     const table = data[section]
     if (!isDict(table)) fail(`missing section [${section}] (needed for key ${section}.${key})`)
     if (!Object.hasOwn(table, key) && section === 'search' && key === 'blocked_companies') table[key] = []   // optional, so an older profile loads
+    if (!Object.hasOwn(table, key) && section === 'deal_breakers') table[key] = []   // optional, an empty list means no deal-breaker of that kind
+    if (!Object.hasOwn(table, key) && section === 'scores' && key === 'junior_max_years') table[key] = 3   // optional, so an older profile loads
+    if (!Object.hasOwn(table, key) && section === 'scores' && key === 'junior_bare_min_years') table[key] = 0
     if (!Object.hasOwn(table, key)) fail(`missing key ${section}.${key}`)
     if (!kindOk(kind, table[key], FLOAT_KEYS.has(`${section}.${key}`))) {
       fail(`key ${section}.${key} must be ${KIND_NAME[kind]}, found ${reprv(table[key])}`)
@@ -341,6 +350,9 @@ export interface Config {
   readonly ea_match_floor: number
   readonly waas_send_match_min: number
   readonly collapse: Record<string, number>
+  readonly junior_max_years: number
+  readonly junior_bare_min_years: number
+  readonly deal_breakers: Record<string, readonly string[]>
   readonly caps: Record<string, number>
   readonly linkedin_readers: number
   readonly max_attempts: number
@@ -352,8 +364,8 @@ let cfgMemo: Config | undefined
 export function cfg(): Config {
   if (cfgMemo) return cfgMemo
   const d = load()
-  const [t, s, r, p, li, b, sc, c] = ['targets', 'search', 'reach', 'pay', 'linkedin', 'budgets',
-    'scores', 'concurrency'].map((k) => d[k]) as Record<string, any>[]
+  const [t, s, r, p, li, b, sc, c, db] = ['targets', 'search', 'reach', 'pay', 'linkedin', 'budgets',
+    'scores', 'concurrency', 'deal_breakers'].map((k) => d[k]) as Record<string, any>[]
   const strs = (x: string[]): readonly string[] => Object.freeze([...x])
   const lower = (x: string[]): readonly string[] => Object.freeze(x.map((y) => y.toLowerCase()))
   cfgMemo = Object.freeze({
@@ -394,6 +406,9 @@ export function cfg(): Config {
     ea_match_floor: sc.ea_match_floor,
     waas_send_match_min: sc.waas_send_match_min,
     collapse: { fd: sc.collapse_fd, ai: sc.collapse_ai, level: sc.collapse_level, stack: sc.collapse_stack },
+    junior_max_years: sc.junior_max_years,
+    junior_bare_min_years: sc.junior_bare_min_years,
+    deal_breakers: { primary_skills: strs(db.primary_skills), stacks_lacked: strs(db.stacks_lacked), work_not_wanted: strs(db.work_not_wanted) },
     caps: { matching: c.matching, tailoring: c.tailoring, applying: c.applying },
     linkedin_readers: c.linkedin_readers,
     max_attempts: c.max_attempts,

@@ -57,6 +57,8 @@ contract_ideal_usd_hour = 0  # set me
 current_inr_lakh = 0  # set me
 # The pay they expect from a home role, in lakh rupees a year.
 expected_india_inr_lakh = 0  # set me
+# Floor for a recruiter invite on Naukri, in lakh rupees a year. An invite whose band sits wholly below it gets Not interested, as R1 says.
+naukri_invite_floor_inr_lakh = 0  # set me
 # Floor for a salaried role paid outside the home country. A band wholly below it is held under R1 decision row 2.
 floor_abroad_usd_year = 0  # set me
 # The ask shown to founders on Work at a Startup.
@@ -98,26 +100,30 @@ stale_days = 14
 waas_messages = 8
 
 [scores]
-# The one bar. Under it, a role never reaches the candidate.
-match_floor = 55
+# Off: 0 means a low match never turns a role down, as R1 says. Was the one bar.
+match_floor = 0
 # Wrong-job test. Under semantic_floor the role is wrong_job.
 semantic_floor = 50
-# At or above this, semantic never holds a role.
-semantic_proceed = 65
-# Between the two, the role needs at least this match, or it is held for review.
-semantic_middle_min_match = 70
-# Easy Apply takes a role only at or above this match. Under it the role is skipped and /outreach works it instead. Added 2026-11-22 on the candidate's answer in /retro (`stated` 2026-11-22).
-ea_match_floor = 80
+# Off: equal to semantic_floor, so the middle band is empty.
+semantic_proceed = 50
+# Off: 0 means the middle band never holds a role.
+semantic_middle_min_match = 0
+# Off: 0 means Easy Apply takes a role at any match.
+ea_match_floor = 0
 # Work at a Startup founder send bar. Under it, the role is held for review, not messaged.
 waas_send_match_min = 60
-# A dimension below its floor holds the role, whatever the total. This is the fd floor.
-collapse_fd = 12
-# The ai dimension floor.
-collapse_ai = 10
-# The level dimension floor.
-collapse_level = 6
-# The stack dimension floor.
-collapse_stack = 4
+# Off: 0 means the fd part never holds a role on its own.
+collapse_fd = 0
+# Off, as collapse_fd.
+collapse_ai = 0
+# Off, as collapse_fd.
+collapse_level = 0
+# Off, as collapse_fd.
+collapse_stack = 0
+# A JD body whose stated maximum is this many years or fewer is junior, a hard filter in R1.
+junior_max_years = 3  # set me
+# A bare minimum of this many years or fewer, with no maximum, is junior too. 0 turns it off.
+junior_bare_min_years = 0  # set me
 
 [concurrency]
 # Agents at once. LinkedIn throttles readers above linkedin_readers.
@@ -200,3 +206,11 @@ max_rows_per_run = 40
 max_requests_per_run = 12
 # A role posted longer ago than this many days is left out.
 posted_within_days = 7
+
+[deal_breakers]
+# Skills that turn a role down when they are the job itself. R1 says how the matcher decides one.
+primary_skills = []  # set me
+# Stacks the candidate lacks. A role drops only when the JD demands one in strict wording as its main stack.
+stacks_lacked = []  # set me
+# Kinds of work the candidate does not want, such as pre-sales or product management.
+work_not_wanted = []  # set me

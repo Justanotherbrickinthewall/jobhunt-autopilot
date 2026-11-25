@@ -165,7 +165,9 @@ These override convenience, and every agent follows them.
 7. Use only the pinned Chrome from `process/local.json`. Never use the built-in browser. There are three
    exceptions. `process/tools/ea-apply.ts` drives its own Chrome profile at `.playwright/linkedin` for the
    `linkedin-ea` lane, and `process/tools/naukri.ts` drives its own at `.playwright/naukri` for the `naukri` lane.
-   `process/tools/hirist.ts` drives its own at `.playwright/hirist` for the `hirist` lane. `stated` 2026-11-25, Hirist 2026-11-26
+   `process/tools/hirist.ts` drives its own at `.playwright/hirist` for the `hirist` lane. `process/tools/li-msg.ts`
+   shares `.playwright/linkedin` to send LinkedIn replies and connection requests and to read the LinkedIn inbox.
+   `stated` 2026-11-25, Hirist and li-msg 2026-11-26
 8. The figures under `## Private pay` in `profile.md` never leave the folder. A `[pay]` value reaches only an application form that asks for it, through `engine.ts pay value`. `engine.ts config` omits the pay figures, and `engine.ts pay below` compares a band without printing them. It compares an hourly band too. `stated` 2026-11-10 `engine.ts pay ask` prints only the one figure meant for a founder. `stated` 2026-11-07
 9. A LinkedIn message, InMail or connection request is sent only from a draft in an `/outreach`, `/retro` or dashboard send run. A prospect is the author of a hiring post, or the person `/outreach` found for an applied or held role. A prospect first message, InMail or connection request is sent by `/outreach` in the
    same run, within the `[prospect]` caps and with no approval. A reply, on LinkedIn or by email, is

@@ -57,7 +57,7 @@ const ROUTES: Record<string, Route> = {
 const HELP_LINES: [string, string][] = [
   ['profile', 'print the profile folder (my-profile), or profile digest for the sections the matcher reads'],
   ['config', 'print the resolved inputs and paths'],
-  ['pay', 'pay below abroad|india|hourly <top> prints below or not below against the floor or the expected figure; pay ask prints the founder ask; pay value <key> prints one figure a form asks for'],
+  ['pay', 'pay below abroad|india|hourly|invite <top> prints below or not below against the floor or the expected figure; pay ask prints the founder ask; pay value <key> prints one figure a form asks for'],
   ['boards', 'boards sweep [--dry-run] fetches the four remote board feeds, filters them and writes one sweep file for the remote_boards lane; --dry-run prints the rows and writes nothing'],
   ['ledger', 'ledger init or migrate: create the ledger, or add the columns and files a newer engine expects'],
   ['preflight', 'check profile, browser, queue and open session before a run'],

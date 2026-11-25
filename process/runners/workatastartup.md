@@ -111,7 +111,7 @@ Fetch at a concurrency of 8 at most. One request returns the full JD and every c
 
 ## Apply
 
-The `matcher` applies the decision table in `process/instructions.md` R1. This board supplies its money rule (rows 2 and 7), its send bar (row 8) and one reach exception.
+The `matcher` applies the decision table in `process/instructions.md` R1. This board supplies its money rule (rows 2 and 5), its send bar (row 6) and one reach exception.
 
 ### Reach: `locationEligible` is a penalty, not a drop
 
@@ -125,12 +125,12 @@ A role that is not remote at all, and sits outside a reachable market, is still 
 - Run `pay below` on the bottom of the band too. `below` on the bottom with `not below` on the top is a straddle.
 - A band wholly below the floor, with an explicit period, is row 2: `skipped`, with the reason `HELD: pay band below floor`, naming the band.
 - A band that straddles the floor is kept and flagged, and the message negotiates. An India-scoped title with a USD band is ambiguous by construction, so keep and flag it too.
-- A band that reads plausibly both ways on period is row 7: `skipped` with `HELD:` and the reading you assumed.
+- A band that reads plausibly both ways on period is row 5: `skipped` with `HELD:` and the reading you assumed.
 - No band at all is not a drop, so score normally and note it. Contract and hourly rows are a hard drop on this board.
 
 ### Send bar and cap
 
-Row 8 holds any role below `scores.waas_send_match_min` or below `scores.semantic_proceed`. The reason is `HELD: below founder send bar`. A founder reads every message, so the bar sits above LinkedIn's. Card triage overstates `match` on this board, which is why the bar is not higher.
+Row 6 holds any role below `scores.waas_send_match_min`. The reason is `HELD: below founder send bar`. A founder reads every message, so the bar sits above LinkedIn's. Card triage overstates `match` on this board, which is why the bar is not higher.
 
 Draft at most `budgets.waas_messages` founder messages in one hunt. The cap applies to the whole hunt and not to the channel. It counts messages drafted, not roles worked. It stops only the founder branch, so founder messages never starve the other channels. `session tick` enforces it, and ingest rejects a `scored` founder row under the send bar. Past the cap, the rows stay `scored` with the board note `founder cap` and lead the next hunt. Only so many messages can be written for their JD in one sitting, and past that they read like a mail merge. `stated`
 

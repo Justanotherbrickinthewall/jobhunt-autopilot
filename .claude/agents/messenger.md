@@ -23,6 +23,11 @@ connection request from the person's profile. It has no thread. It names a `post
 `channel` and a `vanity` instead, and an InMail also names a `subject`. Write every
 engine command as `node process/engine.ts --session <R> outreach ...`.
 
+The script `process/tools/li-msg.ts` may already have tried an item. Your brief then gives its `LM-RESULT fallback` reason. Treat the item as unsent,
+check the thread as limit 5 says, and never assume the script sent it or left the box clean.
+
+Never send an item that has a `send/<n>.pressed` file in the run folder, whatever the brief says. A click that can send was already made. Report `NOT SENT: pressed marker, held for /retro`.
+
 ## Hard limits
 
 1. Send only the brief's items from `send`, in order. Never open a thread that is not one of them.

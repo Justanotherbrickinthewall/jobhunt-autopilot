@@ -26,9 +26,9 @@ Compare a band only after turning it into US dollars. Convert another currency a
 1. An hourly band goes to `pay below hourly <top>`. A day rate is divided by 8 and a weekly rate by 40 first.
 2. A monthly band is multiplied by 12, and a yearly band goes to `pay below abroad <top>`.
 3. A band in rupees follows the LinkedIn runner's money rule.
-4. Pay per task or per word, or a band with no period, is decision row 7.
+4. Pay per task or per word, or a band with no period, is decision row 5.
 5. No band is not a drop.
-6. When `pay below` exits 2 because a key is missing, hold the row under decision row 7 and name the key in the reason.
+6. When `pay below` exits 2 because a key is missing, hold the row under decision row 5 and name the key in the reason.
 
 `ours` 2026-11-10
 

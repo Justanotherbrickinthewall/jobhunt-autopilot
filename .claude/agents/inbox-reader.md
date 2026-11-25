@@ -1,6 +1,6 @@
 ---
 name: inbox-reader
-description: Reads the candidate's job threads and writes one reply draft for each job-related one. In gmail mode it reads the thread files the parent staged from Gmail. In linkedin mode it reads the unread threads, the drafted threads and the recently sent threads in the pinned Chrome. Records every thread in contacted.csv and, where a thread answers an application or an outreach row, records the reply. Never sends and never types into a message box. Dispatched by /retro in Phases 2 and 3 of R10 in process/instructions.md, one per mode, in the background.
+description: Reads the candidate's job threads and writes one reply draft for each job-related one. In gmail mode it reads the thread files the parent staged from Gmail. In staged-linkedin mode it reads the thread files the li-msg.ts script staged from LinkedIn and opens no Chrome. In linkedin mode it reads the unread threads, the drafted threads and the recently sent threads in the pinned Chrome. Records every thread in contacted.csv and, where a thread answers an application or an outreach row, records the reply. Never sends and never types into a message box. Dispatched by /retro in Phases 2 and 3 of R10 in process/instructions.md, one per mode, in the background.
 model: sonnet
 tools: Read, Write, Bash, Grep, Glob, mcp__claude-in-chrome
 ---
@@ -12,20 +12,27 @@ shape is in `process/contracts.md` section 5, under `### outreach`. Read all of 
 
 ## Inputs
 
-Your brief gives a mode (`gmail` or `linkedin`), the run folder `<R>`, the profile folder `<P>` and, in
-`gmail` mode, the folder `<R>/.stage/mail/`. It also gives the verbatim output of `outreach inputs`,
+Your brief gives a mode (`gmail`, `staged-linkedin` or `linkedin`), the run folder `<R>`, the profile folder `<P>` and, in
+`gmail` and `staged-linkedin` modes, the folder `<R>/.stage/mail/`. It also gives the verbatim output of `outreach inputs`,
 `outreach drafted` and `outreach recent-sent`. Write `outreach record` as `node process/engine.ts
 --session <R> outreach record ...`, and `outreach stop` the same way. Write `outreach check`,
 `outreach replied` and `ingest response` as `node process/engine.ts --ledger my-sessions/ledger ...`,
 with no `--session`.
 
-## The two modes
+## The three modes
 
-1. `gmail`: each file in `<R>/.stage/mail/` is one thread, with its messages in order and the names
+1. `gmail`: each file in `<R>/.stage/mail/` that does not start `linkedin-` is one thread, with its messages in order and the names
    of its attachments. Read them all. Use no Gmail tool and no browser unless a limit below says so.
    A draft's `thread_id` is `gmail:<threadId>`. Its `channel` is `email`, its `to` is the address of the
    person to answer, and its `subject` is the thread's subject with one `Re: ` in front.
-2. `linkedin`: pin Chrome, open messaging as `## Messaging` in `process/runners/linkedin.md` says and
+2. `staged-linkedin`: each file `<R>/.stage/mail/linkedin-*.md` is one LinkedIn thread that `process/tools/li-msg.ts inbox` read. It has
+   `source: linkedin`, `thread:` (the exact id), `url:`, `name:`, `headline:`, `vanity:`, `set:` (`unread`, `drafted`, `recent-sent` or `auto-opened`, a thread LinkedIn opened by itself on load, so its unread mark may be gone),
+   `unread:`, `sponsored:`, `message_request:` and `inmail:` lines, then one `## <sender> | <time>` block for each message. Take the title and
+   company from `headline:`. A file with `sponsored: yes` is recorded `skipped` with the reason `sponsored`. A file with a `## raw page text` block
+   has no parsed messages, so read the text as the thread. Open no Chrome, so hard limit 2 does not apply. Read `<R>/.stage/linkedin-inbox.json`
+   for the unread senders the script listed before it opened any thread. Leave alone a `drafted` thread with `post <url>` and no `(follow-up)` mark, as in
+   `linkedin` mode. A draft's `thread_id` is the file's `thread:` value and its `channel` is `message`.
+3. `linkedin`: pin Chrome, open messaging as `## Messaging` in `process/runners/linkedin.md` says and
    collect three sets. They are every unread thread, every thread on `outreach drafted`, and every
    thread on `outreach recent-sent`. Write the unread senders down before opening any. Leave alone a
    `drafted` line that has `post <url>` and no `(follow-up)` mark, because it is a prospect row. A draft's
@@ -77,7 +84,7 @@ with no `--session`.
 
 1. Never type into a message box and never click Send. Opening a thread to read it is allowed.
 2. Pin and use Chrome as `### Browser rules` in R6 of `process/instructions.md` says, and do not
-   restate it here. `linkedin` mode uses the browser throughout. `gmail` mode uses it only for the
+   restate it here. `staged-linkedin` mode uses no browser. `linkedin` mode uses the browser throughout. `gmail` mode uses it only for the
    attachment preview in step 6 above. If no browser is allowed, stop and report `STOPPED: <reason>`.
 3. Never enter credentials. On a sign-in wall, a challenge page or the same read failing twice, stop and
    report `STOPPED: <reason>`, with the threads you had not yet opened. In `linkedin` mode a restriction

@@ -3,7 +3,7 @@ name: outreach
 description: Writes first contacts on LinkedIn, in lanes. The roles lane finds one person at each applied or held role above the bar. The posts lane searches LinkedIn posts for open roles and judges each one. /outreach runs every live lane, roles first. /outreach --roles or /outreach --posts runs one. It drafts, sends within the prospect caps and withdraws stale connection requests, in one run. It is AFK, asks nothing and never sends email. It does not touch the inbox, because /retro reads, drafts and sends every reply. /outreach status prints a read-only report.
 argument-hint: "[--roles | --posts | status]"
 disable-model-invocation: true
-allowed-tools: Read, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(git status:*)
+allowed-tools: Read, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(node process/tools/li-msg.ts:*), Bash(git status:*)
 ---
 
 # /outreach

@@ -44,7 +44,7 @@ button sends the resume the Naukri profile holds, so you upload nothing unless t
 
 Submit only when all four hold. R6 is the full rule.
 
-1. The row's match is at or above `scores.match_floor`. A Naukri invite has no such bar.
+1. The matcher has scored the row. A low `match` holds nothing, as R1 says.
 2. Every screening answer comes from `faq.md` or `profile.md`, or is free text from `work-portfolio.md`.
 3. Neither the row nor the resume carries a flag: a portfolio conflict, a claim the caveats in `work-portfolio.md` deny, a pay or location doubt, a new account or domain, a CAPTCHA, or a question the bank cannot answer.
 4. The only box you tick is the employer's standard consent to process the application. A marketing opt-in or an account's terms hold the row.

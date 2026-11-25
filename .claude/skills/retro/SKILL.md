@@ -2,7 +2,7 @@
 name: retro
 description: Runs when the candidate chooses, never inside a hunt. /retro is the only command that asks the candidate anything. It settles what is held, answers the Gmail inbox and then the LinkedIn inbox, and ends with suggestions. It gathers everything first and sends all its questions in one numbered message. It has one form and takes no argument.
 disable-model-invocation: true
-allowed-tools: Read, Write, Edit, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(git status:*), Bash(git log:*), Bash(ls:*)
+allowed-tools: Read, Write, Edit, Grep, Glob, Agent, Bash(node process/engine.ts:*), Bash(node process/tools/li-msg.ts:*), Bash(git status:*), Bash(git log:*), Bash(ls:*)
 ---
 
 # /retro
